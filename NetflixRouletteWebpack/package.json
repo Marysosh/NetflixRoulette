@@ -7,7 +7,8 @@
     "start": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "prepare": "cd .. && husky install NetflixRouletteWebpack/.husky"
   },
   "author": "Mariia Soshnikova",
   "license": "ISC",
@@ -32,6 +33,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "mini-css-extract-plugin": "^2.6.1",
     "node-sass": "^7.0.3",
     "prettier": "^2.7.1",

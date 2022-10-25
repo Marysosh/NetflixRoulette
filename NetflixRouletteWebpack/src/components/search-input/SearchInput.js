@@ -1,5 +1,5 @@
-import React from 'react';
-import './SearchInput.scss';
+import React from "react";
+import "./SearchInput.scss";
 
 class SearchInput extends React.PureComponent {
   render() {
