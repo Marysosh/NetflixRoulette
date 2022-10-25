@@ -12,17 +12,14 @@ function GenreDropdown() {
 
   return (
     <div className="genre-dropdown">
-      <button className="genre-dropdown-btn" onClick={handleOpen}>
+      <button type="button" className="genre-dropdown-btn" onClick={handleOpen}>
         Select Genre
       </button>
       {open ? (
         <ul className="genre-dropdown-list">
           {genreArray.map((item) => (
             <li className="genre-dropdown-item">
-              <input
-                type="checkbox"
-                className="genre-dropdown-checkbox"
-              ></input>
+              <input type="checkbox" className="genre-dropdown-checkbox" />
               {item}
             </li>
           ))}

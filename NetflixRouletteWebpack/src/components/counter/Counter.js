@@ -9,18 +9,28 @@ class Counter extends React.Component {
 
   changeValue(increase) {
     this.setState((prevState) =>
+      // eslint-disable-next-line no-plusplus, no-param-reassign
       increase ? prevState.value++ : prevState.value--
     );
   }
 
   render() {
+    const { value } = this.state;
     return (
       <div className="counter-panel">
-        <button className="counter-btn" onClick={() => this.changeValue(false)}>
+        <button
+          type="button"
+          className="counter-btn"
+          onClick={() => this.changeValue(false)}
+        >
           Decrease value
         </button>
-        <div className="counter-value">{this.state.value}</div>
-        <button className="counter-btn" onClick={() => this.changeValue(true)}>
+        <div className="counter-value">{value}</div>
+        <button
+          type="button"
+          className="counter-btn"
+          onClick={() => this.changeValue(true)}
+        >
           Increase value
         </button>
       </div>

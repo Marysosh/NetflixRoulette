@@ -1,5 +1,6 @@
-import React from "react";
-import "./SearchInput.scss";
+import React from 'react';
+import './SearchInput.scss';
+
 class SearchInput extends React.PureComponent {
   render() {
     return (
@@ -7,7 +8,7 @@ class SearchInput extends React.PureComponent {
         className="search-input"
         type="text"
         placeholder="What do you want to watch?"
-      ></input>
+      />
     );
   }
 }

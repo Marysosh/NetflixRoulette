@@ -1,8 +1,10 @@
 import React from "react";
 import "./FilledButton.scss";
 
-export const filledBtn = React.createElement(
+const filledBtn = React.createElement(
   "button",
-  { className: "filled-btn" },
+  { className: "filled-btn", type: "button" },
   "Search"
 );
+
+export default filledBtn;
