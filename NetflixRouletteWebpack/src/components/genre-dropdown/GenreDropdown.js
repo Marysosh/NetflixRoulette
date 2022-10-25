@@ -18,7 +18,7 @@ function GenreDropdown() {
       {open ? (
         <ul className="genre-dropdown-list">
           {genreArray.map((item) => (
-            <li className="genre-dropdown-item">
+            <li className="genre-dropdown-item" key={Math.random() + 1}>
               <input type="checkbox" className="genre-dropdown-checkbox" />
               {item}
             </li>

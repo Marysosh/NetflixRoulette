@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import Counter from "./components/counter/Counter";
 import SearchInput from "./components/search-input/SearchInput";
 import GenreDropdown from "./components/genre-dropdown/GenreDropdown";
