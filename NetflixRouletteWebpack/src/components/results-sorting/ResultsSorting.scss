@@ -1,0 +1,26 @@
+.results-sorting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 20vw;
+
+  &-label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: #ffffff;
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+
+    letter-spacing: 0.888889px;
+    text-transform: uppercase;
+
+    mix-blend-mode: normal;
+    opacity: 0.6;
+  }
+}

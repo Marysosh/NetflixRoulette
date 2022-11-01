@@ -1,0 +1,58 @@
+.sorting-dropdown {
+  display: flex;
+  flex-direction: column;
+
+  &-btn {
+    margin-top: 9%;
+    border: none;
+    color: #ffffff;
+    background-color: #232323;
+    text-align: left;
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+
+    letter-spacing: 0.888889px;
+    text-transform: uppercase;
+
+    &-container {
+      width: 13vw;
+      height: 100%;
+    }
+  }
+
+  &-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+  }
+
+  &-item {
+    background-color: #323232;
+    opacity: 0.8;
+    color: #ffffff;
+    margin: 1% 0;
+    padding: 1vh;
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+
+    letter-spacing: 0.888889px;
+    text-transform: uppercase;
+  }
+}
+
+.sorting-order-btn {
+  border: none;
+  background-color: #232323;
+  text-align: center;
+}

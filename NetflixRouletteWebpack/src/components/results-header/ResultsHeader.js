@@ -2,6 +2,7 @@ import React from "react";
 import "./ResultsHeader.scss";
 
 import ResultsFilter from "../results-filter/ResultsFilter";
+import ResultsSorting from "../results-sorting/ResultsSorting";
 
 const genresFilters = [
   { filterName: "All", id: "f0", isSelected: true },
@@ -15,6 +16,7 @@ function ResultsHeader() {
   return (
     <div className="results-header">
       <ResultsFilter genresFilterArray={genresFilters} />
+      <ResultsSorting />
     </div>
   );
 }

@@ -22,5 +22,11 @@ function ResultsFilter({ genresFilterArray }) {
 export default ResultsFilter;
 
 ResultsFilter.propTypes = {
-  genresFilterArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  genresFilterArray: PropTypes.arrayOf(
+    PropTypes.shape({
+      filterName: PropTypes.string,
+      id: PropTypes.string,
+      isSelected: PropTypes.bool,
+    })
+  ).isRequired,
 };
