@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 10vh;
+}
+
+.logo {
+  margin-top: 3vh;
+  margin-left: 7vw;
+}
+
+.add-movie-btn {
+  margin-top: 3vh;
+  margin-right: 8vw;
+}
