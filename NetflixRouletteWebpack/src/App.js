@@ -1,20 +1,12 @@
-// eslint-disable-next-line no-unused-vars
 import React from "react";
-import Counter from "./components/counter/Counter";
-import SearchInput from "./components/search-input/SearchInput";
-import GenreDropdown from "./components/genre-dropdown/GenreDropdown";
-import filledBtn from "./components/filled-button/FilledButton";
 import "./App.scss";
+
+import SearchPanel from "./components/search-panel/SearchPanel";
 
 function App() {
   return (
-    <div className="App">
-      <Counter />
-      <div className="search-form">
-        <SearchInput />
-        {filledBtn}
-      </div>
-      <GenreDropdown />
+    <div className="app">
+      <SearchPanel />
     </div>
   );
 }
