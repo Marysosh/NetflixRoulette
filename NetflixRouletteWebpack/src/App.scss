@@ -3,11 +3,16 @@ body {
   margin-inline: 0;
   padding-block: 0;
   padding-inline: 0;
-  overflow: hidden;
+  overflow: visible;
   -webkit-overflow-scrolling: touch;
 }
 
 .app {
   height: 100vh;
   width: 100vw;
+  background-color: #555555;
+}
+
+.search-results-panel {
+  margin-top: 2vh;
 }

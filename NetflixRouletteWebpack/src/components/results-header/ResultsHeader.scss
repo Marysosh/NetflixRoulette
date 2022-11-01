@@ -1,0 +1,12 @@
+.results {
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 7vh;
+    margin-left: 7vw;
+    margin-right: 8vw;
+
+    border-bottom: 2px solid #424242;
+  }
+}
