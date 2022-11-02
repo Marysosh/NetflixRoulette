@@ -16,6 +16,13 @@ function SortingDropdown() {
   const handleOrderChange = () => {
     setAscendingOrder(!isAscendingOrder);
   };
+
+  // For checking Error boundary
+
+  // if (isAscendingOrder) {
+  //   throw new Error("Wrong sorting order change!");
+  // }
+
   return (
     <div className="sorting-dropdown">
       <div className="sorting-dropdown-btn-container">
