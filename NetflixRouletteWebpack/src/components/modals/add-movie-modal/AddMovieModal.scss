@@ -1,0 +1,30 @@
+.add-movie {
+  &-container {
+    position: fixed;
+
+    z-index: 5;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(1px);
+    background: rgba(35, 35, 35, 0.6);
+  }
+
+  &-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 45vw;
+    height: 75vh;
+    background: #232323;
+    z-index: 10;
+
+    transition: all 0.3s linear;
+
+    .close-btn {
+      border: none;
+      background-color: #232323;
+    }
+  }
+}
