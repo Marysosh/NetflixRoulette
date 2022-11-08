@@ -6,11 +6,11 @@ import descSign from "./descSign.png";
 const genreArray = ["Title", "Rating", "Runtime", "Date added"];
 
 function SortingDropdown() {
-  const [open, setOpen] = useState(false);
+  const [openedDropdown, setDropdownOpen] = useState(false);
   const [isAscendingOrder, setAscendingOrder] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleOpenDropdown = () => {
+    setDropdownOpen(!openedDropdown);
   };
 
   const handleOrderChange = () => {
@@ -29,7 +29,7 @@ function SortingDropdown() {
         <button
           type="button"
           className="sorting-dropdown-btn"
-          onClick={handleOpen}
+          onClick={handleOpenDropdown}
         >
           Release date
         </button>
@@ -41,7 +41,7 @@ function SortingDropdown() {
           <img src={isAscendingOrder ? ascSign : descSign} alt="order Sign" />
         </button>
       </div>
-      {open ? (
+      {openedDropdown ? (
         <ul className="sorting-dropdown-list">
           {genreArray.map((item) => (
             <li className="sorting-dropdown-item" key={Math.random() + 1}>

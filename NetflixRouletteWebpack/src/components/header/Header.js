@@ -19,7 +19,7 @@ class Header extends Component {
     const { openModalHandler } = this.props;
 
     this.setState({ isOpen: value });
-    openModalHandler(true);
+    openModalHandler(value);
   };
 
   render() {

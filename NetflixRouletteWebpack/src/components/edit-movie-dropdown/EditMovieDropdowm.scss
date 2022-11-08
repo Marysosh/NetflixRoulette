@@ -1,0 +1,57 @@
+.edit-movie-dropdown {
+  &-container {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    right: 3%;
+    top: 1.5%;
+
+    background-color: #232323;
+    padding-bottom: 3%;
+  }
+
+  &-btn {
+    width: fit-content;
+    border: none;
+    padding: 0;
+    padding-bottom: 2%;
+    background-color: #232323;
+    margin-left: 87%;
+    margin-top: 5%;
+  }
+
+  &-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 12vw;
+    z-index: 2;
+  }
+
+  &-item {
+    display: flex;
+
+    &-btn {
+      background-color: #232323;
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: left;
+      /* identical to box height */
+
+      color: #ffffff;
+      border: none;
+      padding: 5%;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+        background-color: #f65261;
+      }
+    }
+  }
+}
