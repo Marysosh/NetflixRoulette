@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./EditMovieDropdowm.scss";
 import optionsIcon from "./options_icon.png";
@@ -8,6 +9,9 @@ const BASE_CLASS = "edit-movie-dropdown";
 
 function EditMovieDropdown() {
   const [openedDropdown, setOpenedDropdown] = useState(false);
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setOpenedDropdown);
 
   const handleOpenDropdown = (value) => {
     setOpenedDropdown(value);
@@ -31,7 +35,7 @@ function EditMovieDropdown() {
         <img src={optionsIcon} alt="options icon" />
       </button>
       {openedDropdown ? (
-        <div className={`${BASE_CLASS}-container`}>
+        <div className={`${BASE_CLASS}-container`} ref={wrapperRef}>
           <button
             className={`${BASE_CLASS}-btn`}
             type="button"
@@ -40,7 +44,7 @@ function EditMovieDropdown() {
             <img src={closeBtn} alt="close icon" />
           </button>
           <ul className={`${BASE_CLASS}-list`}>
-            <li className={`${BASE_CLASS}-item`}>
+            <li className={`${BASE_CLASS}-item`} key={Math.random() + 1}>
               <button
                 className={`${BASE_CLASS}-item-btn`}
                 type="button"
@@ -49,7 +53,7 @@ function EditMovieDropdown() {
                 Edit
               </button>
             </li>
-            <li className={`${BASE_CLASS}-item`}>
+            <li className={`${BASE_CLASS}-item`} key={Math.random() + 1}>
               <button
                 className={`${BASE_CLASS}-item-btn`}
                 type="button"

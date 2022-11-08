@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import useOutsideAlerter from "../../utils/useOutsideAlerter";
+
 import "./SortingDropdown.scss";
 import ascSign from "./ascSign.png";
 import descSign from "./descSign.png";
 
-const genreArray = ["Title", "Rating", "Runtime", "Date added"];
+let genreArray = ["Title", "Rating", "Runtime", "Date added"];
+const DEFAULT_VALUE = "Release date";
 
 function SortingDropdown() {
   const [openedDropdown, setDropdownOpen] = useState(false);
   const [isAscendingOrder, setAscendingOrder] = useState(false);
+  const [chosenItem, setChosenItem] = useState(DEFAULT_VALUE);
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setDropdownOpen);
 
   const handleOpenDropdown = () => {
     setDropdownOpen(!openedDropdown);
@@ -17,6 +24,15 @@ function SortingDropdown() {
     setAscendingOrder(!isAscendingOrder);
   };
 
+  const handleItemChoose = (value) => {
+    setDropdownOpen(false);
+    genreArray.push(chosenItem);
+    setChosenItem(value);
+    genreArray = genreArray
+      .filter((item) => item !== value)
+      .sort((a, b) => a.length - b.length);
+  };
+
   // For checking Error boundary
 
   // if (isAscendingOrder) {
@@ -24,14 +40,14 @@ function SortingDropdown() {
   // }
 
   return (
-    <div className="sorting-dropdown">
+    <div className="sorting-dropdown" ref={wrapperRef}>
       <div className="sorting-dropdown-btn-container">
         <button
           type="button"
           className="sorting-dropdown-btn"
           onClick={handleOpenDropdown}
         >
-          Release date
+          {chosenItem}
         </button>
         <button
           type="button"
@@ -45,7 +61,13 @@ function SortingDropdown() {
         <ul className="sorting-dropdown-list">
           {genreArray.map((item) => (
             <li className="sorting-dropdown-item" key={Math.random() + 1}>
-              {item}
+              <button
+                className="sorting-dropdown-item-btn"
+                onClick={() => handleItemChoose(item)}
+                type="button"
+              >
+                {item}
+              </button>
             </li>
           ))}
         </ul>

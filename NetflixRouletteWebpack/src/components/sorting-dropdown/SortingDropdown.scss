@@ -26,6 +26,7 @@
   }
 
   &-list {
+    background-color: #232323;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -34,21 +35,32 @@
   }
 
   &-item {
-    background-color: #323232;
-    opacity: 0.8;
-    color: #ffffff;
-    margin: 1% 0;
-    padding: 1vh;
+    display: flex;
 
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-    /* identical to box height */
+    &-btn {
+      background-color: #232323;
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: left;
+      /* identical to box height */
 
-    letter-spacing: 0.888889px;
-    text-transform: uppercase;
+      letter-spacing: 0.888889px;
+      text-transform: uppercase;
+
+      color: #ffffff;
+      border: none;
+      padding: 5%;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+        background-color: #f65261;
+      }
+    }
   }
 }
 
