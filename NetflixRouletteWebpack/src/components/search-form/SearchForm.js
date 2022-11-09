@@ -7,7 +7,7 @@ function SearchForm() {
   return (
     <div className="search-form">
       <SearchInput />
-      <FilledButton />
+      <FilledButton message="Search" />
     </div>
   );
 }
