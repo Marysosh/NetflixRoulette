@@ -13,7 +13,7 @@ const placeHolders = {
   titlePlaceholder: "Moana",
   movieUrlPlaceholder: "https://",
   releaseDatePlaceholder: "Select Date",
-  ratingPlaceholder: 7.8,
+  ratingPlaceholder: "7.8",
   runtimePlaceholder: "minutes",
   overviewPlaceholder: "Movie description",
 };
@@ -26,12 +26,18 @@ function EditMovieModal({
 }) {
   const onFormSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData(e.target);
+
     handleMovieEdit({
-      title: "AAAAAAAA",
+      title: data.get("title"),
       genre: "Action & Adventure",
-      releaseDate: 2004,
-      id: "m1",
+      releaseDate: data.get("release-date"),
+      rating: data.get("rating"),
+      runtime: data.get("runtime"),
+      image: data.get("movie-url"),
+      overview: data.get("overview"),
     });
+
     if (modalTitle === "Add movie") {
       showCongratsModal(true);
     }
@@ -173,7 +179,7 @@ EditMovieModal.propTypes = {
     titleValue: PropTypes.string,
     movieUrlValue: PropTypes.string,
     releaseDateValue: PropTypes.string,
-    ratingValue: PropTypes.number,
+    ratingValue: PropTypes.string,
     runtimeValue: PropTypes.string,
     overviewValue: PropTypes.string,
   }),

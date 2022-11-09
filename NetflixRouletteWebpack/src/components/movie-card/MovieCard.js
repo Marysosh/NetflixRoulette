@@ -18,7 +18,7 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
   };
 
   return (
-    <div className="movie-card">
+    <div className="movie-card" id={id}>
       <EditMovieDropdown
         handleEditIdChange={handleEditIdChange}
         handleDeleteIdChange={handleDeleteIdChange}
