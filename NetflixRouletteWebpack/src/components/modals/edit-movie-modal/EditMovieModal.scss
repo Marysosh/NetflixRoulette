@@ -89,6 +89,7 @@
             color: #ffffff;
 
             margin-bottom: 3vh;
+            padding-left: 6px;
           }
         }
 
@@ -113,6 +114,13 @@
             color: #ffffff;
 
             margin-bottom: 3vh;
+            padding-left: 6px;
+          }
+          #release-date {
+            background: rgba(50, 50, 50, 0.948044) url(./calendar-icon.png)
+              no-repeat 7px 7px;
+            background-position: center;
+            background-position-x: calc(100% - 12px);
           }
         }
 

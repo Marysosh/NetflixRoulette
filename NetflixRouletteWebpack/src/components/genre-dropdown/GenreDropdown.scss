@@ -1,29 +1,45 @@
 .genre-dropdown {
   display: flex;
   flex-direction: column;
+  width: 96.5%;
+  position: relative;
 
   &-btn {
-    border: none;
-    background-color: #323232;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4.5vh;
+    background: rgba(50, 50, 50, 0.948044);
+    mix-blend-mode: normal;
     opacity: 0.8;
-    color: #ffffff;
-    padding: 18px 18px 18px 15px;
     border-radius: 4px;
-    width: 525px;
+    border: none;
     text-align: left;
+    padding: 0.5vh 1vw;
 
-    font-family: "Montserrat" sans-serif;
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+
+    color: #ffffff;
+
+    mix-blend-mode: normal;
+    opacity: 0.8;
+
+    .triangle-icon {
+    }
   }
 
   &-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 525px;
+    margin-top: 5vh;
+    position: absolute;
+    z-index: 12;
+    width: 100%;
   }
 
   &-item {

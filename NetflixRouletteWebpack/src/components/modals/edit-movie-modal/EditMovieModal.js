@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import "./EditMovieModal.scss";
 import crossIcon from "../close_button.png";
 
+import GenreDropdown from "../../genre-dropdown/GenreDropdown";
+
 const BASE_CLASS = "edit-movie-modal";
 function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
   return (
@@ -50,7 +52,8 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
                 id="movie-url"
               />
               <label className="label">Genre</label>
-              <input className="long-input" type="text" />
+              {/* <input className="long-input" type="text" /> */}
+              <GenreDropdown />
             </div>
             <div className="right-column">
               <label className="label" htmlFor="release-date">
