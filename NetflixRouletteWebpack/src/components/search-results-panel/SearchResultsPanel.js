@@ -92,14 +92,14 @@ function SearchResultsPanel(props) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState("");
 
-  const [placeHolders, setPlaceHolders] = useState("");
+  const [editingValues, setEditingValues] = useState("");
 
   const handleEditModalOpen = (value) => {
     setEditModalOpen(value);
     openModalHandler(value);
   };
 
-  const updatePlaceHolders = (id) => {
+  const updateFormValues = (id) => {
     const {
       title,
       image: movieUrl,
@@ -108,19 +108,19 @@ function SearchResultsPanel(props) {
       runtime,
       overview,
     } = { ...moviesArray.find((item) => item.id === id) };
-    setPlaceHolders({
-      title,
-      movieUrl,
-      releaseDate,
-      rating,
-      runtime,
-      overview,
+    setEditingValues({
+      titleValue: title,
+      movieUrlValue: movieUrl,
+      releaseDateValue: releaseDate,
+      ratingValue: rating,
+      runtimeValue: runtime,
+      overviewValue: overview,
     });
   };
 
   const changeIdToEdit = (idToEdit) => {
     setMovieToEdit(idToEdit);
-    updatePlaceHolders(idToEdit);
+    updateFormValues(idToEdit);
     handleEditModalOpen(true);
   };
 
@@ -162,7 +162,7 @@ function SearchResultsPanel(props) {
           modalTitle="Edit movie"
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
-          placeHolders={placeHolders}
+          editingValues={editingValues}
         />
       )}
       {isDeleteModalOpen && (
