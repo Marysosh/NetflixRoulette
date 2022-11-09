@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import PropTypes from "prop-types";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./EditMovieDropdowm.scss";
@@ -7,7 +8,7 @@ import closeBtn from "./close_btn_small.png";
 
 const BASE_CLASS = "edit-movie-dropdown";
 
-function EditMovieDropdown() {
+function EditMovieDropdown({ handleDeleteIdChange }) {
   const [openedDropdown, setOpenedDropdown] = useState(false);
 
   const wrapperRef = useRef(null);
@@ -23,6 +24,7 @@ function EditMovieDropdown() {
 
   const handleChooseDelete = () => {
     handleOpenDropdown(false);
+    handleDeleteIdChange();
   };
 
   return (
@@ -72,3 +74,7 @@ function EditMovieDropdown() {
 }
 
 export default EditMovieDropdown;
+
+EditMovieDropdown.propTypes = {
+  handleDeleteIdChange: PropTypes.func.isRequired,
+};

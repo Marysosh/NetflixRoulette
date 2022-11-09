@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./AddMovieModal.scss";
-import crossIcon from "./close_button.png";
+import crossIcon from "../close_button.png";
 
 function AddMovieModal({ setIsOpen }) {
   return (

@@ -17,7 +17,7 @@ function App() {
     <ErrorBoundary>
       <div className={isModalOpen ? "app app-opened-modal" : "app"}>
         <SearchPanel openModalHandler={openModalHandler} />
-        <SearchResultsPanel />
+        <SearchResultsPanel openModalHandler={openModalHandler} />
         <Footer />
       </div>
     </ErrorBoundary>

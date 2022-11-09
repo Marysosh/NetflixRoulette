@@ -4,11 +4,15 @@ import "./SearchResults.scss";
 
 import MovieCard from "../movie-card/MovieCard";
 
-function SearchResults({ resultsArray }) {
+function SearchResults({ resultsArray, changeIdToDelete }) {
   return (
     <div className="search-results">
       {resultsArray.map((itemInfo) => (
-        <MovieCard movieInfo={itemInfo} key={itemInfo.id} />
+        <MovieCard
+          movieInfo={itemInfo}
+          key={itemInfo.id}
+          changeIdToDelete={changeIdToDelete}
+        />
       ))}
     </div>
   );
@@ -26,4 +30,5 @@ SearchResults.propTypes = {
       id: PropTypes.string,
     })
   ).isRequired,
+  changeIdToDelete: PropTypes.func.isRequired,
 };

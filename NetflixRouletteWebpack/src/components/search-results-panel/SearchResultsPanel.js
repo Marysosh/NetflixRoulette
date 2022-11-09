@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import "./SearchResultsPanel.scss";
 
 import ResultsHeader from "../results-header/ResultsHeader";
@@ -11,6 +13,7 @@ import BillVol2 from "./BillVol2.png";
 import Avengers from "./Avengers.png";
 import Inception from "./Inception.png";
 import ReservoirDogs from "./ReservoirDogs.png";
+import DeleteMovieModal from "../modals/delete-movie-modal/DeleteMovieModal";
 
 const resultsNumber = 39;
 
@@ -59,14 +62,47 @@ const resultsArray = [
   },
 ];
 
-function SearchResultsPanel() {
+function SearchResultsPanel(props) {
+  const { openModalHandler } = props;
+  const [moviesArray, setMoviesArray] = useState(resultsArray);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [movieToDelete, setMovieToDelete] = useState("");
+
+  const handleDeleteModalOpen = (value) => {
+    setDeleteModalOpen(value);
+    openModalHandler(value);
+  };
+
+  const changeIdToDelete = (idToDelete) => {
+    setMovieToDelete(idToDelete);
+    handleDeleteModalOpen(true);
+  };
+
+  const handleMovieDelete = () => {
+    setMoviesArray(moviesArray.filter((item) => item.id !== movieToDelete));
+    handleDeleteModalOpen(false);
+  };
+
   return (
     <div className="search-results-panel">
       <ResultsHeader />
       <ResultsCount resultsNumber={resultsNumber} />
-      <SearchResults resultsArray={resultsArray} />
+      <SearchResults
+        resultsArray={moviesArray}
+        changeIdToDelete={changeIdToDelete}
+      />
+      {isDeleteModalOpen && (
+        <DeleteMovieModal
+          handleDeleteModalOpen={handleDeleteModalOpen}
+          handleMovieDelete={handleMovieDelete}
+        />
+      )}
     </div>
   );
 }
 
 export default SearchResultsPanel;
+
+SearchResultsPanel.propTypes = {
+  openModalHandler: PropTypes.func.isRequired,
+};
