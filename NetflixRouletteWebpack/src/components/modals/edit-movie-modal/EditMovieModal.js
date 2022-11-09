@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./EditMovieModal.scss";
@@ -24,13 +24,15 @@ function EditMovieModal({
   showCongratsModal,
   editingValues,
 }) {
+  const [selectedGenres, setSelectedGenres] = useState("");
+
   const onFormSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
 
     handleMovieEdit({
       title: data.get("title"),
-      genre: "Action & Adventure",
+      genre: selectedGenres,
       releaseDate: data.get("release-date"),
       rating: data.get("rating"),
       runtime: data.get("runtime"),
@@ -101,7 +103,7 @@ function EditMovieModal({
                 autoComplete="off"
               />
               <label className="label">Genre</label>
-              <GenreDropdown />
+              <GenreDropdown setSelectedGenres={setSelectedGenres} />
             </div>
             <div className="right-column">
               <label className="label" htmlFor="release-date">
