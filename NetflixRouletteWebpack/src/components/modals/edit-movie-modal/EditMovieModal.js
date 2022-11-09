@@ -1,21 +1,107 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from "react";
 import PropTypes from "prop-types";
 
 import "./EditMovieModal.scss";
 import crossIcon from "../close_button.png";
 
+const BASE_CLASS = "edit-movie-modal";
 function EditMovieModal({ handleEditModalOpen, handleMovieEdit }) {
   return (
     <div className="edit-movie-container">
-      <div className="edit-movie-modal">
+      <div className={`${BASE_CLASS}`}>
         <button
-          className="close-btn"
+          className={`${BASE_CLASS}-close-btn`}
           type="button"
           onClick={() => handleEditModalOpen(false)}
         >
           <img src={crossIcon} alt="close button icon" />
         </button>
-        <button
+        <div className={`${BASE_CLASS}-title`}>Edit movie</div>
+        <form
+          className={`${BASE_CLASS}-inputs-container`}
+          onSubmit={() =>
+            handleMovieEdit({
+              title: "AAAAAAAA",
+              genre: "Action & Adventure",
+              releaseDate: 2004,
+              id: "m1",
+            })
+          }
+        >
+          <div className="columns">
+            <div className="left-column">
+              <label className="label" htmlFor="title">
+                Title
+              </label>
+              <input
+                className="long-input"
+                name="title"
+                type="text"
+                id="title"
+              />
+              <label className="label" htmlFor="movie-url">
+                Movie URL
+              </label>
+              <input
+                className="long-input"
+                name="movie-url"
+                type="text"
+                id="movie-url"
+              />
+              <label className="label">Genre</label>
+              <input className="long-input" type="text" />
+            </div>
+            <div className="right-column">
+              <label className="label" htmlFor="release-date">
+                Release date
+              </label>
+              <input
+                className="short-input"
+                name="release-date"
+                type="text"
+                id="release-date"
+              />
+
+              <label className="label" htmlFor="rating">
+                Rating
+              </label>
+              <input
+                className="short-input"
+                name="rating"
+                type="text"
+                id="rating"
+              />
+
+              <label className="label" htmlFor="runtime">
+                Runtime
+              </label>
+              <input
+                className="short-input"
+                name="runtime"
+                type="text"
+                id="runtime"
+              />
+            </div>
+          </div>
+          <div className="overview">
+            <label className="label" htmlFor="overview">
+              Overview
+            </label>
+            <textarea
+              className="textarea-input"
+              name="overview"
+              type="text"
+              id="overview"
+            />
+          </div>
+          <div className="form-buttons">
+            <input className="reset-button" type="reset" value="Reset" />
+            <input className="submit-button" type="submit" value="Submit" />
+          </div>
+        </form>
+
+        {/* <button
           className="close-btn"
           type="button"
           onClick={() =>
@@ -28,7 +114,7 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit }) {
           }
         >
           Edit
-        </button>
+        </button> */}
       </div>
     </div>
   );

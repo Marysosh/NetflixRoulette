@@ -12,21 +12,215 @@
   }
 
   &-modal {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 45vw;
-    height: 75vh;
+    width: 50vw;
+    height: 90vh;
     background: #232323;
     z-index: 10;
 
     transition: all 0.3s linear;
 
-    .close-btn {
+    &-close-btn {
+      align-self: flex-end;
       border: none;
       background-color: #232323;
+      margin: 3%;
+      margin-bottom: 1%;
+    }
+
+    &-title {
+      font-family: "Montserrat";
+      font-style: normal;
+      font-weight: 300;
+      font-size: 40px;
+      line-height: 49px;
+      /* identical to box height */
+
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      color: #ffffff;
+      margin-left: 6%;
+      margin-bottom: 3%;
+    }
+
+    &-inputs-container {
+      display: flex;
+      align-self: center;
+      flex-direction: column;
+      width: 88%;
+      height: 80%;
+
+      .columns {
+        display: flex;
+        width: 100%;
+        height: 50%;
+
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+
+        .left-column {
+          display: flex;
+          flex-direction: column;
+          width: 65%;
+          height: 100%;
+
+          .long-input {
+            width: 95%;
+            height: 13%;
+
+            background: rgba(50, 50, 50, 0.948044);
+            mix-blend-mode: normal;
+            opacity: 0.8;
+            border-radius: 4px;
+            border: 0;
+            padding: 0;
+            margin: 0;
+
+            color: #ffffff;
+
+            margin-bottom: 3vh;
+          }
+        }
+
+        .right-column {
+          display: flex;
+          flex-direction: column;
+          width: 35%;
+          height: 100%;
+
+          .short-input {
+            width: 95%;
+            height: 13%;
+
+            background: rgba(50, 50, 50, 0.948044);
+            mix-blend-mode: normal;
+            opacity: 0.8;
+            border-radius: 4px;
+            border: 0;
+            padding: 0;
+            margin: 0;
+
+            color: #ffffff;
+
+            margin-bottom: 3vh;
+          }
+        }
+
+        .label {
+          width: 95%;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+          /* identical to box height */
+
+          letter-spacing: 0.888889px;
+          text-transform: uppercase;
+
+          color: #f65261;
+
+          mix-blend-mode: normal;
+          opacity: 0.8;
+
+          margin-bottom: 1.5vh;
+        }
+      }
+
+      .overview {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 30%;
+
+        .textarea-input {
+          width: 98%;
+          height: 100%;
+
+          background: rgba(50, 50, 50, 0.948044);
+          mix-blend-mode: normal;
+          opacity: 0.8;
+          border-radius: 4px;
+          border: 0;
+          padding: 0;
+          margin: 0;
+
+          color: #ffffff;
+        }
+
+        .label {
+          width: 95%;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+          /* identical to box height */
+
+          letter-spacing: 0.888889px;
+          text-transform: uppercase;
+
+          color: #f65261;
+
+          mix-blend-mode: normal;
+          opacity: 0.8;
+
+          margin-bottom: 1.5vh;
+        }
+      }
+
+      .form-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        width: 98%;
+        height: 20%;
+
+        .reset-button {
+          border: 1.5px solid #f65261;
+          border-radius: 4px;
+          color: #f65261;
+          background-color: #232323;
+          padding: 1vh 2.5vw;
+
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          text-align: center;
+          text-transform: uppercase;
+
+          cursor: pointer;
+        }
+
+        .submit-button {
+          background: #f65261;
+          border-radius: 4px;
+          border: 0;
+          padding: 1vh 2.5vw;
+          margin-left: 0.75vw;
+
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          text-align: center;
+          text-transform: uppercase;
+
+          color: #ffffff;
+
+          cursor: pointer;
+        }
+      }
     }
   }
 }
