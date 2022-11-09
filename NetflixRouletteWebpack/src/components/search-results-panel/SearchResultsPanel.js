@@ -6,6 +6,8 @@ import "./SearchResultsPanel.scss";
 import ResultsHeader from "../results-header/ResultsHeader";
 import ResultsCount from "../results-count/ResultsCount";
 import SearchResults from "../search-results/SearchResults";
+import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
+import DeleteMovieModal from "../modals/delete-movie-modal/DeleteMovieModal";
 
 import PulpFiction from "./PulpFiction.png";
 import BohemianRapsody from "./BohemianRapsody.png";
@@ -13,7 +15,6 @@ import BillVol2 from "./BillVol2.png";
 import Avengers from "./Avengers.png";
 import Inception from "./Inception.png";
 import ReservoirDogs from "./ReservoirDogs.png";
-import DeleteMovieModal from "../modals/delete-movie-modal/DeleteMovieModal";
 
 const resultsNumber = 39;
 
@@ -65,8 +66,31 @@ const resultsArray = [
 function SearchResultsPanel(props) {
   const { openModalHandler } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
+
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [movieToEdit, setMovieToEdit] = useState("");
+
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState("");
+
+  const handleEditModalOpen = (value) => {
+    setEditModalOpen(value);
+    openModalHandler(value);
+  };
+
+  const changeIdToEdit = (idToEdit) => {
+    setMovieToEdit(idToEdit);
+    handleEditModalOpen(true);
+  };
+
+  const handleMovieEdit = (newMovieData) => {
+    const movieOldData = moviesArray.find((item) => item.id === movieToEdit);
+    setMoviesArray([
+      ...moviesArray.filter((item) => item.id !== movieToEdit),
+      { ...movieOldData, ...newMovieData },
+    ]);
+    handleEditModalOpen(false);
+  };
 
   const handleDeleteModalOpen = (value) => {
     setDeleteModalOpen(value);
@@ -89,8 +113,15 @@ function SearchResultsPanel(props) {
       <ResultsCount resultsNumber={resultsNumber} />
       <SearchResults
         resultsArray={moviesArray}
+        changeIdToEdit={changeIdToEdit}
         changeIdToDelete={changeIdToDelete}
       />
+      {isEditModalOpen && (
+        <EditMovieModal
+          handleEditModalOpen={handleEditModalOpen}
+          handleMovieEdit={handleMovieEdit}
+        />
+      )}
       {isDeleteModalOpen && (
         <DeleteMovieModal
           handleDeleteModalOpen={handleDeleteModalOpen}

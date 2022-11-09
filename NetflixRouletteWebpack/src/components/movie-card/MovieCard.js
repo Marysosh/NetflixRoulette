@@ -6,8 +6,12 @@ import "./MovieCard.scss";
 import MovieInfo from "../movie-info/MovieInfo";
 import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 
-function MovieCard({ movieInfo, changeIdToDelete }) {
+function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
+
+  const handleEditIdChange = () => {
+    changeIdToEdit(id);
+  };
 
   const handleDeleteIdChange = () => {
     changeIdToDelete(id);
@@ -15,7 +19,10 @@ function MovieCard({ movieInfo, changeIdToDelete }) {
 
   return (
     <div className="movie-card">
-      <EditMovieDropdown handleDeleteIdChange={handleDeleteIdChange} />
+      <EditMovieDropdown
+        handleEditIdChange={handleEditIdChange}
+        handleDeleteIdChange={handleDeleteIdChange}
+      />
       <img src={image} alt={`${title} img`} />
       <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
     </div>
@@ -32,5 +39,6 @@ MovieCard.propTypes = {
     image: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  changeIdToEdit: PropTypes.func.isRequired,
   changeIdToDelete: PropTypes.func.isRequired,
 };

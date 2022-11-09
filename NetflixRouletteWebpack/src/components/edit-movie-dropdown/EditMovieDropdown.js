@@ -8,7 +8,7 @@ import closeBtn from "./close_btn_small.png";
 
 const BASE_CLASS = "edit-movie-dropdown";
 
-function EditMovieDropdown({ handleDeleteIdChange }) {
+function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
   const [openedDropdown, setOpenedDropdown] = useState(false);
 
   const wrapperRef = useRef(null);
@@ -20,6 +20,7 @@ function EditMovieDropdown({ handleDeleteIdChange }) {
 
   const handleChooseEdit = () => {
     handleOpenDropdown(false);
+    handleEditIdChange();
   };
 
   const handleChooseDelete = () => {
@@ -76,5 +77,6 @@ function EditMovieDropdown({ handleDeleteIdChange }) {
 export default EditMovieDropdown;
 
 EditMovieDropdown.propTypes = {
+  handleEditIdChange: PropTypes.func.isRequired,
   handleDeleteIdChange: PropTypes.func.isRequired,
 };
