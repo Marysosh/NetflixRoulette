@@ -118,6 +118,7 @@ function SearchResultsPanel(props) {
       />
       {isEditModalOpen && (
         <EditMovieModal
+          modalTitle="Edit movie"
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
         />

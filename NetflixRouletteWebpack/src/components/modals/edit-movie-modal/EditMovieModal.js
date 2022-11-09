@@ -6,7 +6,7 @@ import "./EditMovieModal.scss";
 import crossIcon from "../close_button.png";
 
 const BASE_CLASS = "edit-movie-modal";
-function EditMovieModal({ handleEditModalOpen, handleMovieEdit }) {
+function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -17,7 +17,7 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit }) {
         >
           <img src={crossIcon} alt="close button icon" />
         </button>
-        <div className={`${BASE_CLASS}-title`}>Edit movie</div>
+        <div className={`${BASE_CLASS}-title`}>{modalTitle}</div>
         <form
           className={`${BASE_CLASS}-inputs-container`}
           onSubmit={() =>
@@ -100,21 +100,6 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit }) {
             <input className="submit-button" type="submit" value="Submit" />
           </div>
         </form>
-
-        {/* <button
-          className="close-btn"
-          type="button"
-          onClick={() =>
-            handleMovieEdit({
-              title: "AAAAAAAA",
-              genre: "Action & Adventure",
-              releaseDate: 2004,
-              id: "m1",
-            })
-          }
-        >
-          Edit
-        </button> */}
       </div>
     </div>
   );
@@ -125,4 +110,9 @@ export default EditMovieModal;
 EditMovieModal.propTypes = {
   handleEditModalOpen: PropTypes.func.isRequired,
   handleMovieEdit: PropTypes.func.isRequired,
+  modalTitle: PropTypes.string,
+};
+
+EditMovieModal.defaultProps = {
+  modalTitle: "Modal title",
 };

@@ -5,30 +5,48 @@ import "./Header.scss";
 
 import Logo from "../logo/Logo";
 import AddMovieButton from "../add-movie-button/AddMovieButton";
-import AddMovieModal from "../modals/add-movie-modal/AddMovieModal";
+import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
+      isAddMovieModalOpen: false,
     };
   }
 
-  setIsOpen = (value) => {
+  setIsModalOpen = (value) => {
     const { openModalHandler } = this.props;
 
-    this.setState({ isOpen: value });
+    this.setState({ isAddMovieModalOpen: value });
     openModalHandler(value);
   };
 
+  handleMovieEdit = (newMovieData) => {
+    // const movieOldData = moviesArray.find((item) => item.id === movieToEdit);
+    // setMoviesArray([
+    //   ...moviesArray.filter((item) => item.id !== movieToEdit),
+    //   { ...movieOldData, ...newMovieData },
+    // ]);
+    // handleEditModalOpen(false);
+    console.log(newMovieData);
+    this.setIsModalOpen(false);
+  };
+
   render() {
-    const { isOpen } = this.state;
+    const { isAddMovieModalOpen } = this.state;
+
     return (
       <div className="header">
         <Logo />
-        <AddMovieButton onClick={() => this.setIsOpen(true)} />
-        {isOpen && <AddMovieModal setIsOpen={this.setIsOpen} />}
+        <AddMovieButton onClick={() => this.setIsModalOpen(true)} />
+        {isAddMovieModalOpen && (
+          <EditMovieModal
+            modalTitle="Add movie"
+            handleEditModalOpen={this.setIsModalOpen}
+            handleMovieEdit={this.handleMovieEdit}
+          />
+        )}
       </div>
     );
   }
