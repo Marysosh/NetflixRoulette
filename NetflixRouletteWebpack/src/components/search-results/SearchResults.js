@@ -26,7 +26,7 @@ SearchResults.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       genre: PropTypes.string,
-      releaseDate: PropTypes.number,
+      releaseDate: PropTypes.string,
       image: PropTypes.string,
       id: PropTypes.string,
     })

@@ -8,6 +8,15 @@ import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
 
+const placeHolders = {
+  title: "Moana",
+  movieUrl: "https://",
+  releaseDate: "Select Date",
+  rating: 7.8,
+  runtime: "minutes",
+  overview: "Movie description",
+};
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +64,7 @@ class Header extends Component {
             handleEditModalOpen={this.setIsModalOpen}
             handleMovieEdit={this.handleMovieEdit}
             showCongratsModal={this.setCongratsModalOpen}
+            placeHolders={placeHolders}
           />
         )}
         {isCongratsModalOpen && (

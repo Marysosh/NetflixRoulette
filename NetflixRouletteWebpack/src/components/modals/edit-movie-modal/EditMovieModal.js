@@ -13,6 +13,7 @@ function EditMovieModal({
   handleMovieEdit,
   modalTitle,
   showCongratsModal,
+  placeHolders,
 }) {
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +27,9 @@ function EditMovieModal({
       showCongratsModal(true);
     }
   };
+
+  const { title, movieUrl, releaseDate, rating, runtime, overview } =
+    placeHolders;
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -51,6 +55,7 @@ function EditMovieModal({
                 name="title"
                 type="text"
                 id="title"
+                placeholder={title}
               />
               <label className="label" htmlFor="movie-url">
                 Movie URL
@@ -60,6 +65,7 @@ function EditMovieModal({
                 name="movie-url"
                 type="text"
                 id="movie-url"
+                placeholder={movieUrl}
               />
               <label className="label">Genre</label>
               <GenreDropdown />
@@ -73,6 +79,7 @@ function EditMovieModal({
                 name="release-date"
                 type="text"
                 id="release-date"
+                placeholder={releaseDate}
               />
 
               <label className="label" htmlFor="rating">
@@ -83,6 +90,7 @@ function EditMovieModal({
                 name="rating"
                 type="text"
                 id="rating"
+                placeholder={rating}
               />
 
               <label className="label" htmlFor="runtime">
@@ -93,6 +101,7 @@ function EditMovieModal({
                 name="runtime"
                 type="text"
                 id="runtime"
+                placeholder={runtime}
               />
             </div>
           </div>
@@ -105,6 +114,7 @@ function EditMovieModal({
               name="overview"
               type="text"
               id="overview"
+              placeholder={overview}
             />
           </div>
           <div className="form-buttons">
@@ -124,9 +134,18 @@ EditMovieModal.propTypes = {
   handleMovieEdit: PropTypes.func.isRequired,
   modalTitle: PropTypes.string,
   showCongratsModal: PropTypes.func,
+  placeHolders: PropTypes.shape({
+    title: PropTypes.string,
+    movieUrl: PropTypes.string,
+    releaseDate: PropTypes.string,
+    rating: PropTypes.number,
+    runtime: PropTypes.string,
+    overview: PropTypes.string,
+  }),
 };
 
 EditMovieModal.defaultProps = {
   modalTitle: "Modal title",
   showCongratsModal: () => {},
+  placeHolders: {},
 };

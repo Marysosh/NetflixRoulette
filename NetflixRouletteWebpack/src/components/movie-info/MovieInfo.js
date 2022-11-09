@@ -19,5 +19,5 @@ export default MovieInfo;
 MovieInfo.propTypes = {
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
+  releaseDate: PropTypes.string.isRequired,
 };
