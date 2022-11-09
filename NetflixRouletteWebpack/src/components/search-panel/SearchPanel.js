@@ -8,11 +8,14 @@ import SearchTitle from "../search-title/SearchTitle";
 import SearchForm from "../search-form/SearchForm";
 
 function SearchPanel(props) {
-  const { openModalHandler } = props;
+  const { openModalHandler, addNewMovieHandler } = props;
 
   return (
     <div className="search-panel">
-      <Header openModalHandler={openModalHandler} />
+      <Header
+        openModalHandler={openModalHandler}
+        addNewMovieHandler={addNewMovieHandler}
+      />
       <div className="search-panel__title">
         <SearchTitle />
       </div>
@@ -27,4 +30,5 @@ export default SearchPanel;
 
 SearchPanel.propTypes = {
   openModalHandler: PropTypes.func.isRequired,
+  addNewMovieHandler: PropTypes.func.isRequired,
 };

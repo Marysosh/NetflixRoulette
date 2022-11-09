@@ -8,16 +8,28 @@ import Footer from "./components/footer/Footer";
 
 function App() {
   const [isModalOpen, setIsOpen] = useState(false);
+  const [newMovieData, setNewMovieData] = useState("");
 
   const openModalHandler = (value) => {
     setIsOpen(value);
   };
 
+  const addNewMovieHandler = (addedMovieData) => {
+    setNewMovieData(addedMovieData);
+  };
+
   return (
     <ErrorBoundary>
       <div className={isModalOpen ? "app app-opened-modal" : "app"}>
-        <SearchPanel openModalHandler={openModalHandler} />
-        <SearchResultsPanel openModalHandler={openModalHandler} />
+        <SearchPanel
+          openModalHandler={openModalHandler}
+          addNewMovieHandler={addNewMovieHandler}
+        />
+        <SearchResultsPanel
+          openModalHandler={openModalHandler}
+          addNewMovieHandler={addNewMovieHandler}
+          newMovieData={newMovieData}
+        />
         <Footer />
       </div>
     </ErrorBoundary>

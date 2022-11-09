@@ -33,12 +33,16 @@ export default MovieCard;
 
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-  }).isRequired,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    releaseDate: PropTypes.string,
+    image: PropTypes.string,
+    id: PropTypes.string,
+  }),
   changeIdToEdit: PropTypes.func.isRequired,
   changeIdToDelete: PropTypes.func.isRequired,
+};
+
+MovieCard.defaultProps = {
+  movieInfo: {},
 };

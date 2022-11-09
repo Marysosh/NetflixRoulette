@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-expressions */
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import "./SearchResultsPanel.scss";
@@ -83,7 +84,7 @@ const resultsArray = [
 ];
 
 function SearchResultsPanel(props) {
-  const { openModalHandler } = props;
+  const { openModalHandler, newMovieData } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -93,6 +94,14 @@ function SearchResultsPanel(props) {
   const [movieToDelete, setMovieToDelete] = useState("");
 
   const [editingValues, setEditingValues] = useState("");
+
+  useEffect(() => {
+    newMovieData.genre &&
+      setMoviesArray([
+        ...moviesArray,
+        { ...newMovieData, id: (Math.random() + 1).toString() },
+      ]);
+  }, [newMovieData]);
 
   const handleEditModalOpen = (value) => {
     setEditModalOpen(value);
@@ -179,4 +188,16 @@ export default SearchResultsPanel;
 
 SearchResultsPanel.propTypes = {
   openModalHandler: PropTypes.func.isRequired,
+  newMovieData: PropTypes.oneOfType([
+    PropTypes.shape({
+      title: PropTypes.string,
+      movieUrlValue: PropTypes.string,
+      releaseDate: PropTypes.string,
+      genre: PropTypes.string,
+      rating: PropTypes.string,
+      runtime: PropTypes.string,
+      overview: PropTypes.string,
+    }),
+    PropTypes.string,
+  ]).isRequired,
 };

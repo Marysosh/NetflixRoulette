@@ -25,13 +25,8 @@ class Header extends Component {
   };
 
   handleMovieEdit = (newMovieData) => {
-    // const movieOldData = moviesArray.find((item) => item.id === movieToEdit);
-    // setMoviesArray([
-    //   ...moviesArray.filter((item) => item.id !== movieToEdit),
-    //   { ...movieOldData, ...newMovieData },
-    // ]);
-    // handleEditModalOpen(false);
-    console.log(newMovieData);
+    const { addNewMovieHandler } = this.props;
+    addNewMovieHandler(newMovieData);
     this.setIsModalOpen(false);
   };
 
@@ -69,4 +64,5 @@ export default Header;
 
 Header.propTypes = {
   openModalHandler: PropTypes.func.isRequired,
+  addNewMovieHandler: PropTypes.func.isRequired,
 };
