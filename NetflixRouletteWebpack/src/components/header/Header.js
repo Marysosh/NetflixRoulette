@@ -6,12 +6,14 @@ import "./Header.scss";
 import Logo from "../logo/Logo";
 import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
+import CongratsModal from "../modals/congrats-modal/CongratsModal";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isAddMovieModalOpen: false,
+      isCongratsModalOpen: false,
     };
   }
 
@@ -33,8 +35,15 @@ class Header extends Component {
     this.setIsModalOpen(false);
   };
 
+  setCongratsModalOpen = (value) => {
+    const { openModalHandler } = this.props;
+
+    this.setState({ isCongratsModalOpen: value });
+    openModalHandler(value);
+  };
+
   render() {
-    const { isAddMovieModalOpen } = this.state;
+    const { isAddMovieModalOpen, isCongratsModalOpen } = this.state;
 
     return (
       <div className="header">
@@ -45,7 +54,11 @@ class Header extends Component {
             modalTitle="Add movie"
             handleEditModalOpen={this.setIsModalOpen}
             handleMovieEdit={this.handleMovieEdit}
+            showCongratsModal={this.setCongratsModalOpen}
           />
+        )}
+        {isCongratsModalOpen && (
+          <CongratsModal handleCongratsModalOpen={this.setCongratsModalOpen} />
         )}
       </div>
     );

@@ -8,7 +8,24 @@ import crossIcon from "../close_button.png";
 import GenreDropdown from "../../genre-dropdown/GenreDropdown";
 
 const BASE_CLASS = "edit-movie-modal";
-function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
+function EditMovieModal({
+  handleEditModalOpen,
+  handleMovieEdit,
+  modalTitle,
+  showCongratsModal,
+}) {
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    handleMovieEdit({
+      title: "AAAAAAAA",
+      genre: "Action & Adventure",
+      releaseDate: 2004,
+      id: "m1",
+    });
+    if (modalTitle === "Add movie") {
+      showCongratsModal(true);
+    }
+  };
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -22,14 +39,7 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
         <div className={`${BASE_CLASS}-title`}>{modalTitle}</div>
         <form
           className={`${BASE_CLASS}-inputs-container`}
-          onSubmit={() =>
-            handleMovieEdit({
-              title: "AAAAAAAA",
-              genre: "Action & Adventure",
-              releaseDate: 2004,
-              id: "m1",
-            })
-          }
+          onSubmit={onFormSubmit}
         >
           <div className="columns">
             <div className="left-column">
@@ -52,7 +62,6 @@ function EditMovieModal({ handleEditModalOpen, handleMovieEdit, modalTitle }) {
                 id="movie-url"
               />
               <label className="label">Genre</label>
-              {/* <input className="long-input" type="text" /> */}
               <GenreDropdown />
             </div>
             <div className="right-column">
@@ -114,8 +123,10 @@ EditMovieModal.propTypes = {
   handleEditModalOpen: PropTypes.func.isRequired,
   handleMovieEdit: PropTypes.func.isRequired,
   modalTitle: PropTypes.string,
+  showCongratsModal: PropTypes.func,
 };
 
 EditMovieModal.defaultProps = {
   modalTitle: "Modal title",
+  showCongratsModal: () => {},
 };
