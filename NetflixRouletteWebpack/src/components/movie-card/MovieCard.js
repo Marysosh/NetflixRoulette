@@ -5,6 +5,7 @@ import "./MovieCard.scss";
 
 import MovieInfo from "../movie-info/MovieInfo";
 import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
+import scrollTop from "../../utils/scrollTop";
 
 function MovieCard({
   movieInfo,
@@ -26,7 +27,10 @@ function MovieCard({
     <div
       className="movie-card"
       id={id}
-      onClick={() => showMovieDetailsHandler(movieInfo)}
+      onClick={() => {
+        showMovieDetailsHandler(movieInfo);
+        scrollTop();
+      }}
     >
       <EditMovieDropdown
         handleEditIdChange={handleEditIdChange}

@@ -31,14 +31,14 @@ class ErrorBoundary extends React.Component {
     if (errorInfo) {
       // Error path
       return (
-        <div>
+        <>
           <h2>Oops something wrong happened...</h2>
           <details>
             {error && error.toString()}
             <br />
             {errorInfo.componentStack}
           </details>
-        </div>
+        </>
       );
     }
     // Normally, just render children, i.e. in
