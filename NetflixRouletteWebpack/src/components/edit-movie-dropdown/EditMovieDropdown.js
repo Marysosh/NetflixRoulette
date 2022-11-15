@@ -24,7 +24,8 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
     handleEditIdChange();
   };
 
-  const handleChooseDelete = () => {
+  const handleChooseDelete = (event) => {
+    event.stopPropagation();
     handleOpenDropdown(false);
     handleDeleteIdChange();
   };

@@ -101,7 +101,7 @@ function SearchResultsPanel(props) {
         ...moviesArray,
         { ...newMovieData, id: (Math.random() + 1).toString() },
       ]);
-  }, [newMovieData, moviesArray]);
+  }, [newMovieData]);
 
   const handleEditModalOpen = (value) => {
     setEditModalOpen(value);
