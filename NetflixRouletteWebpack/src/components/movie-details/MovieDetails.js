@@ -1,33 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./MovieDetails.scss";
 import thinLogo from "./logo_thin.png";
 import searchIcon from "./search_icon.png";
-import PulpFiction from "./PulpFiction.png";
 import ratingBorder from "./rating-frame.png";
 
-const movieInfo = {
-  title: "Pulp Fiction",
-  genre: "Action & Adventure",
-  releaseDate: "2004",
-  rating: "8.9",
-  runtime: "2h 34min",
-  image: PulpFiction,
-  overview:
-    "Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hit men who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is paid by Wallace to lose his fight. The lives of these seemingly unrelated people are woven together comprising of a series of funny, bizarre and uncalled-for incidents.—Soumitra",
-  id: "m1",
-};
-
-function MovieDetails() {
+function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
   const { title, genre, releaseDate, rating, runtime, image, overview } =
     movieInfo;
   return (
     <div className="movie-details-container">
       <div className="movie-details-header">
-        <div className="logo">
+        <div className="logo" onClick={() => showMovieDetailsHandler()}>
           <img src={thinLogo} alt="thin logo" />
         </div>
-        <div className="search-icon">
+        <div className="search-icon" onClick={() => showMovieDetailsHandler()}>
           <img src={searchIcon} alt="search icon" />
         </div>
       </div>
@@ -60,3 +48,16 @@ function MovieDetails() {
 }
 
 export default MovieDetails;
+
+MovieDetails.propTypes = {
+  movieInfo: PropTypes.shape({
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    releaseDate: PropTypes.string,
+    image: PropTypes.string,
+    rating: PropTypes.string,
+    runtime: PropTypes.string,
+    overview: PropTypes.string,
+  }).isRequired,
+  showMovieDetailsHandler: PropTypes.func.isRequired,
+};

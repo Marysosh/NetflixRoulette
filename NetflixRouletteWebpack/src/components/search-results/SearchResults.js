@@ -4,7 +4,12 @@ import "./SearchResults.scss";
 
 import MovieCard from "../movie-card/MovieCard";
 
-function SearchResults({ resultsArray, changeIdToEdit, changeIdToDelete }) {
+function SearchResults({
+  resultsArray,
+  changeIdToEdit,
+  changeIdToDelete,
+  showMovieDetailsHandler,
+}) {
   return (
     <div className="search-results">
       {resultsArray.map((itemInfo) => (
@@ -13,6 +18,7 @@ function SearchResults({ resultsArray, changeIdToEdit, changeIdToDelete }) {
           key={itemInfo.id}
           changeIdToEdit={changeIdToEdit}
           changeIdToDelete={changeIdToDelete}
+          showMovieDetailsHandler={showMovieDetailsHandler}
         />
       ))}
     </div>
@@ -33,4 +39,5 @@ SearchResults.propTypes = {
   ).isRequired,
   changeIdToEdit: PropTypes.func.isRequired,
   changeIdToDelete: PropTypes.func.isRequired,
+  showMovieDetailsHandler: PropTypes.func.isRequired,
 };

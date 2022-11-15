@@ -15,6 +15,14 @@
     flex-direction: row;
     justify-content: space-between;
     padding-bottom: 3vh;
+
+    .logo:hover {
+      cursor: pointer;
+    }
+
+    .search-icon:hover {
+      cursor: pointer;
+    }
   }
 
   &-body {
