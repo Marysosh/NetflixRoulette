@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext } from "react";
+import UserContext from "../../utils/contexts";
 
 import "./Header.scss";
 
@@ -8,9 +8,12 @@ import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
 
-function Header({ openModalHandler, addNewMovieHandler }) {
+function Header() {
   const [isAddMovieModalOpen, setAddMovieModalOpen] = useState(false);
   const [isCongratsModalOpen, setIsCongratsModalOpen] = useState(false);
+
+  const { openModalHandler } = useContext(UserContext);
+  const { addNewMovieHandler } = useContext(UserContext);
 
   const setIsModalOpen = (value) => {
     setAddMovieModalOpen(value);
@@ -47,8 +50,3 @@ function Header({ openModalHandler, addNewMovieHandler }) {
 }
 
 export default Header;
-
-Header.propTypes = {
-  openModalHandler: PropTypes.func.isRequired,
-  addNewMovieHandler: PropTypes.func.isRequired,
-};

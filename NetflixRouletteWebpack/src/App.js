@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import UserContext from "./utils/contexts";
+
 import "./App.scss";
 
 import ErrorBoundary from "./components/error-boundary/ErrorBoundary";
@@ -28,26 +30,33 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className={isModalOpen ? "app app-opened-modal" : "app"}>
-        {isMovieDetailsOpen ? (
-          <MovieDetails
-            movieInfo={movieDetails}
-            showMovieDetailsHandler={showMovieDetailsHandler}
-          />
-        ) : (
-          <SearchPanel
+      <UserContext.Provider
+        value={useMemo(
+          () => ({
+            showMovieDetailsHandler,
+            addNewMovieHandler,
+            openModalHandler,
+          }),
+          []
+        )}
+      >
+        <div className={isModalOpen ? "app app-opened-modal" : "app"}>
+          {isMovieDetailsOpen ? (
+            <MovieDetails
+              movieInfo={movieDetails}
+              showMovieDetailsHandler={showMovieDetailsHandler}
+            />
+          ) : (
+            <SearchPanel />
+          )}
+          <SearchResultsPanel
             openModalHandler={openModalHandler}
             addNewMovieHandler={addNewMovieHandler}
+            newMovieData={newMovieData}
           />
-        )}
-        <SearchResultsPanel
-          openModalHandler={openModalHandler}
-          addNewMovieHandler={addNewMovieHandler}
-          newMovieData={newMovieData}
-          showMovieDetailsHandler={showMovieDetailsHandler}
-        />
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </UserContext.Provider>
     </ErrorBoundary>
   );
 }

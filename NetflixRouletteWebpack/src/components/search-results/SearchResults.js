@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import "./SearchResults.scss";
 
 import MovieCard from "../movie-card/MovieCard";
 
-function SearchResults({
-  resultsArray,
-  changeIdToEdit,
-  changeIdToDelete,
-  showMovieDetailsHandler,
-}) {
+function SearchResults({ resultsArray, changeIdToEdit, changeIdToDelete }) {
   return (
     <div className="search-results">
       {resultsArray.map((itemInfo) => (
@@ -18,7 +14,6 @@ function SearchResults({
           key={itemInfo.id}
           changeIdToEdit={changeIdToEdit}
           changeIdToDelete={changeIdToDelete}
-          showMovieDetailsHandler={showMovieDetailsHandler}
         />
       ))}
     </div>
@@ -39,5 +34,4 @@ SearchResults.propTypes = {
   ).isRequired,
   changeIdToEdit: PropTypes.func.isRequired,
   changeIdToDelete: PropTypes.func.isRequired,
-  showMovieDetailsHandler: PropTypes.func.isRequired,
 };

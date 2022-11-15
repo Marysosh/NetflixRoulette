@@ -84,7 +84,7 @@ const resultsArray = [
 ];
 
 function SearchResultsPanel(props) {
-  const { openModalHandler, newMovieData, showMovieDetailsHandler } = props;
+  const { openModalHandler, newMovieData } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
 
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -165,7 +165,6 @@ function SearchResultsPanel(props) {
         resultsArray={moviesArray}
         changeIdToEdit={changeIdToEdit}
         changeIdToDelete={changeIdToDelete}
-        showMovieDetailsHandler={showMovieDetailsHandler}
       />
       {isEditModalOpen && (
         <EditMovieModal
@@ -201,5 +200,4 @@ SearchResultsPanel.propTypes = {
     }),
     PropTypes.string,
   ]).isRequired,
-  showMovieDetailsHandler: PropTypes.func.isRequired,
 };
