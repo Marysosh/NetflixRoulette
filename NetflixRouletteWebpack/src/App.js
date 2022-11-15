@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./App.scss";
 
 import ErrorBoundary from "./components/error-boundary/ErrorBoundary";
-import SearchPanel from "./components/search-panel/SearchPanel";
+// import SearchPanel from "./components/search-panel/SearchPanel";
+import MovieDetails from "./components/movie-details/MovieDetails";
 import SearchResultsPanel from "./components/search-results-panel/SearchResultsPanel";
 import Footer from "./components/footer/Footer";
 
@@ -21,10 +22,11 @@ function App() {
   return (
     <ErrorBoundary>
       <div className={isModalOpen ? "app app-opened-modal" : "app"}>
-        <SearchPanel
+        {/* <SearchPanel
           openModalHandler={openModalHandler}
           addNewMovieHandler={addNewMovieHandler}
-        />
+        /> */}
+        <MovieDetails />
         <SearchResultsPanel
           openModalHandler={openModalHandler}
           addNewMovieHandler={addNewMovieHandler}

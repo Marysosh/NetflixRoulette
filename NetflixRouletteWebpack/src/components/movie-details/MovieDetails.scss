@@ -1,0 +1,135 @@
+.movie-details {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    background-color: #232323;
+    padding-top: 6vh;
+    padding-left: 7vw;
+    padding-right: 8vw;
+    padding-bottom: 4vh;
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 3vh;
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &-image {
+    height: 100%;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    margin-left: 3vw;
+
+    .movie {
+      &-header {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .movie-title {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 40px;
+          line-height: 49px;
+          /* identical to box height */
+
+          text-align: center;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+
+          color: #ffffff;
+        }
+
+        .movie-rating {
+          display: flex;
+          padding-left: 2.5vw;
+          align-items: center;
+          justify-content: center;
+
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 20px;
+          line-height: 24px;
+          text-align: center;
+          text-transform: uppercase;
+
+          color: #ffffff;
+          .rating-border {
+            position: absolute;
+            height: 47px;
+          }
+        }
+      }
+
+      &-genre {
+        padding-top: 1.5vh;
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        /* identical to box height */
+
+        color: #ffffff;
+
+        mix-blend-mode: normal;
+        opacity: 0.5;
+      }
+
+      &-release-runtime-container {
+        display: flex;
+        flex-direction: row;
+        margin: 3vh 0;
+
+        .release-date {
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 24px;
+          line-height: 29px;
+
+          color: #f65261;
+        }
+
+        .runtime {
+          margin-left: 4vw;
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 24px;
+          line-height: 29px;
+
+          color: #f65261;
+        }
+      }
+
+      &-overview {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #ffffff;
+
+        mix-blend-mode: normal;
+        opacity: 0.5;
+      }
+    }
+  }
+}
