@@ -1,7 +1,18 @@
-.search-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
-  margin: auto;
+body {
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  overflow: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+  background-color: #555555;
+}
+
+.search-results-panel {
+  margin-top: 2vh;
 }

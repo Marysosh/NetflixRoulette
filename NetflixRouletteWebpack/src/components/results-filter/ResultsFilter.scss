@@ -1,0 +1,45 @@
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.results-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 35vw;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    color: #ffffff;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+
+    text-transform: uppercase;
+    list-style-type: none;
+  }
+}
+
+.results-filter-item__selected {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  color: #ffffff;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  text-transform: uppercase;
+  list-style-type: none;
+
+  border-bottom: 3px solid #f65261;
+}
