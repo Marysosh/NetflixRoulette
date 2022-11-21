@@ -18,22 +18,27 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
     setOpenedDropdown(value);
   };
 
-  const handleChooseEdit = () => {
+  const handleChooseEdit = (event) => {
+    event.stopPropagation();
     handleOpenDropdown(false);
     handleEditIdChange();
   };
 
-  const handleChooseDelete = () => {
+  const handleChooseDelete = (event) => {
+    event.stopPropagation();
     handleOpenDropdown(false);
     handleDeleteIdChange();
   };
 
   return (
-    <div>
+    <>
       <button
         className="movie-card-options"
         type="button"
-        onClick={() => handleOpenDropdown(true)}
+        onClick={(event) => {
+          event.stopPropagation();
+          handleOpenDropdown(true);
+        }}
       >
         <img src={optionsIcon} alt="options icon" />
       </button>
@@ -42,7 +47,10 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
           <button
             className={`${BASE_CLASS}-btn`}
             type="button"
-            onClick={() => handleOpenDropdown(false)}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleOpenDropdown(false);
+            }}
           >
             <img src={closeBtn} alt="close icon" />
           </button>
@@ -70,7 +78,7 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
       ) : (
         ""
       )}
-    </div>
+    </>
   );
 }
 

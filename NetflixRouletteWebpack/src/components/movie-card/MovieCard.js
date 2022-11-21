@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import UserContext from "../../utils/contexts";
 
 import "./MovieCard.scss";
 
 import MovieInfo from "../movie-info/MovieInfo";
 import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
+import scrollTop from "../../utils/scrollTop";
 
 function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
+  const { showMovieDetailsHandler } = useContext(UserContext);
 
   const handleEditIdChange = () => {
     changeIdToEdit(id);
@@ -18,7 +21,14 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
   };
 
   return (
-    <div className="movie-card" id={id}>
+    <div
+      className="movie-card"
+      id={id}
+      onClick={() => {
+        showMovieDetailsHandler(movieInfo);
+        scrollTop();
+      }}
+    >
       <EditMovieDropdown
         handleEditIdChange={handleEditIdChange}
         handleDeleteIdChange={handleDeleteIdChange}

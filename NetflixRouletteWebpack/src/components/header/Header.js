@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext } from "react";
+import UserContext from "../../utils/contexts";
 
 import "./Header.scss";
 
@@ -8,61 +8,45 @@ import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAddMovieModalOpen: false,
-      isCongratsModalOpen: false,
-    };
-  }
+function Header() {
+  const [isAddMovieModalOpen, setAddMovieModalOpen] = useState(false);
+  const [isCongratsModalOpen, setIsCongratsModalOpen] = useState(false);
 
-  setIsModalOpen = (value) => {
-    const { openModalHandler } = this.props;
+  const { openModalHandler } = useContext(UserContext);
+  const { addNewMovieHandler } = useContext(UserContext);
 
-    this.setState({ isAddMovieModalOpen: value });
+  const setIsModalOpen = (value) => {
+    setAddMovieModalOpen(value);
     openModalHandler(value);
   };
 
-  handleMovieEdit = (newMovieData) => {
-    const { addNewMovieHandler } = this.props;
+  const handleMovieEdit = (newMovieData) => {
     addNewMovieHandler(newMovieData);
-    this.setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
-  setCongratsModalOpen = (value) => {
-    const { openModalHandler } = this.props;
-
-    this.setState({ isCongratsModalOpen: value });
+  const setCongratsModalOpen = (value) => {
+    setIsCongratsModalOpen(value);
     openModalHandler(value);
   };
 
-  render() {
-    const { isAddMovieModalOpen, isCongratsModalOpen } = this.state;
-
-    return (
-      <div className="header">
-        <Logo />
-        <AddMovieButton onClick={() => this.setIsModalOpen(true)} />
-        {isAddMovieModalOpen && (
-          <EditMovieModal
-            modalTitle="Add movie"
-            handleEditModalOpen={this.setIsModalOpen}
-            handleMovieEdit={this.handleMovieEdit}
-            showCongratsModal={this.setCongratsModalOpen}
-          />
-        )}
-        {isCongratsModalOpen && (
-          <CongratsModal handleCongratsModalOpen={this.setCongratsModalOpen} />
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className="header">
+      <Logo />
+      <AddMovieButton onClick={() => setIsModalOpen(true)} />
+      {isAddMovieModalOpen && (
+        <EditMovieModal
+          modalTitle="Add movie"
+          handleEditModalOpen={setIsModalOpen}
+          handleMovieEdit={handleMovieEdit}
+          showCongratsModal={setCongratsModalOpen}
+        />
+      )}
+      {isCongratsModalOpen && (
+        <CongratsModal handleCongratsModalOpen={setCongratsModalOpen} />
+      )}
+    </div>
+  );
 }
 
 export default Header;
-
-Header.propTypes = {
-  openModalHandler: PropTypes.func.isRequired,
-  addNewMovieHandler: PropTypes.func.isRequired,
-};

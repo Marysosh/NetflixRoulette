@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import "./SearchResults.scss";
 
 import MovieCard from "../movie-card/MovieCard";
