@@ -17,7 +17,13 @@ function MovieInfo({ title, genre, releaseDate }) {
 export default MovieInfo;
 
 MovieInfo.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  genre: PropTypes.string,
+  releaseDate: PropTypes.string,
+};
+
+MovieInfo.defaultProps = {
+  title: "",
+  genre: "",
+  releaseDate: "",
 };

@@ -1,8 +1,9 @@
 .search-results {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
+  height: fit-content;
   margin-left: 7vw;
   margin-right: 8vw;
 }

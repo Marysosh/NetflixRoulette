@@ -7,10 +7,18 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 .app {
   height: 100vh;
   width: 100vw;
   background-color: #555555;
+
+  &-opened-modal {
+    overflow-y: hidden;
+  }
 }
 
 .search-results-panel {

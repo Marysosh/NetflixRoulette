@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./ResultsFilter.scss";
 
+const DEFAULT_VALUE = "All";
 function ResultsFilter({ genresFilterArray }) {
+  const [selectedFilter, setSelectedFilter] = useState(DEFAULT_VALUE);
+
+  const handleGenreFilterChange = (value) => {
+    setSelectedFilter(value);
+  };
+
   return (
     <ul className="results-filter">
-      {genresFilterArray.map(({ filterName, id, isSelected }) => (
+      {genresFilterArray.map(({ filterName, id }) => (
         <li
           className={
-            isSelected ? "results-filter-item__selected" : "results-filter-item"
+            filterName === selectedFilter
+              ? "results-filter-item__selected"
+              : "results-filter-item"
           }
           key={id}
         >
-          {filterName}
+          <button
+            className="results-filter-item-btn"
+            onClick={() => handleGenreFilterChange(filterName)}
+            type="button"
+          >
+            {filterName}
+          </button>
         </li>
       ))}
     </ul>

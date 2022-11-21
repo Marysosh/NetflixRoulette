@@ -1,3 +1,21 @@
 .movie-card {
   margin-bottom: 5vh;
+  position: relative;
+
+  &-options {
+    display: none;
+  }
+
+  &:hover {
+    .movie-card-options {
+      position: absolute;
+      display: flex;
+      right: 3%;
+      top: 1.5%;
+
+      border: none;
+      background: none;
+      padding: 0;
+    }
+  }
 }

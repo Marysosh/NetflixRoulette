@@ -1,13 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import "./MovieCard.scss";
 
 import MovieInfo from "../movie-info/MovieInfo";
+import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 
-function MovieCard({ movieInfo }) {
-  const { title, genre, releaseDate, image } = movieInfo;
+function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
+  const { title, genre, releaseDate, image, id } = movieInfo;
+
+  const handleEditIdChange = () => {
+    changeIdToEdit(id);
+  };
+
+  const handleDeleteIdChange = () => {
+    changeIdToDelete(id);
+  };
+
   return (
-    <div className="movie-card">
+    <div className="movie-card" id={id}>
+      <EditMovieDropdown
+        handleEditIdChange={handleEditIdChange}
+        handleDeleteIdChange={handleDeleteIdChange}
+      />
       <img src={image} alt={`${title} img`} />
       <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
     </div>
@@ -18,9 +33,16 @@ export default MovieCard;
 
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  }).isRequired,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    releaseDate: PropTypes.string,
+    image: PropTypes.string,
+    id: PropTypes.string,
+  }),
+  changeIdToEdit: PropTypes.func.isRequired,
+  changeIdToDelete: PropTypes.func.isRequired,
+};
+
+MovieCard.defaultProps = {
+  movieInfo: {},
 };
