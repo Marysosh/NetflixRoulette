@@ -127,7 +127,6 @@ function SearchResultsPanel(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     movies: getMovies(state),
   };

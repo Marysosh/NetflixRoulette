@@ -3,7 +3,7 @@ import ACTIONS from "./actionTypes";
 import initialState from "./initialState.json";
 
 // eslint-disable-next-line default-param-last
-const movieFilters = (state = initialState, action) => {
+const movieList = (state = initialState, action) => {
   switch (action.type) {
     case ACTIONS.SET_SEARCH_RESULTS:
       return {
@@ -15,6 +15,6 @@ const movieFilters = (state = initialState, action) => {
   }
 };
 
-const rootReducer = combineReducers({ movieFilters });
+const rootReducer = combineReducers({ movieList });
 
 export default rootReducer;

@@ -7,6 +7,7 @@ import "./MovieCard.scss";
 import MovieInfo from "../movie-info/MovieInfo";
 import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
+import errorImg from "./error_image.png";
 
 function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
   const {
@@ -39,7 +40,13 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
         handleEditIdChange={handleEditIdChange}
         handleDeleteIdChange={handleDeleteIdChange}
       />
-      <img src={image} alt={`${title} img`} />
+      <img
+        className="movie-card-image"
+        src={image}
+        alt={errorImg}
+        // eslint-disable-next-line no-return-assign
+        onError={(e) => (e.target.onerror = null)((e.target.src = errorImg))}
+      />
       <MovieInfo title={title} genre={genre[0]} releaseDate={releaseDate} />
     </div>
   );

@@ -2,6 +2,11 @@
   margin-bottom: 5vh;
   position: relative;
 
+  &-image {
+    width: 25vw;
+    height: 75vh;
+  }
+
   &-options {
     display: none;
   }
