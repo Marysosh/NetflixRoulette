@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
+import { Provider } from "react-redux";
 import UserContext from "./utils/contexts";
+import store from "./store/index";
 
 import "./App.scss";
 
@@ -29,35 +31,37 @@ function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <UserContext.Provider
-        value={useMemo(
-          () => ({
-            showMovieDetailsHandler,
-            addNewMovieHandler,
-            openModalHandler,
-          }),
-          []
-        )}
-      >
-        <div className={isModalOpen ? "app app-opened-modal" : "app"}>
-          {isMovieDetailsOpen ? (
-            <MovieDetails
-              movieInfo={movieDetails}
-              showMovieDetailsHandler={showMovieDetailsHandler}
-            />
-          ) : (
-            <SearchPanel />
+    <Provider store={store}>
+      <ErrorBoundary>
+        <UserContext.Provider
+          value={useMemo(
+            () => ({
+              showMovieDetailsHandler,
+              addNewMovieHandler,
+              openModalHandler,
+            }),
+            []
           )}
-          <SearchResultsPanel
-            openModalHandler={openModalHandler}
-            addNewMovieHandler={addNewMovieHandler}
-            newMovieData={newMovieData}
-          />
-          <Footer />
-        </div>
-      </UserContext.Provider>
-    </ErrorBoundary>
+        >
+          <div className={isModalOpen ? "app app-opened-modal" : "app"}>
+            {isMovieDetailsOpen ? (
+              <MovieDetails
+                movieInfo={movieDetails}
+                showMovieDetailsHandler={showMovieDetailsHandler}
+              />
+            ) : (
+              <SearchPanel />
+            )}
+            <SearchResultsPanel
+              openModalHandler={openModalHandler}
+              addNewMovieHandler={addNewMovieHandler}
+              newMovieData={newMovieData}
+            />
+            <Footer />
+          </div>
+        </UserContext.Provider>
+      </ErrorBoundary>
+    </Provider>
   );
 }
 
