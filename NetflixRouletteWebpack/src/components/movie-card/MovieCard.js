@@ -9,7 +9,13 @@ import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
 
 function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
-  const { title, genre, releaseDate, image, id } = movieInfo;
+  const {
+    title,
+    genres: genre,
+    release_date: releaseDate,
+    poster_path: image,
+    id,
+  } = movieInfo;
   const { showMovieDetailsHandler } = useContext(UserContext);
 
   const handleEditIdChange = () => {
@@ -34,7 +40,7 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
         handleDeleteIdChange={handleDeleteIdChange}
       />
       <img src={image} alt={`${title} img`} />
-      <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
+      <MovieInfo title={title} genre={genre[0]} releaseDate={releaseDate} />
     </div>
   );
 }
@@ -44,9 +50,9 @@ export default MovieCard;
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
     title: PropTypes.string,
-    genre: PropTypes.string,
-    releaseDate: PropTypes.string,
-    image: PropTypes.string,
+    genres: PropTypes.string,
+    release_date: PropTypes.string,
+    poster_path: PropTypes.string,
     id: PropTypes.string,
   }),
   changeIdToEdit: PropTypes.func.isRequired,

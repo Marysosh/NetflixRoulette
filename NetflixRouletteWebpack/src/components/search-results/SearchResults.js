@@ -8,7 +8,7 @@ import MovieCard from "../movie-card/MovieCard";
 function SearchResults({ resultsArray, changeIdToEdit, changeIdToDelete }) {
   return (
     <div className="search-results">
-      {resultsArray.map((itemInfo) => (
+      {resultsArray?.map((itemInfo) => (
         <MovieCard
           movieInfo={itemInfo}
           key={itemInfo.id}
