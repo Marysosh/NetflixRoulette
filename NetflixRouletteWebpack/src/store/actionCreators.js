@@ -36,19 +36,60 @@ const apiAction = ({
   },
 });
 
-const setSearchResults = (data) => ({
-  type: ACTIONS.SET_SEARCH_RESULTS,
-  payload: data,
-});
+const setSearchResults = (data) => {
+  console.log(data);
+  return {
+    type: ACTIONS.SET_SEARCH_RESULTS,
+    payload: data,
+  };
+};
 
 export const fetchMovies = () =>
   apiAction({
     url: `${BASE_URL}/movies`,
     method: "GET",
-    data: { sortBy: "vote_average", sortOrder: "asc" },
+    data: { limit: 12 },
     onSuccess: setSearchResults,
     onFailure: () => {
       console.log("Error occured loading movies");
     },
     label: "FETCH_MOVIES",
+  });
+
+export const addMovieToEdit = (id) => ({
+  type: ACTIONS.ADD_MOVIE_TO_EDIT,
+  payload: id,
+});
+
+export const addMovieToDelete = (id) => ({
+  type: ACTIONS.ADD_MOVIE_TO_DELETE,
+  payload: id,
+});
+
+export const openEditModal = () => ({
+  type: ACTIONS.OPEN_EDIT_MODAL,
+});
+
+export const closeEditModal = () => ({
+  type: ACTIONS.CLOSE_EDIT_MODAL,
+});
+
+export const openDeleteModal = () => ({
+  type: ACTIONS.OPEN_DELETE_MODAL,
+});
+
+export const closeDeleteModal = () => ({
+  type: ACTIONS.CLOSE_DELETE_MODAL,
+});
+
+export const deleteMovie = (id) =>
+  apiAction({
+    url: `${BASE_URL}/movies/${id}`,
+    method: "DELETE",
+    data: { id },
+    onSuccess: fetchMovies,
+    onFailure: () => {
+      console.log("Error occured during deleting movie");
+    },
+    label: "DELETE_MOVIE",
   });

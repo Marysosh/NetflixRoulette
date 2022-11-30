@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -5,6 +6,7 @@ import "./MovieDetails.scss";
 import thinLogo from "./logo_thin.png";
 import searchIcon from "./search_icon.png";
 import ratingBorder from "./rating-frame.png";
+import errorImg from "./error_image.png";
 
 function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
   const { title, genre, releaseDate, rating, runtime, image, overview } =
@@ -21,7 +23,13 @@ function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
       </div>
       <div className="movie-details-body">
         <div className="movie-details-image">
-          <img src={image} alt="movie cover" />
+          <img
+            src={image}
+            alt="movie cover"
+            onError={(e) =>
+              (e.target.onerror = null)((e.target.src = errorImg))
+            }
+          />
         </div>
         <div className="movie-details-info">
           <div className="movie-header">
@@ -38,7 +46,7 @@ function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
           <div className="movie-genre">{genre}</div>
           <div className="movie-release-runtime-container">
             <div className="release-date">{releaseDate}</div>
-            <div className="runtime">{runtime}</div>
+            <div className="runtime">{runtime || "-"}</div>
           </div>
           <div className="movie-overview">{overview}</div>
         </div>

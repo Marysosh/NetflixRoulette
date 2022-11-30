@@ -7,19 +7,21 @@
     flex-direction: row;
     justify-content: space-between;
     height: 5vh;
+    width: 25vw;
     align-items: center;
   }
 
   &__title {
-    display: flex;
+    //display: flex;
     align-items: center;
-    height: 4vh;
+    min-height: 4vh;
+    max-width: 65%;
 
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
     line-height: 22px;
+    overflow-wrap: break-word;
     /* identical to box height */
 
     color: #ffffff;

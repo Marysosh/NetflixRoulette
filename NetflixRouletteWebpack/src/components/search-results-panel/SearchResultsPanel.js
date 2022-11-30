@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
@@ -11,8 +12,19 @@ import SearchResults from "../search-results/SearchResults";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import DeleteMovieModal from "../modals/delete-movie-modal/DeleteMovieModal";
 
-import { getMovies } from "../../store/selectors";
-import { fetchMovies } from "../../store/actionCreators";
+import {
+  getMovies,
+  getDeleteModalStatus,
+  getEditModalStatus,
+  getMovieToDeleteId,
+  getMovieToEditId,
+} from "../../store/selectors";
+import {
+  closeDeleteModal,
+  closeEditModal,
+  deleteMovie,
+  fetchMovies,
+} from "../../store/actionCreators";
 
 const resultsNumber = 6;
 
@@ -22,20 +34,24 @@ function SearchResultsPanel(props) {
     newMovieData,
     movies: resultsArray,
     fetchMovies,
+    isEditModalOpen,
+    isDeleteModalOpen,
+    movieToEditId,
+    movieToDeleteId,
+    deleteMovie,
+    closeEditModal,
+    closeDeleteModal,
   } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
 
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  // const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [movieToEdit, setMovieToEdit] = useState("");
-
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [movieToDelete, setMovieToDelete] = useState("");
 
   const [editingValues, setEditingValues] = useState("");
 
   useEffect(() => {
     fetchMovies();
-  });
+  }, []);
 
   useEffect(() => {
     newMovieData.genre &&
@@ -46,7 +62,7 @@ function SearchResultsPanel(props) {
   }, [newMovieData]);
 
   const handleEditModalOpen = (value) => {
-    setEditModalOpen(value);
+    // setEditModalOpen(value);
     openModalHandler(value);
   };
 
@@ -84,19 +100,9 @@ function SearchResultsPanel(props) {
     handleEditModalOpen(false);
   };
 
-  const handleDeleteModalOpen = (value) => {
-    setDeleteModalOpen(value);
-    openModalHandler(value);
-  };
-
-  const changeIdToDelete = (idToDelete) => {
-    setMovieToDelete(idToDelete);
-    handleDeleteModalOpen(true);
-  };
-
   const handleMovieDelete = () => {
-    setMoviesArray(moviesArray.filter((item) => item.id !== movieToDelete));
-    handleDeleteModalOpen(false);
+    deleteMovie(movieToDeleteId);
+    closeDeleteModal();
   };
 
   return (
@@ -106,7 +112,6 @@ function SearchResultsPanel(props) {
       <SearchResults
         resultsArray={moviesArray}
         changeIdToEdit={changeIdToEdit}
-        changeIdToDelete={changeIdToDelete}
       />
       {isEditModalOpen && (
         <EditMovieModal
@@ -118,8 +123,8 @@ function SearchResultsPanel(props) {
       )}
       {isDeleteModalOpen && (
         <DeleteMovieModal
-          handleDeleteModalOpen={handleDeleteModalOpen}
           handleMovieDelete={handleMovieDelete}
+          handleDeleteModalClose={closeDeleteModal}
         />
       )}
     </div>
@@ -129,12 +134,19 @@ function SearchResultsPanel(props) {
 const mapStateToProps = (state) => {
   return {
     movies: getMovies(state),
+    isEditModalOpen: getEditModalStatus(state),
+    isDeleteModalOpen: getDeleteModalStatus(state),
+    movieToEditId: getMovieToEditId(state),
+    movieToDeleteId: getMovieToDeleteId(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: () => dispatch(fetchMovies()),
+    deleteMovie: (id) => dispatch(deleteMovie(id)),
+    closeEditModal: () => dispatch(closeEditModal()),
+    closeDeleteModal: () => dispatch(closeDeleteModal()),
   };
 };
 SearchResultsPanel.propTypes = {
@@ -162,6 +174,13 @@ SearchResultsPanel.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   fetchMovies: PropTypes.func.isRequired,
+  isEditModalOpen: PropTypes.bool.isRequired,
+  isDeleteModalOpen: PropTypes.bool.isRequired,
+  movieToEditId: PropTypes.number.isRequired,
+  movieToDeleteId: PropTypes.number.isRequired,
+  deleteMovie: PropTypes.func.isRequired,
+  closeEditModal: PropTypes.func.isRequired,
+  closeDeleteModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);

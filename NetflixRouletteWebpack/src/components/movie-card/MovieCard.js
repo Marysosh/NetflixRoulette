@@ -9,22 +9,12 @@ import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
 import errorImg from "./error_image.png";
 
-function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
-  const {
-    title,
-    genres: genre,
-    release_date: releaseDate,
-    poster_path: image,
-    id,
-  } = movieInfo;
+function MovieCard({ movieInfo, changeIdToEdit }) {
+  const { title, genre, releaseDate, image, id } = movieInfo;
   const { showMovieDetailsHandler } = useContext(UserContext);
 
   const handleEditIdChange = () => {
     changeIdToEdit(id);
-  };
-
-  const handleDeleteIdChange = () => {
-    changeIdToDelete(id);
   };
 
   return (
@@ -36,10 +26,7 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
         scrollTop();
       }}
     >
-      <EditMovieDropdown
-        handleEditIdChange={handleEditIdChange}
-        handleDeleteIdChange={handleDeleteIdChange}
-      />
+      <EditMovieDropdown handleEditIdChange={handleEditIdChange} id={id} />
       <img
         className="movie-card-image"
         src={image}
@@ -47,7 +34,7 @@ function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
         // eslint-disable-next-line no-return-assign
         onError={(e) => (e.target.onerror = null)((e.target.src = errorImg))}
       />
-      <MovieInfo title={title} genre={genre[0]} releaseDate={releaseDate} />
+      <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
     </div>
   );
 }
@@ -57,13 +44,12 @@ export default MovieCard;
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
     title: PropTypes.string,
-    genres: PropTypes.string,
-    release_date: PropTypes.string,
-    poster_path: PropTypes.string,
+    genre: PropTypes.string,
+    releaseDate: PropTypes.string,
+    image: PropTypes.string,
     id: PropTypes.string,
   }),
   changeIdToEdit: PropTypes.func.isRequired,
-  changeIdToDelete: PropTypes.func.isRequired,
 };
 
 MovieCard.defaultProps = {

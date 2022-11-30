@@ -1,5 +1,12 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  addMovieToEdit,
+  addMovieToDelete,
+  openDeleteModal,
+  openEditModal,
+} from "../../store/actionCreators";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./EditMovieDropdowm.scss";
@@ -8,7 +15,14 @@ import closeBtn from "./close_btn_small.png";
 
 const BASE_CLASS = "edit-movie-dropdown";
 
-function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
+function EditMovieDropdown(props) {
+  const {
+    openEditModal,
+    openDeleteModal,
+    addMovieToEdit,
+    addMovieToDelete,
+    id,
+  } = props;
   const [openedDropdown, setOpenedDropdown] = useState(false);
 
   const wrapperRef = useRef(null);
@@ -20,14 +34,16 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
 
   const handleChooseEdit = (event) => {
     event.stopPropagation();
+    addMovieToEdit(id);
+    openEditModal();
     handleOpenDropdown(false);
-    handleEditIdChange();
   };
 
   const handleChooseDelete = (event) => {
     event.stopPropagation();
+    addMovieToDelete(id);
+    openDeleteModal();
     handleOpenDropdown(false);
-    handleDeleteIdChange();
   };
 
   return (
@@ -82,9 +98,21 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
   );
 }
 
-export default EditMovieDropdown;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openEditModal: () => dispatch(openEditModal()),
+    openDeleteModal: () => dispatch(openDeleteModal()),
+    addMovieToEdit: (id) => dispatch(addMovieToEdit(id)),
+    addMovieToDelete: (id) => dispatch(addMovieToDelete(id)),
+  };
+};
 
 EditMovieDropdown.propTypes = {
-  handleEditIdChange: PropTypes.func.isRequired,
-  handleDeleteIdChange: PropTypes.func.isRequired,
+  openEditModal: PropTypes.func.isRequired,
+  openDeleteModal: PropTypes.func.isRequired,
+  addMovieToEdit: PropTypes.func.isRequired,
+  addMovieToDelete: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(EditMovieDropdown);
