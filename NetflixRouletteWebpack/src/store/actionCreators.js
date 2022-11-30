@@ -36,13 +36,10 @@ const apiAction = ({
   },
 });
 
-const setSearchResults = (data) => {
-  console.log(data);
-  return {
-    type: ACTIONS.SET_SEARCH_RESULTS,
-    payload: data,
-  };
-};
+const setSearchResults = (data) => ({
+  type: ACTIONS.SET_SEARCH_RESULTS,
+  payload: data,
+});
 
 export const fetchMovies = () =>
   apiAction({
@@ -82,14 +79,36 @@ export const closeDeleteModal = () => ({
   type: ACTIONS.CLOSE_DELETE_MODAL,
 });
 
+export const setFilteredResults = (data) => ({
+  type: ACTIONS.SET_FILTERED_RESULTS,
+  payload: data,
+});
+
+export const getFilteredSearchResults = (filtersArray = []) =>
+  apiAction({
+    url: `${BASE_URL}/movies`,
+    method: "GET",
+    data: { filter: `${filtersArray?.join(", ")}`, limit: 45 },
+    onSuccess: setSearchResults,
+    onFailure: () => {
+      console.log("Error occured during filtering movies");
+    },
+    label: "FILTER_MOVIES",
+  });
+
 export const deleteMovie = (id) =>
   apiAction({
     url: `${BASE_URL}/movies/${id}`,
     method: "DELETE",
     data: { id },
-    onSuccess: fetchMovies,
+    onSuccess: getFilteredSearchResults,
     onFailure: () => {
       console.log("Error occured during deleting movie");
     },
     label: "DELETE_MOVIE",
   });
+
+export const setSelectedFilters = (filterArray) => ({
+  type: ACTIONS.SET_SELECTED_FILTERS,
+  payload: filterArray,
+});

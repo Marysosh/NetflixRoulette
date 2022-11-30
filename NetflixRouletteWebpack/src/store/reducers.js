@@ -22,6 +22,26 @@ const movieList = (state = initialState, action) => {
         ...state,
         movies: parsedMovies,
       };
+    case ACTIONS.SET_SELECTED_FILTERS:
+      return {
+        ...state,
+        selectedFilters: action.payload,
+      };
+    case ACTIONS.SET_FILTERED_RESULTS:
+      const parsedMovies1 = action.payload.data.map((movieInfo) => ({
+        title: movieInfo.title,
+        image: movieInfo.poster_path,
+        releaseDate: movieInfo.release_date,
+        rating: movieInfo.vote_average,
+        runtime: `${movieInfo.runtime} min`,
+        genre: movieInfo.genres.join(", "),
+        overview: movieInfo.overview,
+        id: movieInfo.id,
+      }));
+      return {
+        ...state,
+        movies: parsedMovies1,
+      };
     default:
       return state;
   }

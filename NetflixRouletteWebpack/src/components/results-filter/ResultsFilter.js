@@ -1,32 +1,63 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "./ResultsFilter.scss";
+import { connect } from "react-redux";
+import { getSelectedFilters } from "../../store/selectors";
+import {
+  getFilteredSearchResults,
+  setSelectedFilters,
+} from "../../store/actionCreators";
 
-const DEFAULT_VALUE = "All";
-function ResultsFilter({ genresFilterArray }) {
-  const [selectedFilter, setSelectedFilter] = useState(DEFAULT_VALUE);
-
-  const handleGenreFilterChange = (value) => {
-    setSelectedFilter(value);
+function ResultsFilter({
+  genresFilterArray,
+  selectedFilters = [],
+  setSelectedFilters,
+  getFilteredSearchResults,
+}) {
+  const handleGenreFilterChange = (item) => {
+    let newSelectedFilters;
+    if (
+      item.filterName === "All" &&
+      !selectedFilters.includes(item.filterName)
+    ) {
+      newSelectedFilters = [];
+    } else if (selectedFilters.includes(item.filterName)) {
+      newSelectedFilters =
+        selectedFilters.length !== 1
+          ? [
+              ...selectedFilters.filter(
+                (sf) => sf !== "All" && sf !== item.filterName
+              ),
+            ]
+          : [];
+    } else {
+      newSelectedFilters = [
+        ...selectedFilters.filter((sf) => sf !== "All"),
+        item.filterName,
+      ];
+    }
+    setSelectedFilters(newSelectedFilters);
+    getFilteredSearchResults(newSelectedFilters);
   };
 
   return (
     <ul className="results-filter">
-      {genresFilterArray.map(({ filterName, id }) => (
+      {genresFilterArray.map((item) => (
         <li
           className={
-            filterName === selectedFilter
+            selectedFilters.includes(item.filterName) ||
+            (selectedFilters.length === 0 && item.filterName === "All")
               ? "results-filter-item__selected"
               : "results-filter-item"
           }
-          key={id}
+          key={item.id}
         >
           <button
             className="results-filter-item-btn"
-            onClick={() => handleGenreFilterChange(filterName)}
+            onClick={() => handleGenreFilterChange(item)}
             type="button"
           >
-            {filterName}
+            {item.filterName}
           </button>
         </li>
       ))}
@@ -34,7 +65,20 @@ function ResultsFilter({ genresFilterArray }) {
   );
 }
 
-export default ResultsFilter;
+const mapStateToProps = (state) => {
+  return {
+    selectedFilters: getSelectedFilters(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedFilters: (filterArray) =>
+      dispatch(setSelectedFilters(filterArray)),
+    getFilteredSearchResults: (filterArray) =>
+      dispatch(getFilteredSearchResults(filterArray)),
+  };
+};
 
 ResultsFilter.propTypes = {
   genresFilterArray: PropTypes.arrayOf(
@@ -44,4 +88,9 @@ ResultsFilter.propTypes = {
       isSelected: PropTypes.bool,
     })
   ).isRequired,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setSelectedFilters: PropTypes.func.isRequired,
+  getFilteredSearchResults: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsFilter);

@@ -18,12 +18,15 @@ import {
   getEditModalStatus,
   getMovieToDeleteId,
   getMovieToEditId,
+  getSelectedFilters,
 } from "../../store/selectors";
 import {
   closeDeleteModal,
   closeEditModal,
   deleteMovie,
   fetchMovies,
+  getFilteredSearchResults,
+  setSelectedFilters,
 } from "../../store/actionCreators";
 
 const resultsNumber = 6;
@@ -41,6 +44,7 @@ function SearchResultsPanel(props) {
     deleteMovie,
     closeEditModal,
     closeDeleteModal,
+    setSelectedFilters,
   } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
 
@@ -52,6 +56,10 @@ function SearchResultsPanel(props) {
   useEffect(() => {
     fetchMovies();
   }, []);
+
+  useEffect(() => {
+    setMoviesArray(resultsArray);
+  }, [resultsArray]);
 
   useEffect(() => {
     newMovieData.genre &&
@@ -102,6 +110,8 @@ function SearchResultsPanel(props) {
 
   const handleMovieDelete = () => {
     deleteMovie(movieToDeleteId);
+    setSelectedFilters([]);
+    fetchMovies();
     closeDeleteModal();
   };
 
@@ -138,6 +148,7 @@ const mapStateToProps = (state) => {
     isDeleteModalOpen: getDeleteModalStatus(state),
     movieToEditId: getMovieToEditId(state),
     movieToDeleteId: getMovieToDeleteId(state),
+    selectedFilters: getSelectedFilters(state),
   };
 };
 
@@ -147,6 +158,10 @@ const mapDispatchToProps = (dispatch) => {
     deleteMovie: (id) => dispatch(deleteMovie(id)),
     closeEditModal: () => dispatch(closeEditModal()),
     closeDeleteModal: () => dispatch(closeDeleteModal()),
+    getFilteredSearchResults: (filterArray) =>
+      dispatch(getFilteredSearchResults(filterArray)),
+    setSelectedFilters: (filterArray) =>
+      dispatch(setSelectedFilters(filterArray)),
   };
 };
 SearchResultsPanel.propTypes = {
@@ -181,6 +196,7 @@ SearchResultsPanel.propTypes = {
   deleteMovie: PropTypes.func.isRequired,
   closeEditModal: PropTypes.func.isRequired,
   closeDeleteModal: PropTypes.func.isRequired,
+  setSelectedFilters: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);
