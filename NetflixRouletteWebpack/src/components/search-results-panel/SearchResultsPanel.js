@@ -29,7 +29,7 @@ import {
   setSelectedFilters,
 } from "../../store/actionCreators";
 
-const resultsNumber = 6;
+const resultsNumber = 45;
 
 function SearchResultsPanel(props) {
   const {

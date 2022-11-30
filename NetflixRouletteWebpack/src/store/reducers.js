@@ -42,6 +42,11 @@ const movieList = (state = initialState, action) => {
         ...state,
         movies: parsedMovies1,
       };
+    case ACTIONS.CHANGE_SORTING_ORDER:
+      return {
+        ...state,
+        sortingOrder: action.payload,
+      };
     default:
       return state;
   }

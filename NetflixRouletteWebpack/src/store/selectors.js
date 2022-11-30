@@ -12,3 +12,5 @@ export const getMovieToDeleteId = (state) =>
   state.modalsManagement.movieToDeleteId;
 
 export const getSelectedFilters = (state) => state.movieList.selectedFilters;
+
+export const getSortingOrder = (state) => state.movieList.sortingOrder;

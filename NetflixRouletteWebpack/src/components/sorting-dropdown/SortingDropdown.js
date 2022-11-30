@@ -1,17 +1,32 @@
 import React, { useState, useRef } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./SortingDropdown.scss";
 import ascSign from "./ascSign.png";
 import descSign from "./descSign.png";
+import {
+  changeSortingOrder,
+  changeSortingType,
+} from "../../store/actionCreators";
+import { getSortingOrder } from "../../store/selectors";
 
-let genreArray = ["Title", "Rating", "Runtime", "Date added"];
-const DEFAULT_VALUE = "Release date";
+let genreArray = [
+  { name: "title", label: "Title" },
+  { name: "vote_average", label: "Rating" },
+  { name: "runtime", label: "Runtime" },
+  { name: "release_date", label: "Release date" },
+];
 
-function SortingDropdown() {
+function SortingDropdown(props) {
+  const { changeSortingType } = props;
   const [openedDropdown, setDropdownOpen] = useState(false);
-  const [isAscendingOrder, setAscendingOrder] = useState(false);
-  const [chosenItem, setChosenItem] = useState(DEFAULT_VALUE);
+  const [sortingOrder, setSortingOrder] = useState("desc");
+  const [chosenItem, setChosenItem] = useState({
+    name: "vote_average",
+    label: "Rating",
+  });
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setDropdownOpen);
@@ -21,7 +36,13 @@ function SortingDropdown() {
   };
 
   const handleOrderChange = () => {
-    setAscendingOrder(!isAscendingOrder);
+    if (sortingOrder === "desc") {
+      setSortingOrder("asc");
+      changeSortingType(chosenItem.name, "asc");
+    } else {
+      setSortingOrder("desc");
+      changeSortingType(chosenItem.name, "desc");
+    }
   };
 
   const handleItemChoose = (value) => {
@@ -29,8 +50,8 @@ function SortingDropdown() {
     genreArray.push(chosenItem);
     setChosenItem(value);
     genreArray = genreArray
-      .filter((item) => item !== value)
-      .sort((a, b) => a.length - b.length);
+      .filter((oldItem) => oldItem.name !== value.name)
+      .sort((a, b) => a.name.length - b.name.length);
   };
 
   // For checking Error boundary
@@ -47,14 +68,17 @@ function SortingDropdown() {
           className="sorting-dropdown-btn"
           onClick={handleOpenDropdown}
         >
-          {chosenItem}
+          {chosenItem.label}
         </button>
         <button
           type="button"
           className="sorting-order-btn"
           onClick={handleOrderChange}
         >
-          <img src={isAscendingOrder ? ascSign : descSign} alt="order Sign" />
+          <img
+            src={sortingOrder === "asc" ? ascSign : descSign}
+            alt="order Sign"
+          />
         </button>
       </div>
       {openedDropdown ? (
@@ -66,7 +90,7 @@ function SortingDropdown() {
                 onClick={() => handleItemChoose(item)}
                 type="button"
               >
-                {item}
+                {item.label}
               </button>
             </li>
           ))}
@@ -76,4 +100,22 @@ function SortingDropdown() {
   );
 }
 
-export default SortingDropdown;
+const mapStateToProps = (state) => {
+  return {
+    sortingOrder: getSortingOrder(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeSortingOrder: (order) => dispatch(changeSortingOrder(order)),
+    changeSortingType: (type, order) =>
+      dispatch(changeSortingType(type, order)),
+  };
+};
+
+SortingDropdown.propTypes = {
+  changeSortingType: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortingDropdown);

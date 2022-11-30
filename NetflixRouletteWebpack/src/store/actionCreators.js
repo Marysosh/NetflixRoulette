@@ -45,7 +45,7 @@ export const fetchMovies = () =>
   apiAction({
     url: `${BASE_URL}/movies`,
     method: "GET",
-    data: { limit: 12 },
+    data: { limit: 45 },
     onSuccess: setSearchResults,
     onFailure: () => {
       console.log("Error occured loading movies");
@@ -112,3 +112,20 @@ export const setSelectedFilters = (filterArray) => ({
   type: ACTIONS.SET_SELECTED_FILTERS,
   payload: filterArray,
 });
+
+export const changeSortingOrder = (order = "desc") => ({
+  type: ACTIONS.CHANGE_SORTING_ORDER,
+  payload: order,
+});
+
+export const changeSortingType = (type = "vote_average", order = "desc") =>
+  apiAction({
+    url: `${BASE_URL}/movies`,
+    method: "GET",
+    data: { sortBy: type, sortOrder: order, limit: 45 },
+    onSuccess: setSearchResults,
+    onFailure: () => {
+      console.log("Error occured during sorting type change");
+    },
+    label: "CHANGE_SORTING",
+  });
