@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from "react";
+import { useFormik } from "formik";
 import PropTypes from "prop-types";
 
 import "./EditMovieModal.scss";
@@ -9,58 +10,81 @@ import GenreDropdown from "../../genre-dropdown/GenreDropdown";
 
 const BASE_CLASS = "edit-movie-modal";
 
-const placeHolders = {
-  titlePlaceholder: "Moana",
-  movieUrlPlaceholder: "https://",
-  releaseDatePlaceholder: "Select Date",
-  ratingPlaceholder: "7.8",
-  runtimePlaceholder: "minutes",
-  overviewPlaceholder: "Movie description",
-};
+// const placeHolders = {
+//   titlePlaceholder: "Moana",
+//   movieUrlPlaceholder:
+//     "https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg",
+//   releaseDatePlaceholder: "Select Date",
+//   ratingPlaceholder: "7.8",
+//   runtimePlaceholder: "minutes",
+//   overviewPlaceholder: "Movie description",
+// };
 function EditMovieModal({
   handleEditModalOpen,
   handleMovieEdit,
   modalTitle,
   showCongratsModal,
-  editingValues,
+  // editingValues,
 }) {
-  const [selectedGenres, setSelectedGenres] = useState("");
+  const [
+    // selectedGenres,
+    setSelectedGenres,
+  ] = useState("");
 
-  const onFormSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
+  // const onFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData(e.target);
 
-    handleMovieEdit({
-      title: data.get("title"),
-      genre: selectedGenres,
-      releaseDate: data.get("release-date"),
-      rating: data.get("rating"),
-      runtime: data.get("runtime"),
-      image: data.get("movie-url"),
-      overview: data.get("overview"),
-    });
+  //   handleMovieEdit({
+  //     title: data.get("title"),
+  //     genre: selectedGenres,
+  //     releaseDate: data.get("release-date"),
+  //     rating: data.get("rating"),
+  //     runtime: data.get("runtime"),
+  //     image: data.get("movie-url"),
+  //     overview: data.get("overview"),
+  //   });
 
-    if (modalTitle === "Add movie") {
-      showCongratsModal(true);
-    }
-  };
+  //   if (modalTitle === "Add movie") {
+  //     showCongratsModal(true);
+  //   }
+  // };
 
-  const {
-    titlePlaceholder,
-    movieUrlPlaceholder,
-    releaseDatePlaceholder,
-    ratingPlaceholder,
-    runtimePlaceholder,
-    overviewPlaceholder,
-  } = placeHolders;
-  const {
-    titleValue,
-    movieUrlValue,
-    releaseDateValue,
-    ratingValue,
-    runtimeValue,
-    overviewValue,
-  } = editingValues;
+  // const {
+  //   titlePlaceholder,
+  //   movieUrlPlaceholder,
+  //   releaseDatePlaceholder,
+  //   ratingPlaceholder,
+  //   runtimePlaceholder,
+  //   overviewPlaceholder,
+  // } = placeHolders;
+  // const {
+  //   titleValue,
+  //   movieUrlValue,
+  //   releaseDateValue,
+  //   ratingValue,
+  //   runtimeValue,
+  //   overviewValue,
+  // } = editingValues;
+  const formik = useFormik({
+    initialValues: {
+      title: "My custom title",
+      movieURL: "My movie URL",
+      releaseDate: "My release date",
+      rating: "My rating",
+      runtime: "My runtime",
+      overview: "My overview",
+    },
+    onSubmit: (values) => {
+      if (modalTitle === "Add movie") {
+        handleMovieEdit(JSON.stringify(values, null, 2));
+        showCongratsModal(true);
+      } else {
+        alert(JSON.stringify(values, null, 2));
+      }
+    },
+  });
+
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -74,7 +98,7 @@ function EditMovieModal({
         <div className={`${BASE_CLASS}-title`}>{modalTitle}</div>
         <form
           className={`${BASE_CLASS}-inputs-container`}
-          onSubmit={onFormSubmit}
+          onSubmit={formik.handleSubmit}
         >
           <div className="columns">
             <div className="left-column">
@@ -86,8 +110,8 @@ function EditMovieModal({
                 name="title"
                 type="text"
                 id="title"
-                placeholder={titlePlaceholder}
-                defaultValue={titleValue}
+                onChange={formik.handleChange}
+                value={formik.values.title}
                 autoComplete="off"
               />
               <label className="label" htmlFor="movie-url">
@@ -95,11 +119,11 @@ function EditMovieModal({
               </label>
               <input
                 className="long-input"
-                name="movie-url"
+                name="movieURL"
                 type="text"
-                id="movie-url"
-                placeholder={movieUrlPlaceholder}
-                defaultValue={movieUrlValue}
+                id="movieURL"
+                onChange={formik.handleChange}
+                value={formik.values.movieURL}
                 autoComplete="off"
               />
               <label className="label">Genre</label>
@@ -111,11 +135,11 @@ function EditMovieModal({
               </label>
               <input
                 className="short-input"
-                name="release-date"
+                name="releaseDate"
                 type="text"
-                id="release-date"
-                placeholder={releaseDatePlaceholder}
-                defaultValue={releaseDateValue}
+                id="releaseDate"
+                onChange={formik.handleChange}
+                value={formik.values.releaseDate}
                 autoComplete="off"
               />
 
@@ -127,8 +151,8 @@ function EditMovieModal({
                 name="rating"
                 type="text"
                 id="rating"
-                placeholder={ratingPlaceholder}
-                defaultValue={ratingValue}
+                onChange={formik.handleChange}
+                value={formik.values.rating}
                 autoComplete="off"
               />
 
@@ -140,8 +164,8 @@ function EditMovieModal({
                 name="runtime"
                 type="text"
                 id="runtime"
-                placeholder={runtimePlaceholder}
-                defaultValue={runtimeValue}
+                onChange={formik.handleChange}
+                value={formik.values.runtime}
                 autoComplete="off"
               />
             </div>
@@ -155,8 +179,8 @@ function EditMovieModal({
               name="overview"
               type="text"
               id="overview"
-              placeholder={overviewPlaceholder}
-              defaultValue={overviewValue}
+              onChange={formik.handleChange}
+              value={formik.values.overview}
               autoComplete="off"
             />
           </div>
