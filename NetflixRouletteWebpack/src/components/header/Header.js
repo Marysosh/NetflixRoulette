@@ -40,17 +40,17 @@ function Header(props) {
   };
 
   const handleMovieEdit = (newMovieData) => {
-    const { title, image, overview, genre, rating, releaseDate, runtime } =
+    const { title, movieURL, overview, genres, rating, releaseDate, runtime } =
       newMovieData;
 
     const refactoredNewMovieData = {
       title,
       vote_average: Number(rating),
       release_date: releaseDate,
-      poster_path: image,
+      poster_path: movieURL,
       overview,
       runtime: Number(runtime),
-      genres: genre.split(", "),
+      genres: genres.split(", "),
     };
     addMovie(refactoredNewMovieData);
 

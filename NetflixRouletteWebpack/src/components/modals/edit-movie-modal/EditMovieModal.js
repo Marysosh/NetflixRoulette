@@ -26,10 +26,7 @@ function EditMovieModal({
   showCongratsModal,
   // editingValues,
 }) {
-  const [
-    // selectedGenres,
-    setSelectedGenres,
-  ] = useState("");
+  const [selectedGenres, setSelectedGenres] = useState("");
 
   // const onFormSubmit = (e) => {
   //   e.preventDefault();
@@ -69,15 +66,16 @@ function EditMovieModal({
   const formik = useFormik({
     initialValues: {
       title: "My custom title",
-      movieURL: "My movie URL",
-      releaseDate: "My release date",
-      rating: "My rating",
-      runtime: "My runtime",
+      movieURL:
+        "https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg",
+      releaseDate: "2020-10-10",
+      rating: "8.0",
+      runtime: "100",
       overview: "My overview",
     },
     onSubmit: (values) => {
       if (modalTitle === "Add movie") {
-        handleMovieEdit(JSON.stringify(values, null, 2));
+        handleMovieEdit({ ...values, genres: selectedGenres });
         showCongratsModal(true);
       } else {
         alert(JSON.stringify(values, null, 2));
