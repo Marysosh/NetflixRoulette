@@ -66,6 +66,26 @@ const movieEdit = (state = {}, action) => {
 
 const modalsManagement = (state = {}, action) => {
   switch (action.type) {
+    case ACTIONS.OPEN_ADD_MOVIE_MODAL:
+      return {
+        ...state,
+        isAddMovieModalOpen: true,
+      };
+    case ACTIONS.CLOSE_ADD_MOVIE_MODAL:
+      return {
+        ...state,
+        isAddMovieModalOpen: false,
+      };
+    case ACTIONS.OPEN_CONGRATS_MODAL:
+      return {
+        ...state,
+        isCongratsModalOpen: true,
+      };
+    case ACTIONS.CLOSE_CONGRATS_MODAL:
+      return {
+        ...state,
+        isCongratsModalOpen: false,
+      };
     case ACTIONS.OPEN_EDIT_MODAL:
       return {
         ...state,
