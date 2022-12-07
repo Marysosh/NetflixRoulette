@@ -26,6 +26,7 @@ import {
   deleteMovie,
   fetchMovies,
   getFilteredSearchResults,
+  openEditModal,
   setSelectedFilters,
 } from "../../store/actionCreators";
 
@@ -42,13 +43,13 @@ function SearchResultsPanel(props) {
     movieToEditId,
     movieToDeleteId,
     deleteMovie,
+    openEditModal,
     closeEditModal,
     closeDeleteModal,
     setSelectedFilters,
   } = props;
   const [moviesArray, setMoviesArray] = useState(resultsArray);
 
-  // const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [movieToEdit, setMovieToEdit] = useState("");
 
   const [editingValues, setEditingValues] = useState("");
@@ -70,8 +71,7 @@ function SearchResultsPanel(props) {
   }, [newMovieData]);
 
   const handleEditModalOpen = (value) => {
-    // setEditModalOpen(value);
-    openModalHandler(value);
+    value ? openEditModal() : closeEditModal();
   };
 
   const updateFormValues = (id) => {
@@ -96,7 +96,6 @@ function SearchResultsPanel(props) {
   const changeIdToEdit = (idToEdit) => {
     setMovieToEdit(idToEdit);
     updateFormValues(idToEdit);
-    handleEditModalOpen(true);
   };
 
   const handleMovieEdit = (newMovieData) => {
@@ -105,7 +104,7 @@ function SearchResultsPanel(props) {
       ...moviesArray.filter((item) => item.id !== movieToEdit),
       { ...movieOldData, ...newMovieData },
     ]);
-    handleEditModalOpen(false);
+    closeEditModal();
   };
 
   const handleMovieDelete = () => {
@@ -156,6 +155,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: () => dispatch(fetchMovies()),
     deleteMovie: (id) => dispatch(deleteMovie(id)),
+    openEditModal: () => dispatch(openEditModal()),
     closeEditModal: () => dispatch(closeEditModal()),
     closeDeleteModal: () => dispatch(closeDeleteModal()),
     getFilteredSearchResults: (filterArray) =>
@@ -194,6 +194,7 @@ SearchResultsPanel.propTypes = {
   movieToEditId: PropTypes.number.isRequired,
   movieToDeleteId: PropTypes.number.isRequired,
   deleteMovie: PropTypes.func.isRequired,
+  openEditModal: PropTypes.func.isRequired,
   closeEditModal: PropTypes.func.isRequired,
   closeDeleteModal: PropTypes.func.isRequired,
   setSelectedFilters: PropTypes.func.isRequired,
