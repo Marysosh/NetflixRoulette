@@ -76,6 +76,16 @@ const modalsManagement = (state = {}, action) => {
         ...state,
         isAddMovieModalOpen: false,
       };
+    case ACTIONS.OPEN_CONGRATS_MODAL:
+      return {
+        ...state,
+        isCongratsModalOpen: true,
+      };
+    case ACTIONS.CLOSE_CONGRATS_MODAL:
+      return {
+        ...state,
+        isCongratsModalOpen: false,
+      };
     case ACTIONS.OPEN_EDIT_MODAL:
       return {
         ...state,

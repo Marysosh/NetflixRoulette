@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import UserContext from "../../utils/contexts";
@@ -6,8 +6,13 @@ import UserContext from "../../utils/contexts";
 import {
   openAddMovieModal,
   closeAddMovieModal,
+  openCongratsModal,
+  closeCongratsModal,
 } from "../../store/actionCreators";
-import { getAddMovieModalStatus } from "../../store/selectors";
+import {
+  getAddMovieModalStatus,
+  getCongratsModalStatus,
+} from "../../store/selectors";
 
 import "./Header.scss";
 
@@ -17,11 +22,15 @@ import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
 
 function Header(props) {
-  const { isAddMovieModalOpen, openAddMovieModal, closeAddMovieModal } = props;
+  const {
+    isAddMovieModalOpen,
+    openAddMovieModal,
+    closeAddMovieModal,
+    isCongratsModalOpen,
+    openCongratsModal,
+    closeCongratsModal,
+  } = props;
 
-  const [isCongratsModalOpen, setIsCongratsModalOpen] = useState(false);
-
-  const { openModalHandler } = useContext(UserContext);
   const { addNewMovieHandler } = useContext(UserContext);
 
   const setIsModalOpen = (value) => {
@@ -34,8 +43,7 @@ function Header(props) {
   };
 
   const setCongratsModalOpen = (value) => {
-    setIsCongratsModalOpen(value);
-    openModalHandler(value);
+    value ? openCongratsModal() : closeCongratsModal();
   };
 
   return (
@@ -60,6 +68,7 @@ function Header(props) {
 const mapStateToProps = (state) => {
   return {
     isAddMovieModalOpen: getAddMovieModalStatus(state),
+    isCongratsModalOpen: getCongratsModalStatus(state),
   };
 };
 
@@ -67,6 +76,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openAddMovieModal: () => dispatch(openAddMovieModal()),
     closeAddMovieModal: () => dispatch(closeAddMovieModal()),
+    openCongratsModal: () => dispatch(openCongratsModal()),
+    closeCongratsModal: () => dispatch(closeCongratsModal()),
   };
 };
 
@@ -74,6 +85,9 @@ Header.propTypes = {
   isAddMovieModalOpen: PropTypes.bool.isRequired,
   openAddMovieModal: PropTypes.func.isRequired,
   closeAddMovieModal: PropTypes.func.isRequired,
+  isCongratsModalOpen: PropTypes.bool.isRequired,
+  openCongratsModal: PropTypes.func.isRequired,
+  closeCongratsModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

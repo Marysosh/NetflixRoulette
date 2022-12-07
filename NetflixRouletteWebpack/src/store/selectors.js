@@ -3,6 +3,9 @@ export const getMovies = (state) => state.movieList.movies;
 export const getAddMovieModalStatus = (state) =>
   state.modalsManagement.isAddMovieModalOpen;
 
+export const getCongratsModalStatus = (state) =>
+  state.modalsManagement.isCongratsModalOpen;
+
 export const getEditModalStatus = (state) =>
   state.modalsManagement.isEditModalOpen;
 

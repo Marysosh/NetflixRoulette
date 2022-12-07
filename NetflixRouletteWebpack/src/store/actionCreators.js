@@ -71,6 +71,14 @@ export const closeAddMovieModal = () => ({
   type: ACTIONS.CLOSE_ADD_MOVIE_MODAL,
 });
 
+export const openCongratsModal = () => ({
+  type: ACTIONS.OPEN_CONGRATS_MODAL,
+});
+
+export const closeCongratsModal = () => ({
+  type: ACTIONS.CLOSE_CONGRATS_MODAL,
+});
+
 export const openEditModal = () => ({
   type: ACTIONS.OPEN_EDIT_MODAL,
 });
