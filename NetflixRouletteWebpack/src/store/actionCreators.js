@@ -112,6 +112,16 @@ export const getFilteredSearchResults = (filtersArray = []) =>
     label: "FILTER_MOVIES",
   });
 
+export const addMovie = (newMovieData) =>
+  apiAction({
+    url: `${BASE_URL}/movies`,
+    method: "POST",
+    data: newMovieData,
+    onSuccess: (data) => console.log(data),
+    onFailure: () => {},
+    label: "ADD_MOVIE",
+  });
+
 export const deleteMovie = (id) =>
   apiAction({
     url: `${BASE_URL}/movies/${id}`,

@@ -8,6 +8,7 @@ import {
   closeAddMovieModal,
   openCongratsModal,
   closeCongratsModal,
+  addMovie,
 } from "../../store/actionCreators";
 import {
   getAddMovieModalStatus,
@@ -29,6 +30,7 @@ function Header(props) {
     isCongratsModalOpen,
     openCongratsModal,
     closeCongratsModal,
+    addMovie,
   } = props;
 
   const { addNewMovieHandler } = useContext(UserContext);
@@ -38,6 +40,20 @@ function Header(props) {
   };
 
   const handleMovieEdit = (newMovieData) => {
+    const { title, image, overview, genre, rating, releaseDate, runtime } =
+      newMovieData;
+
+    const refactoredNewMovieData = {
+      title,
+      vote_average: Number(rating),
+      release_date: releaseDate,
+      poster_path: image,
+      overview,
+      runtime: Number(runtime),
+      genres: genre.split(", "),
+    };
+    addMovie(refactoredNewMovieData);
+
     addNewMovieHandler(newMovieData);
     closeAddMovieModal();
   };
@@ -78,6 +94,7 @@ const mapDispatchToProps = (dispatch) => {
     closeAddMovieModal: () => dispatch(closeAddMovieModal()),
     openCongratsModal: () => dispatch(openCongratsModal()),
     closeCongratsModal: () => dispatch(closeCongratsModal()),
+    addMovie: (data) => dispatch(addMovie(data)),
   };
 };
 
@@ -88,6 +105,7 @@ Header.propTypes = {
   isCongratsModalOpen: PropTypes.bool.isRequired,
   openCongratsModal: PropTypes.func.isRequired,
   closeCongratsModal: PropTypes.func.isRequired,
+  addMovie: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

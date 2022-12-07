@@ -59,6 +59,10 @@ const movieEdit = (state = {}, action) => {
         ...state,
         movies: action.payload,
       };
+    case ACTIONS.ADD_MOVIE:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
