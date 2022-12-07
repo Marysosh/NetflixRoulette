@@ -63,6 +63,14 @@ export const addMovieToDelete = (id) => ({
   payload: id,
 });
 
+export const openAddMovieModal = () => ({
+  type: ACTIONS.OPEN_ADD_MOVIE_MODAL,
+});
+
+export const closeAddMovieModal = () => ({
+  type: ACTIONS.CLOSE_ADD_MOVIE_MODAL,
+});
+
 export const openEditModal = () => ({
   type: ACTIONS.OPEN_EDIT_MODAL,
 });
