@@ -88,8 +88,25 @@
 
             color: #ffffff;
 
-            margin-bottom: 3vh;
             padding-left: 6px;
+          }
+
+          .validation-error {
+            height: 3vh;
+            padding: 0;
+            margin: 0;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            /* identical to box height */
+
+            color: #f65261;
+
+            mix-blend-mode: normal;
+            opacity: 0.8;
           }
         }
 
@@ -113,7 +130,6 @@
 
             color: #ffffff;
 
-            margin-bottom: 3vh;
             padding-left: 6px;
           }
           #release-date {
@@ -121,6 +137,24 @@
               no-repeat 7px 7px;
             background-position: center;
             background-position-x: calc(100% - 12px);
+          }
+
+          .validation-error {
+            height: 3vh;
+            padding: 0;
+            margin: 0;
+
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            /* identical to box height */
+
+            color: #f65261;
+
+            mix-blend-mode: normal;
+            opacity: 0.8;
           }
         }
 
@@ -180,6 +214,24 @@
           opacity: 0.8;
 
           margin-bottom: 1.5vh;
+        }
+
+        .validation-error {
+          height: 3vh;
+          padding: 0;
+          margin: 0;
+
+          font-family: "Montserrat";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          /* identical to box height */
+
+          color: #f65261;
+
+          mix-blend-mode: normal;
+          opacity: 0.8;
         }
       }
 
