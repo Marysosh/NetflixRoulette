@@ -62,6 +62,15 @@ function Header(props) {
     value ? openCongratsModal() : closeCongratsModal();
   };
 
+  const formInitialValues = {
+    title: "My custom title",
+    movieURL: "https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg",
+    releaseDate: "2020-10-10",
+    rating: "8.0",
+    runtime: "100",
+    overview: "My overview",
+  };
+
   return (
     <div className="header">
       <Logo />
@@ -72,6 +81,7 @@ function Header(props) {
           handleEditModalOpen={setIsModalOpen}
           handleMovieEdit={handleMovieEdit}
           showCongratsModal={setCongratsModalOpen}
+          initialValues={formInitialValues}
         />
       )}
       {isCongratsModalOpen && (

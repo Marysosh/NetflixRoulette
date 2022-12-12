@@ -16,19 +16,12 @@ function EditMovieModal({
   handleMovieEdit,
   modalTitle,
   showCongratsModal,
+  initialValues,
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
 
   const formik = useFormik({
-    initialValues: {
-      title: "My custom title",
-      movieURL:
-        "https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg",
-      releaseDate: "2020-10-10",
-      rating: "8.0",
-      runtime: "100",
-      overview: "My overview",
-    },
+    initialValues,
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       movieURL: Yup.string()
@@ -209,6 +202,14 @@ EditMovieModal.propTypes = {
     runtimeValue: PropTypes.string,
     overviewValue: PropTypes.string,
   }),
+  initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    movieUrl: PropTypes.string,
+    releaseDate: PropTypes.string,
+    rating: PropTypes.string,
+    runtime: PropTypes.string,
+    overview: PropTypes.string,
+  }).isRequired,
 };
 
 EditMovieModal.defaultProps = {
