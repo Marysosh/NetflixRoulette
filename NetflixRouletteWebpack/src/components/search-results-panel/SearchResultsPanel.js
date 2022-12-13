@@ -26,7 +26,6 @@ import {
   closeDeleteModal,
   closeEditModal,
   deleteMovie,
-  getFilteredSearchResults,
   openEditModal,
   setSelectedFilters,
   sortAndFilterResults,
@@ -137,8 +136,6 @@ const mapDispatchToProps = (dispatch) => {
     openEditModal: () => dispatch(openEditModal()),
     closeEditModal: () => dispatch(closeEditModal()),
     closeDeleteModal: () => dispatch(closeDeleteModal()),
-    getFilteredSearchResults: (filterArray) =>
-      dispatch(getFilteredSearchResults(filterArray)),
     setSelectedFilters: (filterArray) =>
       dispatch(setSelectedFilters(filterArray)),
   };

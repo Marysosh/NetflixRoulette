@@ -8,7 +8,6 @@ import {
   getSortingType,
 } from "../../store/selectors";
 import {
-  getFilteredSearchResults,
   setSelectedFilters,
   sortAndFilterResults,
 } from "../../store/actionCreators";
@@ -84,8 +83,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSelectedFilters: (filterArray) =>
       dispatch(setSelectedFilters(filterArray)),
-    getFilteredSearchResults: (filterArray) =>
-      dispatch(getFilteredSearchResults(filterArray)),
     sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
       dispatch(
         sortAndFilterResults(sortingType, sortingOrder, selectedFilters)

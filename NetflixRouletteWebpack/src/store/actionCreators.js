@@ -109,18 +109,6 @@ export const setFilteredResults = (data) => ({
   payload: data,
 });
 
-export const getFilteredSearchResults = (filtersArray = []) =>
-  apiAction({
-    url: `${BASE_URL}/movies`,
-    method: "GET",
-    data: { filter: `${filtersArray?.join(", ")}`, limit: 45 },
-    onSuccess: setFilteredResults,
-    onFailure: () => {
-      console.log("Error occured during filtering movies");
-    },
-    label: "FILTER_MOVIES",
-  });
-
 export const addMovie = (newMovieData) =>
   apiAction({
     url: `${BASE_URL}/movies`,
