@@ -47,6 +47,11 @@ const movieList = (state = initialState, action) => {
         ...state,
         sortingOrder: action.payload,
       };
+    case ACTIONS.CHANGE_SORTING_TYPE:
+      return {
+        ...state,
+        sortingType: action.payload,
+      };
     default:
       return state;
   }

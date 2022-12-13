@@ -2,17 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./ResultsFilter.scss";
 import { connect } from "react-redux";
-import { getSelectedFilters } from "../../store/selectors";
+import {
+  getSelectedFilters,
+  getSortingOrder,
+  getSortingType,
+} from "../../store/selectors";
 import {
   getFilteredSearchResults,
   setSelectedFilters,
+  sortAndFilterResults,
 } from "../../store/actionCreators";
 
 function ResultsFilter({
   genresFilterArray,
   selectedFilters = [],
   setSelectedFilters,
-  getFilteredSearchResults,
+  sortingOrder = "desc",
+  sortingType = "vote_average",
+  sortAndFilterResults,
 }) {
   const handleGenreFilterChange = (item) => {
     let newSelectedFilters;
@@ -37,7 +44,7 @@ function ResultsFilter({
       ];
     }
     setSelectedFilters(newSelectedFilters);
-    getFilteredSearchResults(newSelectedFilters);
+    sortAndFilterResults(sortingType, sortingOrder, newSelectedFilters);
   };
 
   return (
@@ -68,6 +75,8 @@ function ResultsFilter({
 const mapStateToProps = (state) => {
   return {
     selectedFilters: getSelectedFilters(state),
+    sortingOrder: getSortingOrder(state),
+    sortingType: getSortingType(state),
   };
 };
 
@@ -77,6 +86,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setSelectedFilters(filterArray)),
     getFilteredSearchResults: (filterArray) =>
       dispatch(getFilteredSearchResults(filterArray)),
+    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+      dispatch(
+        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+      ),
   };
 };
 
@@ -90,7 +103,9 @@ ResultsFilter.propTypes = {
   ).isRequired,
   selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   setSelectedFilters: PropTypes.func.isRequired,
-  getFilteredSearchResults: PropTypes.func.isRequired,
+  sortingOrder: PropTypes.string.isRequired,
+  sortingType: PropTypes.string.isRequired,
+  sortAndFilterResults: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsFilter);

@@ -26,17 +26,17 @@ import {
   closeDeleteModal,
   closeEditModal,
   deleteMovie,
-  fetchMovies,
   getFilteredSearchResults,
   openEditModal,
   setSelectedFilters,
+  sortAndFilterResults,
   updateMovie,
 } from "../../store/actionCreators";
 
 function SearchResultsPanel(props) {
   const {
     movies: resultsArray,
-    fetchMovies,
+    sortAndFilterResults,
     isEditModalOpen,
     isDeleteModalOpen,
     movieToEdit,
@@ -54,7 +54,7 @@ function SearchResultsPanel(props) {
   } = props;
 
   useEffect(() => {
-    fetchMovies();
+    sortAndFilterResults();
   }, []);
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovies: () => dispatch(fetchMovies()),
+    sortAndFilterResults: () => dispatch(sortAndFilterResults()),
     editMovie: (movieData) => dispatch(updateMovie(movieData)),
     deleteMovie: (id) => dispatch(deleteMovie(id)),
     openEditModal: () => dispatch(openEditModal()),
@@ -154,7 +154,7 @@ SearchResultsPanel.propTypes = {
     overview: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
-  fetchMovies: PropTypes.func.isRequired,
+  sortAndFilterResults: PropTypes.func.isRequired,
   isEditModalOpen: PropTypes.bool.isRequired,
   isDeleteModalOpen: PropTypes.bool.isRequired,
   movieToDeleteId: PropTypes.number.isRequired,

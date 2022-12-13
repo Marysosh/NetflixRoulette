@@ -21,6 +21,8 @@ export const getSelectedFilters = (state) => state.movieList.selectedFilters;
 
 export const getSortingOrder = (state) => state.movieList.sortingOrder;
 
+export const getSortingType = (state) => state.movieList.sortingType;
+
 export const getIsAnyModalOpen = (state) => {
   const {
     isAddMovieModalOpen,
