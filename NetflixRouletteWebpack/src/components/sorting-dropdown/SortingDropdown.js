@@ -130,12 +130,18 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 SortingDropdown.propTypes = {
-  sortingOrder: PropTypes.string.isRequired,
+  sortingOrder: PropTypes.string,
   changeSortingOrder: PropTypes.func.isRequired,
-  sortingType: PropTypes.string.isRequired,
+  sortingType: PropTypes.string,
   changeSortingType: PropTypes.func.isRequired,
-  selectedFilters: arrayOf(PropTypes.string).isRequired,
+  selectedFilters: arrayOf(PropTypes.string),
   sortAndFilterResults: PropTypes.func.isRequired,
+};
+
+SortingDropdown.defaultProps = {
+  sortingOrder: "desc",
+  sortingType: "vote_average",
+  selectedFilters: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortingDropdown);

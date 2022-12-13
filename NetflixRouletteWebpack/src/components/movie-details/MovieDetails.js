@@ -29,9 +29,7 @@ function MovieDetails({ movieDetails, showMovieDetails }) {
           <img
             src={image}
             alt="movie cover"
-            onError={(e) =>
-              (e.target.onerror = null)((e.target.src = errorImg))
-            }
+            onError={(e) => (e.target.src = errorImg)}
           />
         </div>
         <div className="movie-details-info">

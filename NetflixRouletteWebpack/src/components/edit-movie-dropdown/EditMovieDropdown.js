@@ -122,16 +122,18 @@ EditMovieDropdown.propTypes = {
   addMovieToEdit: PropTypes.func.isRequired,
   addMovieToDelete: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf({
-    title: PropTypes.string,
-    genre: PropTypes.string,
-    releaseDate: PropTypes.string,
-    rating: PropTypes.string,
-    runtime: PropTypes.string,
-    image: PropTypes.string,
-    overview: PropTypes.string,
-    id: PropTypes.string,
-  }).isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      genre: PropTypes.string,
+      releaseDate: PropTypes.string,
+      rating: PropTypes.number,
+      runtime: PropTypes.string,
+      image: PropTypes.string,
+      overview: PropTypes.string,
+      id: PropTypes.number,
+    })
+  ).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditMovieDropdown);

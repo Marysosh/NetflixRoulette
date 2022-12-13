@@ -95,13 +95,18 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Header.propTypes = {
-  isAddMovieModalOpen: PropTypes.bool.isRequired,
+  isAddMovieModalOpen: PropTypes.bool,
   openAddMovieModal: PropTypes.func.isRequired,
   closeAddMovieModal: PropTypes.func.isRequired,
-  isCongratsModalOpen: PropTypes.bool.isRequired,
+  isCongratsModalOpen: PropTypes.bool,
   openCongratsModal: PropTypes.func.isRequired,
   closeCongratsModal: PropTypes.func.isRequired,
   addMovie: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  isAddMovieModalOpen: false,
+  isCongratsModalOpen: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

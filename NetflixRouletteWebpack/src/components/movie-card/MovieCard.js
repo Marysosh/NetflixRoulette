@@ -30,7 +30,7 @@ function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
         src={image}
         alt={errorImg}
         // eslint-disable-next-line no-return-assign
-        onError={(e) => (e.target.onerror = null)((e.target.src = errorImg))}
+        onError={(e) => (e.target.src = errorImg)}
       />
       <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
     </div>
@@ -43,7 +43,7 @@ MovieCard.propTypes = {
     genre: PropTypes.string,
     releaseDate: PropTypes.string,
     image: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   setMovieDetails: PropTypes.func.isRequired,
   showMovieDetails: PropTypes.func.isRequired,

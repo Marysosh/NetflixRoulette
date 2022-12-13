@@ -31,6 +31,7 @@ import {
   sortAndFilterResults,
   updateMovie,
 } from "../../store/actionCreators";
+import ResultsFilter from "../results-filter/ResultsFilter";
 
 function SearchResultsPanel(props) {
   const {
@@ -141,20 +142,22 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 SearchResultsPanel.propTypes = {
-  movies: PropTypes.arrayOf({
-    title: PropTypes.string,
-    genre: PropTypes.string,
-    releaseDate: PropTypes.string,
-    rating: PropTypes.string,
-    runtime: PropTypes.string,
-    image: PropTypes.string,
-    overview: PropTypes.string,
-    id: PropTypes.string,
-  }).isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      genre: PropTypes.string,
+      releaseDate: PropTypes.string,
+      rating: PropTypes.number,
+      runtime: PropTypes.string,
+      image: PropTypes.string,
+      overview: PropTypes.string,
+      id: PropTypes.number,
+    })
+  ).isRequired,
   sortAndFilterResults: PropTypes.func.isRequired,
-  isEditModalOpen: PropTypes.bool.isRequired,
-  isDeleteModalOpen: PropTypes.bool.isRequired,
-  movieToDeleteId: PropTypes.number.isRequired,
+  isEditModalOpen: PropTypes.bool,
+  isDeleteModalOpen: PropTypes.bool,
+  movieToDeleteId: PropTypes.number,
   deleteMovie: PropTypes.func.isRequired,
   openEditModal: PropTypes.func.isRequired,
   closeEditModal: PropTypes.func.isRequired,
@@ -168,12 +171,21 @@ SearchResultsPanel.propTypes = {
     runtime: PropTypes.number,
     overview: PropTypes.string,
     id: PropTypes.number,
-  }).isRequired,
+  }),
   editMovie: PropTypes.func.isRequired,
-  isAnyModalOpen: PropTypes.bool.isRequired,
+  isAnyModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
   setIsMovieDetailsOpen: PropTypes.func.isRequired,
-  movieDetailsStatus: PropTypes.bool.isRequired,
+  movieDetailsStatus: PropTypes.bool,
+};
+
+SearchResultsPanel.defaultProps = {
+  isEditModalOpen: false,
+  isDeleteModalOpen: false,
+  movieToDeleteId: null,
+  movieToEdit: {},
+  isAnyModalOpen: false,
+  movieDetailsStatus: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);

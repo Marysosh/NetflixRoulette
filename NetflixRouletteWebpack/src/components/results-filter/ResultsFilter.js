@@ -98,11 +98,17 @@ ResultsFilter.propTypes = {
       isSelected: PropTypes.bool,
     })
   ).isRequired,
-  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
   setSelectedFilters: PropTypes.func.isRequired,
-  sortingOrder: PropTypes.string.isRequired,
-  sortingType: PropTypes.string.isRequired,
+  sortingOrder: PropTypes.string,
+  sortingType: PropTypes.string,
   sortAndFilterResults: PropTypes.func.isRequired,
+};
+
+ResultsFilter.defaultProps = {
+  selectedFilters: [],
+  sortingOrder: "desc",
+  sortingType: "vote_average",
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsFilter);
