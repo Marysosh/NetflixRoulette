@@ -47,6 +47,11 @@ const movieList = (state = initialState, action) => {
         ...state,
         sortingOrder: action.payload,
       };
+    case ACTIONS.CHANGE_SORTING_TYPE:
+      return {
+        ...state,
+        sortingType: action.payload,
+      };
     default:
       return state;
   }
@@ -103,7 +108,7 @@ const modalsManagement = (state = {}, action) => {
     case ACTIONS.ADD_MOVIE_TO_EDIT:
       return {
         ...state,
-        movieToEditId: action.payload,
+        movieToEdit: action.payload,
       };
     case ACTIONS.OPEN_DELETE_MODAL:
       return {
@@ -119,6 +124,16 @@ const modalsManagement = (state = {}, action) => {
       return {
         ...state,
         movieToDeleteId: action.payload,
+      };
+    case ACTIONS.SET_MOVIE_DETAILS:
+      return {
+        ...state,
+        movieDetails: action.payload,
+      };
+    case ACTIONS.SHOW_MOVIE_DETAILS:
+      return {
+        ...state,
+        showMovieDetails: action.payload,
       };
     default:
       return state;

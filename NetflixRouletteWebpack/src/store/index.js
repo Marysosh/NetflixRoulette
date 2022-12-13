@@ -1,8 +1,8 @@
-import { fetchMovies } from "./actionCreators";
+import { sortAndFilterResults } from "./actionCreators";
 import storeFactory from "./storeFactory";
 
 const store = storeFactory();
 
-store.dispatch(fetchMovies());
+store.dispatch(sortAndFilterResults());
 
 export default store;

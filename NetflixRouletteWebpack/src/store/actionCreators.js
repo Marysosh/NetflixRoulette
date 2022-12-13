@@ -41,21 +41,30 @@ const setSearchResults = (data) => ({
   payload: data,
 });
 
-export const fetchMovies = () =>
+export const sortAndFilterResults = (
+  sortingType = "vote_average",
+  sortingOrder = "desc",
+  filtersArray = []
+) =>
   apiAction({
     url: `${BASE_URL}/movies`,
     method: "GET",
-    data: { limit: 45 },
+    data: {
+      sortBy: sortingType,
+      sortOrder: sortingOrder,
+      filter: `${filtersArray?.join(", ")}`,
+      limit: 45,
+    },
     onSuccess: setSearchResults,
     onFailure: () => {
-      console.log("Error occured loading movies");
+      console.log("Error occured during sorting type change");
     },
-    label: "FETCH_MOVIES",
+    label: "CHANGE_SORTING",
   });
 
-export const addMovieToEdit = (id) => ({
+export const addMovieToEdit = (movieData) => ({
   type: ACTIONS.ADD_MOVIE_TO_EDIT,
-  payload: id,
+  payload: movieData,
 });
 
 export const addMovieToDelete = (id) => ({
@@ -100,26 +109,24 @@ export const setFilteredResults = (data) => ({
   payload: data,
 });
 
-export const getFilteredSearchResults = (filtersArray = []) =>
-  apiAction({
-    url: `${BASE_URL}/movies`,
-    method: "GET",
-    data: { filter: `${filtersArray?.join(", ")}`, limit: 45 },
-    onSuccess: setSearchResults,
-    onFailure: () => {
-      console.log("Error occured during filtering movies");
-    },
-    label: "FILTER_MOVIES",
-  });
-
 export const addMovie = (newMovieData) =>
   apiAction({
     url: `${BASE_URL}/movies`,
     method: "POST",
     data: newMovieData,
-    onSuccess: (data) => console.log(data),
+    onSuccess: sortAndFilterResults,
     onFailure: () => {},
     label: "ADD_MOVIE",
+  });
+
+export const updateMovie = (movieData) =>
+  apiAction({
+    url: `${BASE_URL}/movies/`,
+    method: "PUT",
+    data: movieData,
+    onSuccess: sortAndFilterResults,
+    onFailure: () => console.log("Error occured during updating the movie"),
+    label: "UPDATE_MOVIE",
   });
 
 export const deleteMovie = (id) =>
@@ -127,7 +134,7 @@ export const deleteMovie = (id) =>
     url: `${BASE_URL}/movies/${id}`,
     method: "DELETE",
     data: { id },
-    onSuccess: getFilteredSearchResults,
+    onSuccess: sortAndFilterResults,
     onFailure: () => {
       console.log("Error occured during deleting movie");
     },
@@ -144,14 +151,17 @@ export const changeSortingOrder = (order = "desc") => ({
   payload: order,
 });
 
-export const changeSortingType = (type = "vote_average", order = "desc") =>
-  apiAction({
-    url: `${BASE_URL}/movies`,
-    method: "GET",
-    data: { sortBy: type, sortOrder: order, limit: 45 },
-    onSuccess: setSearchResults,
-    onFailure: () => {
-      console.log("Error occured during sorting type change");
-    },
-    label: "CHANGE_SORTING",
-  });
+export const changeSortingType = (type = "vote_average") => ({
+  type: ACTIONS.CHANGE_SORTING_TYPE,
+  payload: type,
+});
+
+export const setMovieDetails = (movieInfo) => ({
+  type: ACTIONS.SET_MOVIE_DETAILS,
+  payload: movieInfo,
+});
+
+export const showMovieDetails = (value) => ({
+  type: ACTIONS.SHOW_MOVIE_DETAILS,
+  payload: value,
+});

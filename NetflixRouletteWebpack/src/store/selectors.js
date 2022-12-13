@@ -12,7 +12,7 @@ export const getEditModalStatus = (state) =>
 export const getDeleteModalStatus = (state) =>
   state.modalsManagement.isDeleteModalOpen;
 
-export const getMovieToEditId = (state) => state.modalsManagement.movieToEditId;
+export const getMovieToEdit = (state) => state.modalsManagement.movieToEdit;
 
 export const getMovieToDeleteId = (state) =>
   state.modalsManagement.movieToDeleteId;
@@ -20,3 +20,25 @@ export const getMovieToDeleteId = (state) =>
 export const getSelectedFilters = (state) => state.movieList.selectedFilters;
 
 export const getSortingOrder = (state) => state.movieList.sortingOrder;
+
+export const getSortingType = (state) => state.movieList.sortingType;
+
+export const getIsAnyModalOpen = (state) => {
+  const {
+    isAddMovieModalOpen,
+    isEditModalOpen,
+    isDeleteModalOpen,
+    isCongratsModalOpen,
+  } = state.modalsManagement;
+  return (
+    isAddMovieModalOpen ||
+    isEditModalOpen ||
+    isDeleteModalOpen ||
+    isCongratsModalOpen
+  );
+};
+
+export const getMovieDetails = (state) => state.modalsManagement.movieDetails;
+
+export const getMovieDetailsStatus = (state) =>
+  state.modalsManagement.showMovieDetails;

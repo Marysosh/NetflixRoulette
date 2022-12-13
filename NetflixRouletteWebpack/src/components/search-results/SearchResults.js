@@ -5,15 +5,11 @@ import "./SearchResults.scss";
 
 import MovieCard from "../movie-card/MovieCard";
 
-function SearchResults({ resultsArray, changeIdToEdit }) {
+function SearchResults({ resultsArray }) {
   return (
     <div className="search-results">
       {resultsArray?.map((itemInfo) => (
-        <MovieCard
-          movieInfo={itemInfo}
-          key={itemInfo.id}
-          changeIdToEdit={changeIdToEdit}
-        />
+        <MovieCard movieInfo={itemInfo} key={itemInfo.id} />
       ))}
     </div>
   );
@@ -28,8 +24,8 @@ SearchResults.propTypes = {
       genre: PropTypes.string,
       releaseDate: PropTypes.string,
       image: PropTypes.string,
-      id: PropTypes.string,
+      rating: PropTypes.number,
+      id: PropTypes.number,
     })
   ).isRequired,
-  changeIdToEdit: PropTypes.func.isRequired,
 };

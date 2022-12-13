@@ -19,6 +19,15 @@ function EditMovieModal({
   initialValues,
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
+  const {
+    title: titleValue,
+    image: movieUrlValue,
+    releaseDate: releaseDateValue,
+    rating: ratingValue,
+    runtime: runtimeValue,
+    overview: overviewValue,
+    id,
+  } = editingValues;
 
   const formik = useFormik({
     initialValues,
@@ -53,7 +62,6 @@ function EditMovieModal({
       setSelectedGenres([]);
     },
   });
-
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -195,12 +203,13 @@ EditMovieModal.propTypes = {
   modalTitle: PropTypes.string,
   showCongratsModal: PropTypes.func,
   editingValues: PropTypes.shape({
-    titleValue: PropTypes.string,
-    movieUrlValue: PropTypes.string,
-    releaseDateValue: PropTypes.string,
-    ratingValue: PropTypes.string,
-    runtimeValue: PropTypes.string,
-    overviewValue: PropTypes.string,
+    title: PropTypes.string,
+    image: PropTypes.string,
+    releaseDate: PropTypes.string,
+    rating: PropTypes.string,
+    runtime: PropTypes.string,
+    overview: PropTypes.string,
+    id: PropTypes.number,
   }),
   initialValues: PropTypes.shape({
     title: PropTypes.string,

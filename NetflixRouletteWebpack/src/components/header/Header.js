@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import UserContext from "../../utils/contexts";
 
 import {
   openAddMovieModal,
@@ -33,8 +32,6 @@ function Header(props) {
     addMovie,
   } = props;
 
-  const { addNewMovieHandler } = useContext(UserContext);
-
   const setIsModalOpen = (value) => {
     value ? openAddMovieModal() : closeAddMovieModal();
   };
@@ -54,7 +51,6 @@ function Header(props) {
     };
     addMovie(refactoredNewMovieData);
 
-    addNewMovieHandler(newMovieData);
     closeAddMovieModal();
   };
 
@@ -109,13 +105,18 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Header.propTypes = {
-  isAddMovieModalOpen: PropTypes.bool.isRequired,
+  isAddMovieModalOpen: PropTypes.bool,
   openAddMovieModal: PropTypes.func.isRequired,
   closeAddMovieModal: PropTypes.func.isRequired,
-  isCongratsModalOpen: PropTypes.bool.isRequired,
+  isCongratsModalOpen: PropTypes.bool,
   openCongratsModal: PropTypes.func.isRequired,
   closeCongratsModal: PropTypes.func.isRequired,
   addMovie: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  isAddMovieModalOpen: false,
+  isCongratsModalOpen: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

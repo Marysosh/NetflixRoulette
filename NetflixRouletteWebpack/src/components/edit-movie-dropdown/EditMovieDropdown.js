@@ -7,6 +7,7 @@ import {
   openDeleteModal,
   openEditModal,
 } from "../../store/actionCreators";
+import { getMovies } from "../../store/selectors";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./EditMovieDropdowm.scss";
@@ -22,6 +23,7 @@ function EditMovieDropdown(props) {
     addMovieToEdit,
     addMovieToDelete,
     id,
+    movies,
   } = props;
   const [openedDropdown, setOpenedDropdown] = useState(false);
 
@@ -34,7 +36,8 @@ function EditMovieDropdown(props) {
 
   const handleChooseEdit = (event) => {
     event.stopPropagation();
-    addMovieToEdit(id);
+    const movieData = movies.find((movie) => movie.id === id);
+    addMovieToEdit(movieData);
     openEditModal();
     handleOpenDropdown(false);
   };
@@ -98,11 +101,17 @@ function EditMovieDropdown(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    movies: getMovies(state),
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     openEditModal: () => dispatch(openEditModal()),
     openDeleteModal: () => dispatch(openDeleteModal()),
-    addMovieToEdit: (id) => dispatch(addMovieToEdit(id)),
+    addMovieToEdit: (movieData) => dispatch(addMovieToEdit(movieData)),
     addMovieToDelete: (id) => dispatch(addMovieToDelete(id)),
   };
 };
@@ -113,6 +122,18 @@ EditMovieDropdown.propTypes = {
   addMovieToEdit: PropTypes.func.isRequired,
   addMovieToDelete: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      genre: PropTypes.string,
+      releaseDate: PropTypes.string,
+      rating: PropTypes.number,
+      runtime: PropTypes.string,
+      image: PropTypes.string,
+      overview: PropTypes.string,
+      id: PropTypes.number,
+    })
+  ).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(EditMovieDropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(EditMovieDropdown);
