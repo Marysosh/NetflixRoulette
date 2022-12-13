@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
@@ -19,6 +19,11 @@ function EditMovieModal({
   initialValues,
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
+  useEffect(() => {
+    if (modalTitle === "Edit movie") {
+      setSelectedGenres(initialValues.genre);
+    }
+  }, [initialValues.genre, modalTitle]);
 
   const formik = useFormik({
     initialValues,
@@ -108,7 +113,10 @@ function EditMovieModal({
               </div>
 
               <label className="label">Genre</label>
-              <GenreDropdown setSelectedGenres={setSelectedGenres} />
+              <GenreDropdown
+                setSelectedGenres={setSelectedGenres}
+                selectedGenres={selectedGenres}
+              />
               <div className="validation-error">
                 {selectedGenres.length ? null : "Choose at least 1 genre"}
               </div>
@@ -213,6 +221,7 @@ EditMovieModal.propTypes = {
     rating: PropTypes.string,
     runtime: PropTypes.string,
     overview: PropTypes.string,
+    genre: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
 };
