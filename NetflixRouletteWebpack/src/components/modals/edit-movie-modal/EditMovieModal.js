@@ -47,6 +47,10 @@ function EditMovieModal({
       overview: Yup.string().required("Overview is required"),
     }),
     onSubmit: (values) => {
+      if (!selectedGenres.length) {
+        formik.isValidating = false;
+        formik.errors.movieURL.typeError;
+      }
       if (modalTitle === "Add movie") {
         handleMovieEdit({ ...values, genres: selectedGenres });
         showCongratsModal(true);
