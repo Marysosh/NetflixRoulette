@@ -63,7 +63,11 @@ function EditMovieModal({
       }
     },
     onReset: () => {
-      setSelectedGenres([]);
+      if (modalTitle === "Add movie") {
+        setSelectedGenres("");
+      } else {
+        setSelectedGenres(initialValues.genre);
+      }
     },
   });
   return (
