@@ -165,3 +165,13 @@ export const changeSortingType = (type = "vote_average", order = "desc") =>
     },
     label: "CHANGE_SORTING",
   });
+
+export const setMovieDetails = (movieInfo) => ({
+  type: ACTIONS.SET_MOVIE_DETAILS,
+  payload: movieInfo,
+});
+
+export const showMovieDetails = (value) => ({
+  type: ACTIONS.SHOW_MOVIE_DETAILS,
+  payload: value,
+});

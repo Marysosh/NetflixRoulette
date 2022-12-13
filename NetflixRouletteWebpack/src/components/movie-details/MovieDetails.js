@@ -1,23 +1,26 @@
 /* eslint-disable no-return-assign */
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import "./MovieDetails.scss";
 import thinLogo from "./logo_thin.png";
 import searchIcon from "./search_icon.png";
 import ratingBorder from "./rating-frame.png";
 import errorImg from "./error_image.png";
+import { showMovieDetails } from "../../store/actionCreators";
+import { getMovieDetails } from "../../store/selectors";
 
-function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
+function MovieDetails({ movieDetails, showMovieDetails }) {
   const { title, genre, releaseDate, rating, runtime, image, overview } =
-    movieInfo;
+    movieDetails;
   return (
     <div className="movie-details-container">
       <div className="movie-details-header">
-        <div className="logo" onClick={() => showMovieDetailsHandler()}>
+        <div className="logo" onClick={() => showMovieDetails(false)}>
           <img src={thinLogo} alt="thin logo" />
         </div>
-        <div className="search-icon" onClick={() => showMovieDetailsHandler()}>
+        <div className="search-icon" onClick={() => showMovieDetails(false)}>
           <img src={searchIcon} alt="search icon" />
         </div>
       </div>
@@ -55,17 +58,29 @@ function MovieDetails({ movieInfo, showMovieDetailsHandler }) {
   );
 }
 
-export default MovieDetails;
-
 MovieDetails.propTypes = {
-  movieInfo: PropTypes.shape({
+  movieDetails: PropTypes.shape({
     title: PropTypes.string,
     genre: PropTypes.string,
     releaseDate: PropTypes.string,
     image: PropTypes.string,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     runtime: PropTypes.string,
     overview: PropTypes.string,
   }).isRequired,
-  showMovieDetailsHandler: PropTypes.func.isRequired,
+  showMovieDetails: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => {
+  return {
+    movieDetails: getMovieDetails(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showMovieDetails: (value) => dispatch(showMovieDetails(value)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);

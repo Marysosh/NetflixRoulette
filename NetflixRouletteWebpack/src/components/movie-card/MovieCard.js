@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import UserContext from "../../utils/contexts";
+import { connect } from "react-redux";
+
+import { setMovieDetails, showMovieDetails } from "../../store/actionCreators";
 
 import "./MovieCard.scss";
 
@@ -9,16 +11,16 @@ import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
 import errorImg from "./error_image.png";
 
-function MovieCard({ movieInfo }) {
+function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
-  const { showMovieDetailsHandler } = useContext(UserContext);
 
   return (
     <div
       className="movie-card"
       id={id}
       onClick={() => {
-        showMovieDetailsHandler(movieInfo);
+        setMovieDetails(movieInfo);
+        showMovieDetails(true);
         scrollTop();
       }}
     >
@@ -35,8 +37,6 @@ function MovieCard({ movieInfo }) {
   );
 }
 
-export default MovieCard;
-
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
     title: PropTypes.string,
@@ -45,8 +45,19 @@ MovieCard.propTypes = {
     image: PropTypes.string,
     id: PropTypes.string,
   }),
+  setMovieDetails: PropTypes.func.isRequired,
+  showMovieDetails: PropTypes.func.isRequired,
 };
 
 MovieCard.defaultProps = {
   movieInfo: {},
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMovieDetails: (details) => dispatch(setMovieDetails(details)),
+    showMovieDetails: (value) => dispatch(showMovieDetails(value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MovieCard);

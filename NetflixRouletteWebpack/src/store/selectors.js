@@ -35,3 +35,8 @@ export const getIsAnyModalOpen = (state) => {
     isCongratsModalOpen
   );
 };
+
+export const getMovieDetails = (state) => state.modalsManagement.movieDetails;
+
+export const getMovieDetailsStatus = (state) =>
+  state.modalsManagement.showMovieDetails;

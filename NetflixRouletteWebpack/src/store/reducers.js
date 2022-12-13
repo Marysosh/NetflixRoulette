@@ -120,6 +120,16 @@ const modalsManagement = (state = {}, action) => {
         ...state,
         movieToDeleteId: action.payload,
       };
+    case ACTIONS.SET_MOVIE_DETAILS:
+      return {
+        ...state,
+        movieDetails: action.payload,
+      };
+    case ACTIONS.SHOW_MOVIE_DETAILS:
+      return {
+        ...state,
+        showMovieDetails: action.payload,
+      };
     default:
       return state;
   }

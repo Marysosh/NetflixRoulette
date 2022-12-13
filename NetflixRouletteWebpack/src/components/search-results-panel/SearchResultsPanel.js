@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -20,6 +20,7 @@ import {
   getMovieToEdit,
   getSelectedFilters,
   getIsAnyModalOpen,
+  getMovieDetailsStatus,
 } from "../../store/selectors";
 import {
   closeDeleteModal,
@@ -31,8 +32,6 @@ import {
   setSelectedFilters,
   updateMovie,
 } from "../../store/actionCreators";
-
-const resultsNumber = 45;
 
 function SearchResultsPanel(props) {
   const {
@@ -50,6 +49,8 @@ function SearchResultsPanel(props) {
     setSelectedFilters,
     isAnyModalOpen,
     setIsModalOpen,
+    setIsMovieDetailsOpen,
+    movieDetailsStatus,
   } = props;
 
   useEffect(() => {
@@ -59,6 +60,10 @@ function SearchResultsPanel(props) {
   useEffect(() => {
     setIsModalOpen(isAnyModalOpen);
   }, [isAnyModalOpen]);
+
+  useEffect(() => {
+    setIsMovieDetailsOpen(movieDetailsStatus);
+  }, [setIsMovieDetailsOpen, movieDetailsStatus]);
 
   const handleEditModalOpen = (value) => {
     value ? openEditModal() : closeEditModal();
@@ -91,7 +96,7 @@ function SearchResultsPanel(props) {
   return (
     <div className="search-results-panel">
       <ResultsHeader />
-      <ResultsCount resultsNumber={resultsNumber} />
+      <ResultsCount resultsNumber={resultsArray.length} />
       <SearchResults resultsArray={resultsArray} />
       {isEditModalOpen && (
         <EditMovieModal
@@ -120,6 +125,7 @@ const mapStateToProps = (state) => {
     selectedFilters: getSelectedFilters(state),
     movieToEdit: getMovieToEdit(state),
     isAnyModalOpen: getIsAnyModalOpen(state),
+    movieDetailsStatus: getMovieDetailsStatus(state),
   };
 };
 
@@ -138,7 +144,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 SearchResultsPanel.propTypes = {
-  movies: PropTypes.shape({
+  movies: PropTypes.arrayOf({
     title: PropTypes.string,
     genre: PropTypes.string,
     releaseDate: PropTypes.string,
@@ -169,6 +175,8 @@ SearchResultsPanel.propTypes = {
   editMovie: PropTypes.func.isRequired,
   isAnyModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
+  setIsMovieDetailsOpen: PropTypes.func.isRequired,
+  movieDetailsStatus: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);
