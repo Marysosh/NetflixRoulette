@@ -9,13 +9,9 @@ import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
 import errorImg from "./error_image.png";
 
-function MovieCard({ movieInfo, changeIdToEdit }) {
+function MovieCard({ movieInfo }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
   const { showMovieDetailsHandler } = useContext(UserContext);
-
-  const handleEditIdChange = () => {
-    changeIdToEdit(id);
-  };
 
   return (
     <div
@@ -26,7 +22,7 @@ function MovieCard({ movieInfo, changeIdToEdit }) {
         scrollTop();
       }}
     >
-      <EditMovieDropdown handleEditIdChange={handleEditIdChange} id={id} />
+      <EditMovieDropdown id={id} />
       <img
         className="movie-card-image"
         src={image}
@@ -49,7 +45,6 @@ MovieCard.propTypes = {
     image: PropTypes.string,
     id: PropTypes.string,
   }),
-  changeIdToEdit: PropTypes.func.isRequired,
 };
 
 MovieCard.defaultProps = {

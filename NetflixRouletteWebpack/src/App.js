@@ -12,18 +12,9 @@ import SearchResultsPanel from "./components/search-results-panel/SearchResultsP
 import Footer from "./components/footer/Footer";
 
 function App() {
-  const [isModalOpen, setIsOpen] = useState(false);
-  const [newMovieData, setNewMovieData] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMovieDetailsOpen, setIsMovieDetailsOpen] = useState(false);
   const [movieDetails, setMovieDetails] = useState("");
-
-  const openModalHandler = (value) => {
-    setIsOpen(value);
-  };
-
-  const addNewMovieHandler = (addedMovieData) => {
-    setNewMovieData(addedMovieData);
-  };
 
   const showMovieDetailsHandler = (movieInfo) => {
     setMovieDetails(movieInfo);
@@ -37,8 +28,6 @@ function App() {
           value={useMemo(
             () => ({
               showMovieDetailsHandler,
-              addNewMovieHandler,
-              openModalHandler,
             }),
             []
           )}
@@ -52,11 +41,7 @@ function App() {
             ) : (
               <SearchPanel />
             )}
-            <SearchResultsPanel
-              openModalHandler={openModalHandler}
-              addNewMovieHandler={addNewMovieHandler}
-              newMovieData={newMovieData}
-            />
+            <SearchResultsPanel setIsModalOpen={setIsModalOpen} />
             <Footer />
           </div>
         </UserContext.Provider>

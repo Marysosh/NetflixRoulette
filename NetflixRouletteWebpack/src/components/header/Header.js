@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import UserContext from "../../utils/contexts";
 
 import {
   openAddMovieModal,
@@ -33,8 +32,6 @@ function Header(props) {
     addMovie,
   } = props;
 
-  const { addNewMovieHandler } = useContext(UserContext);
-
   const setIsModalOpen = (value) => {
     value ? openAddMovieModal() : closeAddMovieModal();
   };
@@ -54,7 +51,6 @@ function Header(props) {
     };
     addMovie(refactoredNewMovieData);
 
-    addNewMovieHandler(newMovieData);
     closeAddMovieModal();
   };
 

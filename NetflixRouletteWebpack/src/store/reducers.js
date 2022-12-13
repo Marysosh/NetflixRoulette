@@ -103,7 +103,7 @@ const modalsManagement = (state = {}, action) => {
     case ACTIONS.ADD_MOVIE_TO_EDIT:
       return {
         ...state,
-        movieToEditId: action.payload,
+        movieToEdit: action.payload,
       };
     case ACTIONS.OPEN_DELETE_MODAL:
       return {

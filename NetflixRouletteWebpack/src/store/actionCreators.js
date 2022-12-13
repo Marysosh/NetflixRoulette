@@ -53,9 +53,9 @@ export const fetchMovies = () =>
     label: "FETCH_MOVIES",
   });
 
-export const addMovieToEdit = (id) => ({
+export const addMovieToEdit = (movieData) => ({
   type: ACTIONS.ADD_MOVIE_TO_EDIT,
-  payload: id,
+  payload: movieData,
 });
 
 export const addMovieToDelete = (id) => ({
@@ -122,12 +122,22 @@ export const addMovie = (newMovieData) =>
     label: "ADD_MOVIE",
   });
 
+export const updateMovie = (movieData) =>
+  apiAction({
+    url: `${BASE_URL}/movies/`,
+    method: "PUT",
+    data: movieData,
+    onSuccess: fetchMovies,
+    onFailure: () => console.log("Error occured during updating the movie"),
+    label: "UPDATE_MOVIE",
+  });
+
 export const deleteMovie = (id) =>
   apiAction({
     url: `${BASE_URL}/movies/${id}`,
     method: "DELETE",
     data: { id },
-    onSuccess: getFilteredSearchResults,
+    onSuccess: fetchMovies,
     onFailure: () => {
       console.log("Error occured during deleting movie");
     },

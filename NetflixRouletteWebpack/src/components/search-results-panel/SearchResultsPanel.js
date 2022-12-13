@@ -17,8 +17,9 @@ import {
   getDeleteModalStatus,
   getEditModalStatus,
   getMovieToDeleteId,
-  getMovieToEditId,
+  getMovieToEdit,
   getSelectedFilters,
+  getIsAnyModalOpen,
 } from "../../store/selectors";
 import {
   closeDeleteModal,
@@ -28,89 +29,62 @@ import {
   getFilteredSearchResults,
   openEditModal,
   setSelectedFilters,
+  updateMovie,
 } from "../../store/actionCreators";
 
 const resultsNumber = 45;
 
 function SearchResultsPanel(props) {
   const {
-    openModalHandler,
-    newMovieData,
     movies: resultsArray,
     fetchMovies,
     isEditModalOpen,
     isDeleteModalOpen,
-    movieToEditId,
+    movieToEdit,
+    editMovie,
     movieToDeleteId,
     deleteMovie,
     openEditModal,
     closeEditModal,
     closeDeleteModal,
     setSelectedFilters,
+    isAnyModalOpen,
+    setIsModalOpen,
   } = props;
-  const [moviesArray, setMoviesArray] = useState(resultsArray);
-
-  const [movieToEdit, setMovieToEdit] = useState("");
-
-  const [editingValues, setEditingValues] = useState("");
 
   useEffect(() => {
     fetchMovies();
   }, []);
 
   useEffect(() => {
-    setMoviesArray(resultsArray);
-  }, [resultsArray]);
-
-  useEffect(() => {
-    newMovieData.genre &&
-      setMoviesArray([
-        ...moviesArray,
-        { ...newMovieData, id: (Math.random() + 1).toString() },
-      ]);
-  }, [newMovieData]);
+    setIsModalOpen(isAnyModalOpen);
+  }, [isAnyModalOpen]);
 
   const handleEditModalOpen = (value) => {
     value ? openEditModal() : closeEditModal();
   };
 
-  const updateFormValues = (id) => {
-    const {
-      title,
-      image: movieUrl,
-      releaseDate,
-      rating,
-      runtime,
-      overview,
-    } = { ...moviesArray.find((item) => item.id === id) };
-    setEditingValues({
-      titleValue: title,
-      movieUrlValue: movieUrl,
-      releaseDateValue: releaseDate,
-      ratingValue: rating,
-      runtimeValue: runtime,
-      overviewValue: overview,
-    });
-  };
-
-  const changeIdToEdit = (idToEdit) => {
-    setMovieToEdit(idToEdit);
-    updateFormValues(idToEdit);
-  };
-
   const handleMovieEdit = (newMovieData) => {
-    const movieOldData = moviesArray.find((item) => item.id === movieToEdit);
-    setMoviesArray([
-      ...moviesArray.filter((item) => item.id !== movieToEdit),
-      { ...movieOldData, ...newMovieData },
-    ]);
+    const { title, runtime, releaseDate, rating, overview, image, genre, id } =
+      newMovieData;
+    const parsedMovieData = {
+      title,
+      vote_average: Number(rating),
+      release_date: releaseDate,
+      poster_path: image,
+      overview,
+      runtime: Number(runtime),
+      genres: genre.split(", "),
+      id,
+    };
+    setSelectedFilters([]);
+    editMovie(parsedMovieData);
     closeEditModal();
   };
 
   const handleMovieDelete = () => {
-    deleteMovie(movieToDeleteId);
     setSelectedFilters([]);
-    fetchMovies();
+    deleteMovie(movieToDeleteId);
     closeDeleteModal();
   };
 
@@ -118,16 +92,13 @@ function SearchResultsPanel(props) {
     <div className="search-results-panel">
       <ResultsHeader />
       <ResultsCount resultsNumber={resultsNumber} />
-      <SearchResults
-        resultsArray={moviesArray}
-        changeIdToEdit={changeIdToEdit}
-      />
+      <SearchResults resultsArray={resultsArray} />
       {isEditModalOpen && (
         <EditMovieModal
           modalTitle="Edit movie"
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
-          editingValues={editingValues}
+          editingValues={movieToEdit}
         />
       )}
       {isDeleteModalOpen && (
@@ -145,15 +116,17 @@ const mapStateToProps = (state) => {
     movies: getMovies(state),
     isEditModalOpen: getEditModalStatus(state),
     isDeleteModalOpen: getDeleteModalStatus(state),
-    movieToEditId: getMovieToEditId(state),
     movieToDeleteId: getMovieToDeleteId(state),
     selectedFilters: getSelectedFilters(state),
+    movieToEdit: getMovieToEdit(state),
+    isAnyModalOpen: getIsAnyModalOpen(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: () => dispatch(fetchMovies()),
+    editMovie: (movieData) => dispatch(updateMovie(movieData)),
     deleteMovie: (id) => dispatch(deleteMovie(id)),
     openEditModal: () => dispatch(openEditModal()),
     closeEditModal: () => dispatch(closeEditModal()),
@@ -165,19 +138,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 SearchResultsPanel.propTypes = {
-  openModalHandler: PropTypes.func.isRequired,
-  newMovieData: PropTypes.oneOfType([
-    PropTypes.shape({
-      title: PropTypes.string,
-      movieUrlValue: PropTypes.string,
-      releaseDate: PropTypes.string,
-      genre: PropTypes.string,
-      rating: PropTypes.string,
-      runtime: PropTypes.string,
-      overview: PropTypes.string,
-    }),
-    PropTypes.string,
-  ]).isRequired,
   movies: PropTypes.shape({
     title: PropTypes.string,
     genre: PropTypes.string,
@@ -191,13 +151,24 @@ SearchResultsPanel.propTypes = {
   fetchMovies: PropTypes.func.isRequired,
   isEditModalOpen: PropTypes.bool.isRequired,
   isDeleteModalOpen: PropTypes.bool.isRequired,
-  movieToEditId: PropTypes.number.isRequired,
   movieToDeleteId: PropTypes.number.isRequired,
   deleteMovie: PropTypes.func.isRequired,
   openEditModal: PropTypes.func.isRequired,
   closeEditModal: PropTypes.func.isRequired,
   closeDeleteModal: PropTypes.func.isRequired,
   setSelectedFilters: PropTypes.func.isRequired,
+  movieToEdit: PropTypes.shape({
+    title: PropTypes.string,
+    image: PropTypes.string,
+    releaseDate: PropTypes.number,
+    rating: PropTypes.number,
+    runtime: PropTypes.number,
+    overview: PropTypes.string,
+    id: PropTypes.number,
+  }).isRequired,
+  editMovie: PropTypes.func.isRequired,
+  isAnyModalOpen: PropTypes.bool.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);
