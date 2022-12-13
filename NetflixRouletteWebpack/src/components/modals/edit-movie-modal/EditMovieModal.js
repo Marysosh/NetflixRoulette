@@ -19,15 +19,6 @@ function EditMovieModal({
   initialValues,
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
-  const {
-    title: titleValue,
-    image: movieUrlValue,
-    releaseDate: releaseDateValue,
-    rating: ratingValue,
-    runtime: runtimeValue,
-    overview: overviewValue,
-    id,
-  } = editingValues;
 
   const formik = useFormik({
     initialValues,
@@ -55,7 +46,11 @@ function EditMovieModal({
         handleMovieEdit({ ...values, genres: selectedGenres });
         showCongratsModal(true);
       } else {
-        alert(JSON.stringify(values, null, 2));
+        handleMovieEdit({
+          ...values,
+          genres: selectedGenres,
+          id: initialValues.id,
+        });
       }
     },
     onReset: () => {
@@ -218,6 +213,7 @@ EditMovieModal.propTypes = {
     rating: PropTypes.string,
     runtime: PropTypes.string,
     overview: PropTypes.string,
+    id: PropTypes.number,
   }).isRequired,
 };
 

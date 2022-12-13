@@ -53,7 +53,7 @@ export const sortAndFilterResults = (
       sortBy: sortingType,
       sortOrder: sortingOrder,
       filter: `${filtersArray?.join(", ")}`,
-      limit: 45,
+      limit: 100,
     },
     onSuccess: setSearchResults,
     onFailure: () => {
@@ -109,32 +109,32 @@ export const setFilteredResults = (data) => ({
   payload: data,
 });
 
-export const addMovie = (newMovieData) =>
+export const addMovie = (newMovieData, callbackFn) =>
   apiAction({
     url: `${BASE_URL}/movies`,
     method: "POST",
     data: newMovieData,
-    onSuccess: sortAndFilterResults,
+    onSuccess: callbackFn,
     onFailure: () => {},
     label: "ADD_MOVIE",
   });
 
-export const updateMovie = (movieData) =>
+export const updateMovie = (movieData, callbackFn) =>
   apiAction({
     url: `${BASE_URL}/movies/`,
     method: "PUT",
     data: movieData,
-    onSuccess: sortAndFilterResults,
+    onSuccess: callbackFn,
     onFailure: () => console.log("Error occured during updating the movie"),
     label: "UPDATE_MOVIE",
   });
 
-export const deleteMovie = (id) =>
+export const deleteMovie = (id, callbackFn) =>
   apiAction({
     url: `${BASE_URL}/movies/${id}`,
     method: "DELETE",
     data: { id },
-    onSuccess: sortAndFilterResults,
+    onSuccess: callbackFn,
     onFailure: () => {
       console.log("Error occured during deleting movie");
     },

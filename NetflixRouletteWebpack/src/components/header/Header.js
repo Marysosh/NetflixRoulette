@@ -8,10 +8,14 @@ import {
   openCongratsModal,
   closeCongratsModal,
   addMovie,
+  sortAndFilterResults,
 } from "../../store/actionCreators";
 import {
   getAddMovieModalStatus,
   getCongratsModalStatus,
+  getSelectedFilters,
+  getSortingOrder,
+  getSortingType,
 } from "../../store/selectors";
 
 import "./Header.scss";
@@ -30,6 +34,10 @@ function Header(props) {
     openCongratsModal,
     closeCongratsModal,
     addMovie,
+    sortingType,
+    sortingOrder,
+    selectedFilters,
+    sortAndFilterResults,
   } = props;
 
   const setIsModalOpen = (value) => {
@@ -49,7 +57,15 @@ function Header(props) {
       runtime: Number(runtime),
       genres: genres.split(", "),
     };
-    addMovie(refactoredNewMovieData);
+    addMovie(
+      refactoredNewMovieData,
+      sortAndFilterResults.bind(
+        null,
+        sortingType,
+        sortingOrder,
+        selectedFilters
+      )
+    );
 
     closeAddMovieModal();
   };
@@ -91,6 +107,9 @@ const mapStateToProps = (state) => {
   return {
     isAddMovieModalOpen: getAddMovieModalStatus(state),
     isCongratsModalOpen: getCongratsModalStatus(state),
+    selectedFilters: getSelectedFilters(state),
+    sortingType: getSortingType(state),
+    sortingOrder: getSortingOrder(state),
   };
 };
 
@@ -101,6 +120,10 @@ const mapDispatchToProps = (dispatch) => {
     openCongratsModal: () => dispatch(openCongratsModal()),
     closeCongratsModal: () => dispatch(closeCongratsModal()),
     addMovie: (data) => dispatch(addMovie(data)),
+    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+      dispatch(
+        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+      ),
   };
 };
 
@@ -112,11 +135,18 @@ Header.propTypes = {
   openCongratsModal: PropTypes.func.isRequired,
   closeCongratsModal: PropTypes.func.isRequired,
   addMovie: PropTypes.func.isRequired,
+  sortingOrder: PropTypes.string,
+  sortingType: PropTypes.string,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
+  sortAndFilterResults: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
   isAddMovieModalOpen: false,
   isCongratsModalOpen: false,
+  sortingType: "vote_average",
+  sortingOrder: "desc",
+  selectedFilters: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
