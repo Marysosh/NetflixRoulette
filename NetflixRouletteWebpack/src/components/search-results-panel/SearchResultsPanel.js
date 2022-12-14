@@ -57,9 +57,9 @@ function SearchResultsPanel(props) {
     selectedFilters,
   } = props;
 
-  useEffect(() => {
-    sortAndFilterResults();
-  }, []);
+  // useEffect(() => {
+  //   sortAndFilterResults();
+  // }, []);
 
   useEffect(() => {
     setIsModalOpen(isAnyModalOpen);
