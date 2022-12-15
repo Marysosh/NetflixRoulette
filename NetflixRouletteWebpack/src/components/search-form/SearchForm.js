@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./SearchForm.scss";
-// import SearchInput from "../search-input/SearchInput";
 import FilledButton from "../filled-button/FilledButton";
 
 function SearchForm() {
@@ -23,7 +22,6 @@ function SearchForm() {
   return (
     <form onSubmit={btnHandler}>
       <div className="search-form">
-        {/* <SearchInput /> */}
         <input
           className="search-input"
           type="text"

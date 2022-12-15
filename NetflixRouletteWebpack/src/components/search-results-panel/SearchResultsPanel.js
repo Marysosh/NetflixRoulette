@@ -66,7 +66,7 @@ function SearchResultsPanel(props) {
 
   useEffect(() => {
     const newId = Number(selectedMovie.get("movie"));
-    const movieInfo = resultsArray.find((movie) => {
+    const movieInfo = resultsArray?.find((movie) => {
       return movie.id === newId;
     });
     if (movieInfo?.id) {

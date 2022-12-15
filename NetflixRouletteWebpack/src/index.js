@@ -23,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "search",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: ":searchQuery",
