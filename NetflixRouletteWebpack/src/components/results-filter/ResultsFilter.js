@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ResultsFilter.scss";
 import { connect } from "react-redux";
+import { useSearchParams, useParams } from "react-router-dom";
 import {
   getSelectedFilters,
   getSortingOrder,
@@ -20,6 +21,22 @@ function ResultsFilter({
   sortingType = "vote_average",
   sortAndFilterResults,
 }) {
+  const [genreArray, setGenre] = useSearchParams();
+  const { searchQuery } = useParams();
+
+  useEffect(() => {
+    if (genreArray.get("genre")) {
+      setSelectedFilters(genreArray.get("genre").split("-"));
+      sortAndFilterResults(
+        sortingType,
+        sortingOrder,
+        genreArray.get("genre").split("-"),
+        searchQuery,
+        "title"
+      );
+    }
+  }, []);
+
   const handleGenreFilterChange = (item) => {
     let newSelectedFilters;
     if (
@@ -27,6 +44,7 @@ function ResultsFilter({
       !selectedFilters.includes(item.filterName)
     ) {
       newSelectedFilters = [];
+      setGenre({});
     } else if (selectedFilters.includes(item.filterName)) {
       newSelectedFilters =
         selectedFilters.length !== 1
@@ -42,8 +60,18 @@ function ResultsFilter({
         item.filterName,
       ];
     }
+
+    newSelectedFilters.length
+      ? setGenre({ genre: [...newSelectedFilters].join("-") })
+      : setGenre({});
     setSelectedFilters(newSelectedFilters);
-    sortAndFilterResults(sortingType, sortingOrder, newSelectedFilters);
+    sortAndFilterResults(
+      sortingType,
+      sortingOrder,
+      newSelectedFilters,
+      searchQuery,
+      "title"
+    );
   };
 
   return (
@@ -51,8 +79,9 @@ function ResultsFilter({
       {genresFilterArray.map((item) => (
         <li
           className={
-            selectedFilters.includes(item.filterName) ||
-            (selectedFilters.length === 0 && item.filterName === "All")
+            genreArray.get("genre")?.includes(item.filterName) ||
+            (genreArray.get("genre")?.length == null &&
+              item.filterName === "All")
               ? "results-filter-item__selected"
               : "results-filter-item"
           }
@@ -83,9 +112,21 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSelectedFilters: (filterArray) =>
       dispatch(setSelectedFilters(filterArray)),
-    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+    sortAndFilterResults: (
+      sortingType,
+      sortingOrder,
+      selectedFilters,
+      searchQuery,
+      searchBy
+    ) =>
       dispatch(
-        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+        sortAndFilterResults(
+          sortingType,
+          sortingOrder,
+          selectedFilters,
+          searchQuery,
+          searchBy
+        )
       ),
   };
 };

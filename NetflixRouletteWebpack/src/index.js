@@ -15,19 +15,23 @@ const router = createBrowserRouter([
     path: "/",
     element: <Navigate to="search" />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "search",
-    element: <App />,
     loader: () => {
       store.dispatch(sortAndFilterResults("", "", [], "", ""));
       return null;
     },
+  },
+  {
+    path: "search",
+    element: <App />,
     children: [
       {
         path: ":searchQuery",
         element: <App />,
         loader: ({ params }) => {
+          // const genreArray =
+          //   (info.request.url.includes("?") &&
+          //     info?.request?.url?.split("?")[1].split("=")[1].split("-")) ||
+          //   [];
           store.dispatch(
             sortAndFilterResults("", "", [], params.searchQuery, "title")
           );
@@ -36,14 +40,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "search/:searchQuery",
-  //   element: <App />,
-  //   loader: () => {
-  //     store.dispatch(sortAndFilterResults("", "", [], "", ""));
-  //     return null;
-  //   },
-  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
