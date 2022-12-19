@@ -1,12 +1,11 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
+import { genreArray } from "../../utils/constants";
 
 import "./GenreDropdown.scss";
 import ascSign from "./ascSign.png";
 import descSign from "./descSign.png";
-
-const genreArray = ["Crime", "Documentary", "Horror", "Comedy"];
 
 function GenreDropdown(props) {
   const [open, setOpen] = useState(false);
