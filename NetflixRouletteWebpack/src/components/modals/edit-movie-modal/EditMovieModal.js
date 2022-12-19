@@ -1,14 +1,13 @@
-/* eslint-disable no-useless-escape */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import PropTypes from "prop-types";
 
 import "./EditMovieModal.scss";
 import crossIcon from "../close_button.png";
 
 import GenreDropdown from "../../genre-dropdown/GenreDropdown";
+import { validationParameters } from "./validationSchema";
 
 const BASE_CLASS = "edit-movie-modal";
 function EditMovieModal({
@@ -27,25 +26,7 @@ function EditMovieModal({
 
   const formik = useFormik({
     initialValues,
-    validationSchema: Yup.object({
-      title: Yup.string().required("Title is required"),
-      movieURL: Yup.string()
-        .matches(
-          /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,
-          "Add valid URL"
-        )
-        .required("Movie URL is required")
-        .typeError("Movie URL must be valid"),
-      releaseDate: Yup.string()
-        .matches(
-          /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/,
-          "Use this format: YYYY-MM-DD"
-        )
-        .required("Release date is required"),
-      rating: Yup.number().typeError("Rating must be a number"),
-      runtime: Yup.number().typeError("Runtime must be a number"),
-      overview: Yup.string().required("Overview is required"),
-    }),
+    validationSchema: validationParameters,
     onSubmit: (values) => {
       if (!selectedGenres.length) {
         formik.isValidating = false;
