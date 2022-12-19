@@ -11,6 +11,7 @@ import {
   setSelectedFilters,
   sortAndFilterResults,
 } from "../../store/actionCreators";
+import { FILTER_NAMES } from "../../utils/constants";
 
 function ResultsFilter({
   genresFilterArray,
@@ -23,7 +24,7 @@ function ResultsFilter({
   const handleGenreFilterChange = (item) => {
     let newSelectedFilters;
     if (
-      item.filterName === "All" &&
+      item.filterName === FILTER_NAMES.ALL &&
       !selectedFilters.includes(item.filterName)
     ) {
       newSelectedFilters = [];
@@ -32,13 +33,13 @@ function ResultsFilter({
         selectedFilters.length !== 1
           ? [
               ...selectedFilters.filter(
-                (sf) => sf !== "All" && sf !== item.filterName
+                (sf) => sf !== FILTER_NAMES.ALL && sf !== item.filterName
               ),
             ]
           : [];
     } else {
       newSelectedFilters = [
-        ...selectedFilters.filter((sf) => sf !== "All"),
+        ...selectedFilters.filter((sf) => sf !== FILTER_NAMES.ALL),
         item.filterName,
       ];
     }
@@ -52,7 +53,8 @@ function ResultsFilter({
         <li
           className={
             selectedFilters.includes(item.filterName) ||
-            (selectedFilters.length === 0 && item.filterName === "All")
+            (selectedFilters.length === 0 &&
+              item.filterName === FILTER_NAMES.ALL)
               ? "results-filter-item__selected"
               : "results-filter-item"
           }
