@@ -29,10 +29,6 @@ const router = createBrowserRouter([
         path: ":searchQuery",
         element: <App />,
         loader: ({ params }) => {
-          // const genreArray =
-          //   (info.request.url.includes("?") &&
-          //     info?.request?.url?.split("?")[1].split("=")[1].split("-")) ||
-          //   [];
           store.dispatch(
             sortAndFilterResults("", "", [], params.searchQuery, "title")
           );

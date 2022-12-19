@@ -5,8 +5,6 @@ import "./ErrorPage.scss";
 export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);
-  console.log(error);
-  console.log("hey");
 
   return (
     <div className="error-page">

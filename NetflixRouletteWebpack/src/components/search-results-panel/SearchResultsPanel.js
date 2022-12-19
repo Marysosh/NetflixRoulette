@@ -36,6 +36,7 @@ import {
   sortAndFilterResults,
   updateMovie,
 } from "../../store/actionCreators";
+import { MODAL_TITLES } from "../../utils/constants";
 
 function SearchResultsPanel(props) {
   const {
@@ -155,7 +156,7 @@ function SearchResultsPanel(props) {
       <SearchResults resultsArray={resultsArray} />
       {isEditModalOpen && (
         <EditMovieModal
-          modalTitle="Edit movie"
+          modalTitle={MODAL_TITLES.EDIT_MOVIE}
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
           initialValues={movieToEditParsedData}

@@ -20,3 +20,8 @@ export const genresFilters = [
   { filterName: FILTER_NAMES.HORROR, id: "f3", isSelected: false },
   { filterName: FILTER_NAMES.CRIME, id: "f4", isSelected: false },
 ];
+
+export const MODAL_TITLES = {
+  ADD_MOVIE: "Add movie",
+  EDIT_MOVIE: "Edit movie",
+};
