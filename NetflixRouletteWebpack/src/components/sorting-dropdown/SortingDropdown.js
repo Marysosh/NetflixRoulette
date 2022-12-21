@@ -89,7 +89,7 @@ function SortingDropdown(props) {
         >
           <img
             src={sortingOrder === "asc" ? ascSign : descSign}
-            alt="order Sign"
+            alt={sortingOrder === "asc" ? "ascSign" : "descSign"}
           />
         </button>
       </div>

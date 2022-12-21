@@ -1,20 +1,13 @@
 import React from "react";
-import { legacy_createStore as createStore, combineReducers } from "redux";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import { movieList, movieEdit, modalsManagement } from "./reducers";
+import { createTestStore } from "../utils/testUtils";
+
 import "@testing-library/jest-dom";
 
 import SearchPanel from "../components/search-panel/SearchPanel";
-
-function createTestStore(initialState) {
-  const store = createStore(
-    combineReducers({ movieList, movieEdit, modalsManagement }, initialState)
-  );
-  return store;
-}
 
 describe("Reducers testing", () => {
   describe("modalsManagement reducer", () => {
