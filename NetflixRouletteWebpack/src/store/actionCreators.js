@@ -119,7 +119,6 @@ export const addMovie = (newMovieData, callbackFn) =>
     method: "POST",
     data: newMovieData,
     onSuccess: callbackFn,
-    onFailure: () => {},
     label: "ADD_MOVIE",
   });
 
@@ -150,12 +149,12 @@ export const setSelectedFilters = (filterArray) => ({
   payload: filterArray,
 });
 
-export const changeSortingOrder = (order = "desc") => ({
+export const changeSortingOrder = (order) => ({
   type: ACTIONS.CHANGE_SORTING_ORDER,
   payload: order,
 });
 
-export const changeSortingType = (type = "vote_average") => ({
+export const changeSortingType = (type) => ({
   type: ACTIONS.CHANGE_SORTING_TYPE,
   payload: type,
 });

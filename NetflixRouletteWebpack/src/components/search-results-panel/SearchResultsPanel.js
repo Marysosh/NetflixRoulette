@@ -217,7 +217,7 @@ SearchResultsPanel.propTypes = {
       overview: PropTypes.string,
       id: PropTypes.number,
     })
-  ).isRequired,
+  ),
   sortAndFilterResults: PropTypes.func.isRequired,
   isEditModalOpen: PropTypes.bool,
   isDeleteModalOpen: PropTypes.bool,
@@ -230,7 +230,7 @@ SearchResultsPanel.propTypes = {
   movieToEdit: PropTypes.shape({
     title: PropTypes.string,
     image: PropTypes.string,
-    releaseDate: PropTypes.number,
+    releaseDate: PropTypes.string,
     rating: PropTypes.number,
     runtime: PropTypes.number,
     overview: PropTypes.string,
@@ -259,6 +259,7 @@ SearchResultsPanel.defaultProps = {
   sortingType: "vote_average",
   sortingOrder: "desc",
   selectedFilters: [],
+  movies: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);

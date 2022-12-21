@@ -65,7 +65,7 @@ describe("Sorting dropdown", () => {
     await userEvent.click(getByText("Rating"));
   });
 
-  it("should change sorting order on click", async () => {
+  it("should change sorting order from desc to asc on click", async () => {
     const { getByAltText } = render(
       <Provider store={store}>
         <SortingDropdown />
@@ -75,5 +75,18 @@ describe("Sorting dropdown", () => {
     await userEvent.click(getByAltText("descSign"));
 
     expect(getByAltText("ascSign")).toBeInTheDocument();
+  });
+
+  it("should change sorting order from asc to desc on click", async () => {
+    const { getByAltText } = render(
+      <Provider store={store}>
+        <SortingDropdown />
+      </Provider>
+    );
+
+    await userEvent.click(getByAltText("descSign"));
+    await userEvent.click(getByAltText("ascSign"));
+
+    expect(getByAltText("descSign")).toBeInTheDocument();
   });
 });

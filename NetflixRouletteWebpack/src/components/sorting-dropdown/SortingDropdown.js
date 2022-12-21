@@ -25,11 +25,11 @@ let genreArray = [
 
 function SortingDropdown(props) {
   const {
-    sortingOrder = "desc",
+    sortingOrder,
     changeSortingOrder,
-    sortingType = "vote_average",
+    sortingType,
     changeSortingType,
-    selectedFilters = [],
+    selectedFilters,
     sortAndFilterResults,
   } = props;
   const [openedDropdown, setDropdownOpen] = useState(false);
