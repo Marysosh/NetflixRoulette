@@ -21,6 +21,8 @@ import {
   getSelectedFilters,
   getIsAnyModalOpen,
   getMovieDetailsStatus,
+  getSortingType,
+  getSortingOrder,
 } from "../../store/selectors";
 import {
   closeDeleteModal,
@@ -31,7 +33,6 @@ import {
   sortAndFilterResults,
   updateMovie,
 } from "../../store/actionCreators";
-import ResultsFilter from "../results-filter/ResultsFilter";
 
 function SearchResultsPanel(props) {
   const {
@@ -51,6 +52,9 @@ function SearchResultsPanel(props) {
     setIsModalOpen,
     setIsMovieDetailsOpen,
     movieDetailsStatus,
+    sortingType,
+    sortingOrder,
+    selectedFilters,
   } = props;
 
   useEffect(() => {
@@ -70,40 +74,76 @@ function SearchResultsPanel(props) {
   };
 
   const handleMovieEdit = (newMovieData) => {
-    const { title, runtime, releaseDate, rating, overview, image, genre, id } =
-      newMovieData;
+    const {
+      title,
+      runtime,
+      releaseDate,
+      rating,
+      overview,
+      movieURL,
+      genres,
+      id,
+    } = newMovieData;
     const parsedMovieData = {
       title,
       vote_average: Number(rating),
       release_date: releaseDate,
-      poster_path: image,
+      poster_path: movieURL,
       overview,
       runtime: Number(runtime),
-      genres: genre.split(", "),
+      genres: genres.split(", "),
       id,
     };
-    setSelectedFilters([]);
-    editMovie(parsedMovieData);
+    editMovie(
+      parsedMovieData,
+      sortAndFilterResults.bind(
+        null,
+        sortingType,
+        sortingOrder,
+        selectedFilters
+      )
+    );
     closeEditModal();
   };
 
   const handleMovieDelete = () => {
-    setSelectedFilters([]);
-    deleteMovie(movieToDeleteId);
+    deleteMovie(
+      movieToDeleteId,
+      sortAndFilterResults.bind(
+        null,
+        sortingType,
+        sortingOrder,
+        selectedFilters
+      )
+    );
     closeDeleteModal();
+  };
+
+  const { title, image, runtime, releaseDate, rating, genre, overview, id } =
+    movieToEdit;
+
+  const movieToEditParsedData = {
+    movieURL: image,
+    overview,
+    rating,
+    releaseDate,
+    runtime,
+    title,
+    genre,
+    id,
   };
 
   return (
     <div className="search-results-panel">
       <ResultsHeader />
-      <ResultsCount resultsNumber={resultsArray.length} />
+      <ResultsCount resultsNumber={resultsArray?.length} />
       <SearchResults resultsArray={resultsArray} />
       {isEditModalOpen && (
         <EditMovieModal
           modalTitle="Edit movie"
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
-          editingValues={movieToEdit}
+          initialValues={movieToEditParsedData}
         />
       )}
       {isDeleteModalOpen && (
@@ -123,6 +163,8 @@ const mapStateToProps = (state) => {
     isDeleteModalOpen: getDeleteModalStatus(state),
     movieToDeleteId: getMovieToDeleteId(state),
     selectedFilters: getSelectedFilters(state),
+    sortingType: getSortingType(state),
+    sortingOrder: getSortingOrder(state),
     movieToEdit: getMovieToEdit(state),
     isAnyModalOpen: getIsAnyModalOpen(state),
     movieDetailsStatus: getMovieDetailsStatus(state),
@@ -131,9 +173,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sortAndFilterResults: () => dispatch(sortAndFilterResults()),
-    editMovie: (movieData) => dispatch(updateMovie(movieData)),
-    deleteMovie: (id) => dispatch(deleteMovie(id)),
+    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+      dispatch(
+        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+      ),
+    editMovie: (movieData, callbackFn) =>
+      dispatch(updateMovie(movieData, callbackFn)),
+    deleteMovie: (id, callbackFn) => dispatch(deleteMovie(id, callbackFn)),
     openEditModal: () => dispatch(openEditModal()),
     closeEditModal: () => dispatch(closeEditModal()),
     closeDeleteModal: () => dispatch(closeDeleteModal()),
@@ -170,6 +216,7 @@ SearchResultsPanel.propTypes = {
     rating: PropTypes.number,
     runtime: PropTypes.number,
     overview: PropTypes.string,
+    genre: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.number,
   }),
   editMovie: PropTypes.func.isRequired,
@@ -177,6 +224,9 @@ SearchResultsPanel.propTypes = {
   setIsModalOpen: PropTypes.func.isRequired,
   setIsMovieDetailsOpen: PropTypes.func.isRequired,
   movieDetailsStatus: PropTypes.bool,
+  sortingType: PropTypes.string,
+  sortingOrder: PropTypes.string,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
 };
 
 SearchResultsPanel.defaultProps = {
@@ -186,6 +236,9 @@ SearchResultsPanel.defaultProps = {
   movieToEdit: {},
   isAnyModalOpen: false,
   movieDetailsStatus: false,
+  sortingType: "vote_average",
+  sortingOrder: "desc",
+  selectedFilters: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPanel);

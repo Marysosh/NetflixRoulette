@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+/* eslint-disable no-return-assign */
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 import { genreArray } from "../../utils/constants";
@@ -16,7 +17,17 @@ function GenreDropdown(props) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
 
-  const { setSelectedGenres } = props;
+  const { setSelectedGenres, selectedGenres } = props;
+
+  useEffect(() => {
+    const indexInGenreArray = selectedGenres
+      .split(", ")
+      .map((item) => genreArray.findIndex((genre) => genre === item));
+
+    const updatedCheckedState = [...checkedState];
+    indexInGenreArray.forEach((item) => (updatedCheckedState[item] = true));
+    setCheckedState(updatedCheckedState);
+  }, [selectedGenres]);
 
   const handleOpen = () => {
     setOpen(!open);
@@ -78,4 +89,9 @@ export default GenreDropdown;
 
 GenreDropdown.propTypes = {
   setSelectedGenres: PropTypes.func.isRequired,
+  selectedGenres: PropTypes.string,
+};
+
+GenreDropdown.defaultProps = {
+  selectedGenres: "",
 };

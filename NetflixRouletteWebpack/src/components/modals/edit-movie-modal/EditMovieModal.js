@@ -1,68 +1,56 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useFormik } from "formik";
 import PropTypes from "prop-types";
 
 import "./EditMovieModal.scss";
 import crossIcon from "../close_button.png";
 
 import GenreDropdown from "../../genre-dropdown/GenreDropdown";
+import { validationParameters } from "./validationSchema";
 
 const BASE_CLASS = "edit-movie-modal";
-
-const placeHolders = {
-  titlePlaceholder: "Moana",
-  movieUrlPlaceholder: "https://",
-  releaseDatePlaceholder: "Select Date",
-  ratingPlaceholder: "7.8",
-  runtimePlaceholder: "minutes",
-  overviewPlaceholder: "Movie description",
-};
 function EditMovieModal({
   handleEditModalOpen,
   handleMovieEdit,
   modalTitle,
   showCongratsModal,
-  editingValues,
+  initialValues,
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
-  const {
-    title: titleValue,
-    image: movieUrlValue,
-    releaseDate: releaseDateValue,
-    rating: ratingValue,
-    runtime: runtimeValue,
-    overview: overviewValue,
-    id,
-  } = editingValues;
-
-  const onFormSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-
-    handleMovieEdit({
-      title: data.get("title"),
-      genre: selectedGenres,
-      releaseDate: data.get("release-date"),
-      rating: data.get("rating"),
-      runtime: data.get("runtime"),
-      image: data.get("movie-url"),
-      overview: data.get("overview"),
-      id,
-    });
-
-    if (modalTitle === "Add movie") {
-      showCongratsModal(true);
+  useEffect(() => {
+    if (modalTitle === "Edit movie") {
+      setSelectedGenres(initialValues.genre);
     }
-  };
+  }, [initialValues.genre, modalTitle]);
 
-  const {
-    titlePlaceholder,
-    movieUrlPlaceholder,
-    releaseDatePlaceholder,
-    ratingPlaceholder,
-    runtimePlaceholder,
-    overviewPlaceholder,
-  } = placeHolders;
+  const formik = useFormik({
+    initialValues,
+    validationSchema: validationParameters,
+    onSubmit: (values) => {
+      if (!selectedGenres.length) {
+        formik.isValidating = false;
+        formik.errors.movieURL.typeError;
+      }
+      if (modalTitle === "Add movie") {
+        handleMovieEdit({ ...values, genres: selectedGenres });
+        showCongratsModal(true);
+      } else {
+        handleMovieEdit({
+          ...values,
+          genres: selectedGenres,
+          id: initialValues.id,
+        });
+      }
+    },
+    onReset: () => {
+      if (modalTitle === "Add movie") {
+        setSelectedGenres("");
+      } else {
+        setSelectedGenres(initialValues.genre);
+      }
+    },
+  });
   return (
     <div className="edit-movie-container">
       <div className={`${BASE_CLASS}`}>
@@ -76,7 +64,8 @@ function EditMovieModal({
         <div className={`${BASE_CLASS}-title`}>{modalTitle}</div>
         <form
           className={`${BASE_CLASS}-inputs-container`}
-          onSubmit={onFormSubmit}
+          onSubmit={formik.handleSubmit}
+          onReset={formik.handleReset}
         >
           <div className="columns">
             <div className="left-column">
@@ -88,24 +77,38 @@ function EditMovieModal({
                 name="title"
                 type="text"
                 id="title"
-                placeholder={titlePlaceholder}
-                defaultValue={titleValue}
+                onChange={formik.handleChange}
+                value={formik.values.title}
                 autoComplete="off"
               />
+              <div className="validation-error">
+                {formik.errors.title ? formik.errors.title : null}
+              </div>
+
               <label className="label" htmlFor="movie-url">
                 Movie URL
               </label>
               <input
                 className="long-input"
-                name="movie-url"
+                name="movieURL"
                 type="text"
-                id="movie-url"
-                placeholder={movieUrlPlaceholder}
-                defaultValue={movieUrlValue}
+                id="movieURL"
+                onChange={formik.handleChange}
+                value={formik.values.movieURL}
                 autoComplete="off"
               />
+              <div className="validation-error">
+                {formik.errors.movieURL ? formik.errors.movieURL : null}
+              </div>
+
               <label className="label">Genre</label>
-              <GenreDropdown setSelectedGenres={setSelectedGenres} />
+              <GenreDropdown
+                setSelectedGenres={setSelectedGenres}
+                selectedGenres={selectedGenres}
+              />
+              <div className="validation-error">
+                {selectedGenres.length ? null : "Choose at least 1 genre"}
+              </div>
             </div>
             <div className="right-column">
               <label className="label" htmlFor="release-date">
@@ -113,13 +116,16 @@ function EditMovieModal({
               </label>
               <input
                 className="short-input"
-                name="release-date"
+                name="releaseDate"
                 type="text"
-                id="release-date"
-                placeholder={releaseDatePlaceholder}
-                defaultValue={releaseDateValue}
+                id="releaseDate"
+                onChange={formik.handleChange}
+                value={formik.values.releaseDate}
                 autoComplete="off"
               />
+              <div className="validation-error">
+                {formik.errors.releaseDate ? formik.errors.releaseDate : null}
+              </div>
 
               <label className="label" htmlFor="rating">
                 Rating
@@ -129,10 +135,13 @@ function EditMovieModal({
                 name="rating"
                 type="text"
                 id="rating"
-                placeholder={ratingPlaceholder}
-                defaultValue={ratingValue}
+                onChange={formik.handleChange}
+                value={formik.values.rating}
                 autoComplete="off"
               />
+              <div className="validation-error">
+                {formik.errors.rating ? formik.errors.rating : null}
+              </div>
 
               <label className="label" htmlFor="runtime">
                 Runtime
@@ -142,10 +151,13 @@ function EditMovieModal({
                 name="runtime"
                 type="text"
                 id="runtime"
-                placeholder={runtimePlaceholder}
-                defaultValue={runtimeValue}
+                onChange={formik.handleChange}
+                value={formik.values.runtime}
                 autoComplete="off"
               />
+              <div className="validation-error">
+                {formik.errors.runtime ? formik.errors.runtime : null}
+              </div>
             </div>
           </div>
           <div className="overview">
@@ -157,10 +169,13 @@ function EditMovieModal({
               name="overview"
               type="text"
               id="overview"
-              placeholder={overviewPlaceholder}
-              defaultValue={overviewValue}
+              onChange={formik.handleChange}
+              value={formik.values.overview}
               autoComplete="off"
             />
+            <div className="validation-error">
+              {formik.errors.overview ? formik.errors.overview : null}
+            </div>
           </div>
           <div className="form-buttons">
             <input className="reset-button" type="reset" value="Reset" />
@@ -188,6 +203,16 @@ EditMovieModal.propTypes = {
     overview: PropTypes.string,
     id: PropTypes.number,
   }),
+  initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    movieUrl: PropTypes.string,
+    releaseDate: PropTypes.string,
+    rating: PropTypes.string,
+    runtime: PropTypes.string,
+    overview: PropTypes.string,
+    genre: PropTypes.string,
+    id: PropTypes.number,
+  }).isRequired,
 };
 
 EditMovieModal.defaultProps = {
