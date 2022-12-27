@@ -24,6 +24,7 @@ import Logo from "../logo/Logo";
 import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
+import { MODAL_TITLES } from "../../utils/constants";
 
 function Header(props) {
   const {
@@ -89,7 +90,7 @@ function Header(props) {
       <AddMovieButton onClick={() => setIsModalOpen(true)} />
       {isAddMovieModalOpen && (
         <EditMovieModal
-          modalTitle="Add movie"
+          modalTitle={MODAL_TITLES.ADD_MOVIE}
           handleEditModalOpen={setIsModalOpen}
           handleMovieEdit={handleMovieEdit}
           showCongratsModal={setCongratsModalOpen}

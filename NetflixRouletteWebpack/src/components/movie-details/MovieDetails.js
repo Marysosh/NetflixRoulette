@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 import "./MovieDetails.scss";
 import thinLogo from "./logo_thin.png";
@@ -14,13 +15,27 @@ import { getMovieDetails } from "../../store/selectors";
 function MovieDetails({ movieDetails, showMovieDetails }) {
   const { title, genre, releaseDate, rating, runtime, image, overview } =
     movieDetails;
+  const [, setSelectedMovie] = useSearchParams();
+
   return (
     <div className="movie-details-container">
       <div className="movie-details-header">
-        <div className="logo" onClick={() => showMovieDetails(false)}>
+        <div
+          className="logo"
+          onClick={() => {
+            showMovieDetails(false);
+            setSelectedMovie({});
+          }}
+        >
           <img src={thinLogo} alt="thin logo" />
         </div>
-        <div className="search-icon" onClick={() => showMovieDetails(false)}>
+        <div
+          className="search-icon"
+          onClick={() => {
+            showMovieDetails(false);
+            setSelectedMovie({});
+          }}
+        >
           <img src={searchIcon} alt="search icon" />
         </div>
       </div>

@@ -7,6 +7,7 @@ import Logo from "../logo/Logo";
 import AddMovieButton from "../add-movie-button/AddMovieButton";
 import EditMovieModal from "../modals/edit-movie-modal/EditMovieModal";
 import CongratsModal from "../modals/congrats-modal/CongratsModal";
+import { MODAL_TITLES } from "../../utils/constants";
 
 class Header extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class Header extends Component {
         <AddMovieButton onClick={() => this.setIsModalOpen(true)} />
         {isAddMovieModalOpen && (
           <EditMovieModal
-            modalTitle="Add movie"
+            modalTitle={MODAL_TITLES.ADD_MOVIE}
             handleEditModalOpen={this.setIsModalOpen}
             handleMovieEdit={this.handleMovieEdit}
             showCongratsModal={this.setCongratsModalOpen}

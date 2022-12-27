@@ -1,8 +1,9 @@
-import { sortAndFilterResults } from "./actionCreators";
 import storeFactory from "./storeFactory";
+
+import { sortAndFilterResults } from "./actionCreators";
 
 const store = storeFactory();
 
-store.dispatch(sortAndFilterResults());
+store.dispatch(sortAndFilterResults("", "", [], "", ""));
 
 export default store;

@@ -44,7 +44,9 @@ const setSearchResults = (data) => ({
 export const sortAndFilterResults = (
   sortingType = "vote_average",
   sortingOrder = "desc",
-  filtersArray = []
+  filtersArray = [],
+  search = "",
+  searchBy = "title"
 ) =>
   apiAction({
     url: `${BASE_URL}/movies`,
@@ -54,6 +56,8 @@ export const sortAndFilterResults = (
       sortOrder: sortingOrder,
       filter: `${filtersArray?.join(", ")}`,
       limit: 100,
+      search,
+      searchBy,
     },
     onSuccess: setSearchResults,
     onFailure: () => {

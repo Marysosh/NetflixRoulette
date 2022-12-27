@@ -1,11 +1,48 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import App from "./App";
+import ErrorPage from "./components/error-page/ErrorPage";
+import { sortAndFilterResults } from "./store/actionCreators";
+import store from "./store/index";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigate to="search" />,
+    errorElement: <ErrorPage />,
+    loader: () => {
+      store.dispatch(sortAndFilterResults("", "", [], "", ""));
+      return null;
+    },
+  },
+  {
+    path: "search",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: ":searchQuery",
+        element: <App />,
+        loader: ({ params }) => {
+          store.dispatch(
+            sortAndFilterResults("", "", [], params.searchQuery, "title")
+          );
+          return null;
+        },
+      },
+    ],
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
