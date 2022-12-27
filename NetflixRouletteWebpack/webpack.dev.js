@@ -5,9 +5,17 @@ const common = require("./webpack.common");
 
 module.exports = merge(common, {
   mode: "development",
+  devServer: {
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "/"),
+    },
+    open: true,
+  },
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   plugins: [
     new HtmlWebpackPlugin({

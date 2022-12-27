@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useSearchParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./SearchResultsPanel.scss";
@@ -29,10 +30,13 @@ import {
   closeEditModal,
   deleteMovie,
   openEditModal,
+  setMovieDetails,
   setSelectedFilters,
+  showMovieDetails,
   sortAndFilterResults,
   updateMovie,
 } from "../../store/actionCreators";
+import { MODAL_TITLES } from "../../utils/constants";
 
 function SearchResultsPanel(props) {
   const {
@@ -52,14 +56,26 @@ function SearchResultsPanel(props) {
     setIsModalOpen,
     setIsMovieDetailsOpen,
     movieDetailsStatus,
+    setMovieDetails,
+    showMovieDetails,
     sortingType,
     sortingOrder,
     selectedFilters,
   } = props;
 
+  const [selectedMovie] = useSearchParams();
+
   useEffect(() => {
-    sortAndFilterResults();
-  }, []);
+    const newId = Number(selectedMovie.get("movie"));
+    const movieInfo = resultsArray?.find((movie) => {
+      return movie.id === newId;
+    });
+    if (movieInfo?.id) {
+      setMovieDetails(movieInfo);
+      setIsMovieDetailsOpen(true);
+      showMovieDetails(true);
+    }
+  }, [selectedMovie.get("movie"), resultsArray]);
 
   useEffect(() => {
     setIsModalOpen(isAnyModalOpen);
@@ -140,7 +156,7 @@ function SearchResultsPanel(props) {
       <SearchResults resultsArray={resultsArray} />
       {isEditModalOpen && (
         <EditMovieModal
-          modalTitle="Edit movie"
+          modalTitle={MODAL_TITLES.EDIT_MOVIE}
           handleEditModalOpen={handleEditModalOpen}
           handleMovieEdit={handleMovieEdit}
           initialValues={movieToEditParsedData}
@@ -185,6 +201,8 @@ const mapDispatchToProps = (dispatch) => {
     closeDeleteModal: () => dispatch(closeDeleteModal()),
     setSelectedFilters: (filterArray) =>
       dispatch(setSelectedFilters(filterArray)),
+    setMovieDetails: (movieInfo) => dispatch(setMovieDetails(movieInfo)),
+    showMovieDetails: (value) => dispatch(showMovieDetails(value)),
   };
 };
 SearchResultsPanel.propTypes = {
@@ -227,6 +245,8 @@ SearchResultsPanel.propTypes = {
   sortingType: PropTypes.string,
   sortingOrder: PropTypes.string,
   selectedFilters: PropTypes.arrayOf(PropTypes.string),
+  setMovieDetails: PropTypes.func.isRequired,
+  showMovieDetails: PropTypes.func.isRequired,
 };
 
 SearchResultsPanel.defaultProps = {

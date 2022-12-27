@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 import { setMovieDetails, showMovieDetails } from "../../store/actionCreators";
 
@@ -13,6 +14,7 @@ import errorImg from "./error_image.png";
 
 function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
+  const [, setSelectedMovie] = useSearchParams();
 
   return (
     <div
@@ -21,6 +23,7 @@ function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
       onClick={() => {
         setMovieDetails(movieInfo);
         showMovieDetails(true);
+        setSelectedMovie({ movie: id });
         scrollTop();
       }}
     >

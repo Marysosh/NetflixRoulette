@@ -8,6 +8,7 @@ import crossIcon from "../close_button.png";
 
 import GenreDropdown from "../../genre-dropdown/GenreDropdown";
 import { validationParameters } from "./validationSchema";
+import { MODAL_TITLES } from "../../../utils/constants";
 
 const BASE_CLASS = "edit-movie-modal";
 function EditMovieModal({
@@ -19,7 +20,7 @@ function EditMovieModal({
 }) {
   const [selectedGenres, setSelectedGenres] = useState("");
   useEffect(() => {
-    if (modalTitle === "Edit movie") {
+    if (modalTitle === MODAL_TITLES.EDIT_MOVIE) {
       setSelectedGenres(initialValues.genre);
     }
   }, [initialValues.genre, modalTitle]);
@@ -32,7 +33,7 @@ function EditMovieModal({
         formik.isValidating = false;
         formik.errors.movieURL.typeError;
       }
-      if (modalTitle === "Add movie") {
+      if (modalTitle === MODAL_TITLES.ADD_MOVIE) {
         handleMovieEdit({ ...values, genres: selectedGenres });
         showCongratsModal(true);
       } else {
@@ -44,11 +45,9 @@ function EditMovieModal({
       }
     },
     onReset: () => {
-      if (modalTitle === "Add movie") {
-        setSelectedGenres("");
-      } else {
-        setSelectedGenres(initialValues.genre);
-      }
+      setSelectedGenres(
+        modalTitle === MODAL_TITLES.ADD_MOVIE ? "" : initialValues.genre
+      );
     },
   });
   return (
