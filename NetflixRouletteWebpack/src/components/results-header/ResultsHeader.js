@@ -3,14 +3,7 @@ import "./ResultsHeader.scss";
 
 import ResultsFilter from "../results-filter/ResultsFilter";
 import ResultsSorting from "../results-sorting/ResultsSorting";
-
-const genresFilters = [
-  { filterName: "All", id: "f0", isSelected: true },
-  { filterName: "Documentary", id: "f1", isSelected: false },
-  { filterName: "Comedy", id: "f2", isSelected: false },
-  { filterName: "Horror", id: "f3", isSelected: false },
-  { filterName: "Crime", id: "f4", isSelected: false },
-];
+import { genresFilters } from "../../utils/constants";
 
 function ResultsHeader() {
   return (

@@ -6,14 +6,14 @@ import crossIcon from "../close_button.png";
 import FilledButton from "../../filled-button/FilledButton";
 
 const BASE_CLASSNAME = "delete-movie-modal";
-function DeleteMovieModal({ handleDeleteModalOpen, handleMovieDelete }) {
+function DeleteMovieModal({ handleDeleteModalClose, handleMovieDelete }) {
   return (
     <div className="delete-movie-container">
       <div className={`${BASE_CLASSNAME}`}>
         <button
           className={`${BASE_CLASSNAME}-close-btn`}
           type="button"
-          onClick={() => handleDeleteModalOpen(false)}
+          onClick={() => handleDeleteModalClose()}
         >
           <img src={crossIcon} alt="close button icon" />
         </button>
@@ -34,6 +34,6 @@ function DeleteMovieModal({ handleDeleteModalOpen, handleMovieDelete }) {
 export default DeleteMovieModal;
 
 DeleteMovieModal.propTypes = {
-  handleDeleteModalOpen: PropTypes.func.isRequired,
+  handleDeleteModalClose: PropTypes.func.isRequired,
   handleMovieDelete: PropTypes.func.isRequired,
 };

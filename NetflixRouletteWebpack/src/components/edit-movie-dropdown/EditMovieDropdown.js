@@ -1,5 +1,13 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  addMovieToEdit,
+  addMovieToDelete,
+  openDeleteModal,
+  openEditModal,
+} from "../../store/actionCreators";
+import { getMovies } from "../../store/selectors";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./EditMovieDropdowm.scss";
@@ -8,7 +16,15 @@ import closeBtn from "./close_btn_small.png";
 
 const BASE_CLASS = "edit-movie-dropdown";
 
-function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
+function EditMovieDropdown(props) {
+  const {
+    openEditModal,
+    openDeleteModal,
+    addMovieToEdit,
+    addMovieToDelete,
+    id,
+    movies,
+  } = props;
   const [openedDropdown, setOpenedDropdown] = useState(false);
 
   const wrapperRef = useRef(null);
@@ -20,14 +36,17 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
 
   const handleChooseEdit = (event) => {
     event.stopPropagation();
+    const movieData = movies.find((movie) => movie.id === id);
+    addMovieToEdit(movieData);
+    openEditModal();
     handleOpenDropdown(false);
-    handleEditIdChange();
   };
 
   const handleChooseDelete = (event) => {
     event.stopPropagation();
+    addMovieToDelete(id);
+    openDeleteModal();
     handleOpenDropdown(false);
-    handleDeleteIdChange();
   };
 
   return (
@@ -82,9 +101,39 @@ function EditMovieDropdown({ handleEditIdChange, handleDeleteIdChange }) {
   );
 }
 
-export default EditMovieDropdown;
+const mapStateToProps = (state) => {
+  return {
+    movies: getMovies(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openEditModal: () => dispatch(openEditModal()),
+    openDeleteModal: () => dispatch(openDeleteModal()),
+    addMovieToEdit: (movieData) => dispatch(addMovieToEdit(movieData)),
+    addMovieToDelete: (id) => dispatch(addMovieToDelete(id)),
+  };
+};
 
 EditMovieDropdown.propTypes = {
-  handleEditIdChange: PropTypes.func.isRequired,
-  handleDeleteIdChange: PropTypes.func.isRequired,
+  openEditModal: PropTypes.func.isRequired,
+  openDeleteModal: PropTypes.func.isRequired,
+  addMovieToEdit: PropTypes.func.isRequired,
+  addMovieToDelete: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      genre: PropTypes.string,
+      releaseDate: PropTypes.string,
+      rating: PropTypes.number,
+      runtime: PropTypes.string,
+      image: PropTypes.string,
+      overview: PropTypes.string,
+      id: PropTypes.number,
+    })
+  ).isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditMovieDropdown);

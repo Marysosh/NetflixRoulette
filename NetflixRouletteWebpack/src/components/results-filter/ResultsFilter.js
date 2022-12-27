@@ -1,32 +1,71 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "./ResultsFilter.scss";
+import { connect } from "react-redux";
+import {
+  getSelectedFilters,
+  getSortingOrder,
+  getSortingType,
+} from "../../store/selectors";
+import {
+  setSelectedFilters,
+  sortAndFilterResults,
+} from "../../store/actionCreators";
+import { FILTER_NAMES } from "../../utils/constants";
 
-const DEFAULT_VALUE = "All";
-function ResultsFilter({ genresFilterArray }) {
-  const [selectedFilter, setSelectedFilter] = useState(DEFAULT_VALUE);
-
-  const handleGenreFilterChange = (value) => {
-    setSelectedFilter(value);
+function ResultsFilter({
+  genresFilterArray,
+  selectedFilters = [],
+  setSelectedFilters,
+  sortingOrder = "desc",
+  sortingType = "vote_average",
+  sortAndFilterResults,
+}) {
+  const handleGenreFilterChange = (item) => {
+    let newSelectedFilters;
+    if (
+      item.filterName === FILTER_NAMES.ALL &&
+      !selectedFilters.includes(item.filterName)
+    ) {
+      newSelectedFilters = [];
+    } else if (selectedFilters.includes(item.filterName)) {
+      newSelectedFilters =
+        selectedFilters.length !== 1
+          ? [
+              ...selectedFilters.filter(
+                (sf) => sf !== FILTER_NAMES.ALL && sf !== item.filterName
+              ),
+            ]
+          : [];
+    } else {
+      newSelectedFilters = [
+        ...selectedFilters.filter((sf) => sf !== FILTER_NAMES.ALL),
+        item.filterName,
+      ];
+    }
+    setSelectedFilters(newSelectedFilters);
+    sortAndFilterResults(sortingType, sortingOrder, newSelectedFilters);
   };
 
   return (
     <ul className="results-filter">
-      {genresFilterArray.map(({ filterName, id }) => (
+      {genresFilterArray.map((item) => (
         <li
           className={
-            filterName === selectedFilter
+            selectedFilters.includes(item.filterName) ||
+            (selectedFilters.length === 0 &&
+              item.filterName === FILTER_NAMES.ALL)
               ? "results-filter-item__selected"
               : "results-filter-item"
           }
-          key={id}
+          key={item.id}
         >
           <button
             className="results-filter-item-btn"
-            onClick={() => handleGenreFilterChange(filterName)}
+            onClick={() => handleGenreFilterChange(item)}
             type="button"
           >
-            {filterName}
+            {item.filterName}
           </button>
         </li>
       ))}
@@ -34,7 +73,24 @@ function ResultsFilter({ genresFilterArray }) {
   );
 }
 
-export default ResultsFilter;
+const mapStateToProps = (state) => {
+  return {
+    selectedFilters: getSelectedFilters(state),
+    sortingOrder: getSortingOrder(state),
+    sortingType: getSortingType(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedFilters: (filterArray) =>
+      dispatch(setSelectedFilters(filterArray)),
+    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+      dispatch(
+        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+      ),
+  };
+};
 
 ResultsFilter.propTypes = {
   genresFilterArray: PropTypes.arrayOf(
@@ -44,4 +100,17 @@ ResultsFilter.propTypes = {
       isSelected: PropTypes.bool,
     })
   ).isRequired,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
+  setSelectedFilters: PropTypes.func.isRequired,
+  sortingOrder: PropTypes.string,
+  sortingType: PropTypes.string,
+  sortAndFilterResults: PropTypes.func.isRequired,
 };
+
+ResultsFilter.defaultProps = {
+  selectedFilters: [],
+  sortingOrder: "desc",
+  sortingType: "vote_average",
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsFilter);

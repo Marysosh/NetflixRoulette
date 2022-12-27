@@ -1,45 +1,41 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import UserContext from "../../utils/contexts";
+import { connect } from "react-redux";
+
+import { setMovieDetails, showMovieDetails } from "../../store/actionCreators";
 
 import "./MovieCard.scss";
 
 import MovieInfo from "../movie-info/MovieInfo";
 import EditMovieDropdown from "../edit-movie-dropdown/EditMovieDropdown";
 import scrollTop from "../../utils/scrollTop";
+import errorImg from "./error_image.png";
 
-function MovieCard({ movieInfo, changeIdToEdit, changeIdToDelete }) {
+function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
   const { title, genre, releaseDate, image, id } = movieInfo;
-  const { showMovieDetailsHandler } = useContext(UserContext);
-
-  const handleEditIdChange = () => {
-    changeIdToEdit(id);
-  };
-
-  const handleDeleteIdChange = () => {
-    changeIdToDelete(id);
-  };
 
   return (
     <div
       className="movie-card"
       id={id}
       onClick={() => {
-        showMovieDetailsHandler(movieInfo);
+        setMovieDetails(movieInfo);
+        showMovieDetails(true);
         scrollTop();
       }}
     >
-      <EditMovieDropdown
-        handleEditIdChange={handleEditIdChange}
-        handleDeleteIdChange={handleDeleteIdChange}
+      <EditMovieDropdown id={id} />
+      <img
+        className="movie-card-image"
+        src={image}
+        alt={errorImg}
+        // eslint-disable-next-line no-return-assign
+        onError={(e) => (e.target.src = errorImg)}
       />
-      <img src={image} alt={`${title} img`} />
       <MovieInfo title={title} genre={genre} releaseDate={releaseDate} />
     </div>
   );
 }
-
-export default MovieCard;
 
 MovieCard.propTypes = {
   movieInfo: PropTypes.shape({
@@ -47,12 +43,21 @@ MovieCard.propTypes = {
     genre: PropTypes.string,
     releaseDate: PropTypes.string,
     image: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
-  changeIdToEdit: PropTypes.func.isRequired,
-  changeIdToDelete: PropTypes.func.isRequired,
+  setMovieDetails: PropTypes.func.isRequired,
+  showMovieDetails: PropTypes.func.isRequired,
 };
 
 MovieCard.defaultProps = {
   movieInfo: {},
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMovieDetails: (details) => dispatch(setMovieDetails(details)),
+    showMovieDetails: (value) => dispatch(showMovieDetails(value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MovieCard);

@@ -32,7 +32,9 @@
   }
 
   &-image {
-    height: 100%;
+    img {
+      height: 60vh;
+    }
   }
 
   &-info {

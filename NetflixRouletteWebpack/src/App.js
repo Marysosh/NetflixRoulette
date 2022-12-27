@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from "react";
-import UserContext from "./utils/contexts";
+import React, { useState } from "react";
+import { Provider } from "react-redux";
+import store from "./store/index";
 
 import "./App.scss";
 
@@ -10,54 +11,22 @@ import SearchResultsPanel from "./components/search-results-panel/SearchResultsP
 import Footer from "./components/footer/Footer";
 
 function App() {
-  const [isModalOpen, setIsOpen] = useState(false);
-  const [newMovieData, setNewMovieData] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMovieDetailsOpen, setIsMovieDetailsOpen] = useState(false);
-  const [movieDetails, setMovieDetails] = useState("");
-
-  const openModalHandler = (value) => {
-    setIsOpen(value);
-  };
-
-  const addNewMovieHandler = (addedMovieData) => {
-    setNewMovieData(addedMovieData);
-  };
-
-  const showMovieDetailsHandler = (movieInfo) => {
-    setMovieDetails(movieInfo);
-    movieInfo ? setIsMovieDetailsOpen(true) : setIsMovieDetailsOpen(false);
-  };
 
   return (
-    <ErrorBoundary>
-      <UserContext.Provider
-        value={useMemo(
-          () => ({
-            showMovieDetailsHandler,
-            addNewMovieHandler,
-            openModalHandler,
-          }),
-          []
-        )}
-      >
+    <Provider store={store}>
+      <ErrorBoundary>
         <div className={isModalOpen ? "app app-opened-modal" : "app"}>
-          {isMovieDetailsOpen ? (
-            <MovieDetails
-              movieInfo={movieDetails}
-              showMovieDetailsHandler={showMovieDetailsHandler}
-            />
-          ) : (
-            <SearchPanel />
-          )}
+          {isMovieDetailsOpen ? <MovieDetails /> : <SearchPanel />}
           <SearchResultsPanel
-            openModalHandler={openModalHandler}
-            addNewMovieHandler={addNewMovieHandler}
-            newMovieData={newMovieData}
+            setIsModalOpen={setIsModalOpen}
+            setIsMovieDetailsOpen={setIsMovieDetailsOpen}
           />
           <Footer />
         </div>
-      </UserContext.Provider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Provider>
   );
 }
 

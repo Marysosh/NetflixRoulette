@@ -1,17 +1,42 @@
 import React, { useState, useRef } from "react";
+import { connect } from "react-redux";
+import PropTypes, { arrayOf } from "prop-types";
 import useOutsideAlerter from "../../utils/useOutsideAlerter";
 
 import "./SortingDropdown.scss";
 import ascSign from "./ascSign.png";
 import descSign from "./descSign.png";
+import {
+  changeSortingOrder,
+  changeSortingType,
+  sortAndFilterResults,
+} from "../../store/actionCreators";
+import {
+  getSelectedFilters,
+  getSortingOrder,
+  getSortingType,
+} from "../../store/selectors";
 
-let genreArray = ["Title", "Rating", "Runtime", "Date added"];
-const DEFAULT_VALUE = "Release date";
+let genreArray = [
+  { name: "title", label: "Title" },
+  { name: "runtime", label: "Runtime" },
+  { name: "release_date", label: "Release date" },
+];
 
-function SortingDropdown() {
+function SortingDropdown(props) {
+  const {
+    sortingOrder = "desc",
+    changeSortingOrder,
+    sortingType = "vote_average",
+    changeSortingType,
+    selectedFilters = [],
+    sortAndFilterResults,
+  } = props;
   const [openedDropdown, setDropdownOpen] = useState(false);
-  const [isAscendingOrder, setAscendingOrder] = useState(false);
-  const [chosenItem, setChosenItem] = useState(DEFAULT_VALUE);
+  const [chosenItem, setChosenItem] = useState({
+    name: "vote_average",
+    label: "Rating",
+  });
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setDropdownOpen);
@@ -21,7 +46,13 @@ function SortingDropdown() {
   };
 
   const handleOrderChange = () => {
-    setAscendingOrder(!isAscendingOrder);
+    if (sortingOrder === "desc") {
+      changeSortingOrder("asc");
+      sortAndFilterResults(sortingType, "asc", selectedFilters);
+    } else {
+      changeSortingOrder("desc");
+      sortAndFilterResults(sortingType, "desc", selectedFilters);
+    }
   };
 
   const handleItemChoose = (value) => {
@@ -29,8 +60,10 @@ function SortingDropdown() {
     genreArray.push(chosenItem);
     setChosenItem(value);
     genreArray = genreArray
-      .filter((item) => item !== value)
-      .sort((a, b) => a.length - b.length);
+      .filter((oldItem) => oldItem.name !== value.name)
+      .sort((a, b) => a.name.length - b.name.length);
+    changeSortingType(value.name);
+    sortAndFilterResults(value.name, sortingOrder, selectedFilters);
   };
 
   // For checking Error boundary
@@ -47,14 +80,17 @@ function SortingDropdown() {
           className="sorting-dropdown-btn"
           onClick={handleOpenDropdown}
         >
-          {chosenItem}
+          {chosenItem.label}
         </button>
         <button
           type="button"
           className="sorting-order-btn"
           onClick={handleOrderChange}
         >
-          <img src={isAscendingOrder ? ascSign : descSign} alt="order Sign" />
+          <img
+            src={sortingOrder === "asc" ? ascSign : descSign}
+            alt="order Sign"
+          />
         </button>
       </div>
       {openedDropdown ? (
@@ -66,7 +102,7 @@ function SortingDropdown() {
                 onClick={() => handleItemChoose(item)}
                 type="button"
               >
-                {item}
+                {item.label}
               </button>
             </li>
           ))}
@@ -76,4 +112,36 @@ function SortingDropdown() {
   );
 }
 
-export default SortingDropdown;
+const mapStateToProps = (state) => {
+  return {
+    sortingOrder: getSortingOrder(state),
+    sortingType: getSortingType(state),
+    selectedFilters: getSelectedFilters(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeSortingOrder: (order) => dispatch(changeSortingOrder(order)),
+    changeSortingType: (type) => dispatch(changeSortingType(type)),
+    sortAndFilterResults: (sortType, sortOrder, filtersArray) =>
+      dispatch(sortAndFilterResults(sortType, sortOrder, filtersArray)),
+  };
+};
+
+SortingDropdown.propTypes = {
+  sortingOrder: PropTypes.string,
+  changeSortingOrder: PropTypes.func.isRequired,
+  sortingType: PropTypes.string,
+  changeSortingType: PropTypes.func.isRequired,
+  selectedFilters: arrayOf(PropTypes.string),
+  sortAndFilterResults: PropTypes.func.isRequired,
+};
+
+SortingDropdown.defaultProps = {
+  sortingOrder: "desc",
+  sortingType: "vote_average",
+  selectedFilters: [],
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortingDropdown);

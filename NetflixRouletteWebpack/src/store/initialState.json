@@ -1,0 +1,64 @@
+{
+  "movieList": [
+    {
+      "title": "Pulp Fiction",
+      "genre": "Action & Adventure",
+      "releaseDate": "2004",
+      "rating": 9.1,
+      "runtime": "246 min",
+      "image": "http://localhost:8080/c8a8e2d591a5758d2542.png",
+      "overview": "badibclaidhbc libc ileabc i;b e;v",
+      "id": 10
+    },
+    {
+      "title": "Bohemian Rhapsody",
+      "genre": "Drama, Biography, Music",
+      "releaseDate": "2003",
+      "rating": 9.2,
+      "runtime": "247 min",
+      "image": "http://localhost:8080/e8bb66f05e44653e5a40.png",
+      "overview": "hrb vehir v;jer b;vf ej;r bfvoejr bv",
+      "id": 20
+    },
+    {
+      "title": "Kill Bill: Vol 2",
+      "genre": "Oscar winning movie",
+      "releaseDate": "1994",
+      "rating": 9.3,
+      "runtime": "248 min",
+      "image": "http://localhost:8080/771013b2b994cfb2dc29.png",
+      "overview": "cbe ichbv eic ie cikejr bfco;r jeco;e q",
+      "id": 30
+    },
+    {
+      "title": "Avengers: War of Infinity",
+      "genre": "Action & Adventure",
+      "releaseDate": "2004",
+      "rating": 9.4,
+      "runtime": "249 min",
+      "image": "http://localhost:8080/8cf7ce20f2ef407079e9.png",
+      "overview": "hebr coeijbqu fcoebfqu3 co eu3bf o234ubf [o4u3bf",
+      "id": 40
+    },
+    {
+      "title": "Inception",
+      "genre": "Action & Adventure",
+      "releaseDate": "2003",
+      "rating": 9.5,
+      "runtime": "250 min",
+      "image": "http://localhost:8080/8f7687dc3a3ec4d1c6a6.png",
+      "overview": "cidhewb cuwe bcfo2ub 3df[ou23b df[o23ub fd[o32ub fdo32ub fd",
+      "id": 50
+    },
+    {
+      "title": "Reservoir dogs",
+      "genre": "Oscar winning movie",
+      "releaseDate": "1994",
+      "rating": 9.6,
+      "runtime": "251 min",
+      "image": "http://localhost:8080/2a602dca2fe3a3795e05.png",
+      "overview": "ewkh coe ufbnc 2of]p2n3jdfp0in23fdp23fbn23pfbnnjfbnj4n444 c  ejf d2",
+      "id": 60
+    }
+  ]
+}
