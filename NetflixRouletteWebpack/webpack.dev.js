@@ -5,6 +5,7 @@ const common = require("./webpack.common");
 
 module.exports = merge(common, {
   mode: "development",
+  entry: "webpack-hot-middleware/client",
   devServer: {
     historyApiFallback: true,
     static: {
