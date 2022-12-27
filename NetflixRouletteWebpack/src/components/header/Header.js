@@ -8,10 +8,14 @@ import {
   openCongratsModal,
   closeCongratsModal,
   addMovie,
+  sortAndFilterResults,
 } from "../../store/actionCreators";
 import {
   getAddMovieModalStatus,
   getCongratsModalStatus,
+  getSelectedFilters,
+  getSortingOrder,
+  getSortingType,
 } from "../../store/selectors";
 
 import "./Header.scss";
@@ -30,6 +34,10 @@ function Header(props) {
     openCongratsModal,
     closeCongratsModal,
     addMovie,
+    sortingType,
+    sortingOrder,
+    selectedFilters,
+    sortAndFilterResults,
   } = props;
 
   const setIsModalOpen = (value) => {
@@ -37,25 +45,42 @@ function Header(props) {
   };
 
   const handleMovieEdit = (newMovieData) => {
-    const { title, image, overview, genre, rating, releaseDate, runtime } =
+    const { title, movieURL, overview, genres, rating, releaseDate, runtime } =
       newMovieData;
 
     const refactoredNewMovieData = {
       title,
       vote_average: Number(rating),
       release_date: releaseDate,
-      poster_path: image,
+      poster_path: movieURL,
       overview,
       runtime: Number(runtime),
-      genres: genre.split(", "),
+      genres: genres.split(", "),
     };
-    addMovie(refactoredNewMovieData);
+    addMovie(
+      refactoredNewMovieData,
+      sortAndFilterResults.bind(
+        null,
+        sortingType,
+        sortingOrder,
+        selectedFilters
+      )
+    );
 
     closeAddMovieModal();
   };
 
   const setCongratsModalOpen = (value) => {
     value ? openCongratsModal() : closeCongratsModal();
+  };
+
+  const formInitialValues = {
+    title: "My custom title",
+    movieURL: "https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg",
+    releaseDate: "2020-10-10",
+    rating: "8.0",
+    runtime: "100",
+    overview: "My overview",
   };
 
   return (
@@ -68,6 +93,7 @@ function Header(props) {
           handleEditModalOpen={setIsModalOpen}
           handleMovieEdit={handleMovieEdit}
           showCongratsModal={setCongratsModalOpen}
+          initialValues={formInitialValues}
         />
       )}
       {isCongratsModalOpen && (
@@ -81,6 +107,9 @@ const mapStateToProps = (state) => {
   return {
     isAddMovieModalOpen: getAddMovieModalStatus(state),
     isCongratsModalOpen: getCongratsModalStatus(state),
+    selectedFilters: getSelectedFilters(state),
+    sortingType: getSortingType(state),
+    sortingOrder: getSortingOrder(state),
   };
 };
 
@@ -91,6 +120,10 @@ const mapDispatchToProps = (dispatch) => {
     openCongratsModal: () => dispatch(openCongratsModal()),
     closeCongratsModal: () => dispatch(closeCongratsModal()),
     addMovie: (data) => dispatch(addMovie(data)),
+    sortAndFilterResults: (sortingType, sortingOrder, selectedFilters) =>
+      dispatch(
+        sortAndFilterResults(sortingType, sortingOrder, selectedFilters)
+      ),
   };
 };
 
@@ -102,11 +135,18 @@ Header.propTypes = {
   openCongratsModal: PropTypes.func.isRequired,
   closeCongratsModal: PropTypes.func.isRequired,
   addMovie: PropTypes.func.isRequired,
+  sortingOrder: PropTypes.string,
+  sortingType: PropTypes.string,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
+  sortAndFilterResults: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
   isAddMovieModalOpen: false,
   isCongratsModalOpen: false,
+  sortingType: "vote_average",
+  sortingOrder: "desc",
+  selectedFilters: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
