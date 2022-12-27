@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 import ACTIONS from "./actionTypes";
 import initialState from "./initialState.json";
 
-const movieList = (state = initialState, action) => {
+export const movieList = (state = initialState, action) => {
   switch (action.type) {
     case ACTIONS.SET_SEARCH_RESULTS:
       const parsedMovies = action.payload.data.map((movieInfo) => ({
@@ -57,7 +57,7 @@ const movieList = (state = initialState, action) => {
   }
 };
 
-const movieEdit = (state = {}, action) => {
+export const movieEdit = (state = {}, action) => {
   switch (action.type) {
     case ACTIONS.DELETE_MOVIE:
       return {
@@ -73,7 +73,7 @@ const movieEdit = (state = {}, action) => {
   }
 };
 
-const modalsManagement = (state = {}, action) => {
+export const modalsManagement = (state = {}, action) => {
   switch (action.type) {
     case ACTIONS.OPEN_ADD_MOVIE_MODAL:
       return {

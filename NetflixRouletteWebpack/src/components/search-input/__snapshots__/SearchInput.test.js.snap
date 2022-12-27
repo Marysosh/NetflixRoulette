@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search input should render correctly 1`] = `
+<DocumentFragment>
+  <input
+    class="search-input"
+    placeholder="What do you want to watch?"
+    type="text"
+    value=""
+  />
+</DocumentFragment>
+`;

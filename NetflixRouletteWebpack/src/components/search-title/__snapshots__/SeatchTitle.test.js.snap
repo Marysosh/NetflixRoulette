@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search title component renders correctly 1`] = `
+<DocumentFragment>
+  <h2
+    class="search-title"
+  >
+    Find your movie
+  </h2>
+</DocumentFragment>
+`;

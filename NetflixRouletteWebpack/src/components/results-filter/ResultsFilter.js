@@ -16,10 +16,10 @@ import { FILTER_NAMES } from "../../utils/constants";
 
 function ResultsFilter({
   genresFilterArray,
-  selectedFilters = [],
+  selectedFilters,
   setSelectedFilters,
-  sortingOrder = "desc",
-  sortingType = "vote_average",
+  sortingOrder,
+  sortingType,
   sortAndFilterResults,
 }) {
   const [genreArray, setGenre] = useSearchParams();

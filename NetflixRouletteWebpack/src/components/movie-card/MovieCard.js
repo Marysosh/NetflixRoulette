@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -31,7 +32,7 @@ function MovieCard({ movieInfo, setMovieDetails, showMovieDetails }) {
       <img
         className="movie-card-image"
         src={image}
-        alt={errorImg}
+        alt="movie-card-image"
         // eslint-disable-next-line no-return-assign
         onError={(e) => (e.target.src = errorImg)}
       />
