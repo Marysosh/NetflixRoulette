@@ -25,11 +25,11 @@ let genreArray = [
 
 function SortingDropdown(props) {
   const {
-    sortingOrder = "desc",
+    sortingOrder,
     changeSortingOrder,
-    sortingType = "vote_average",
+    sortingType,
     changeSortingType,
-    selectedFilters = [],
+    selectedFilters,
     sortAndFilterResults,
   } = props;
   const [openedDropdown, setDropdownOpen] = useState(false);
@@ -89,7 +89,7 @@ function SortingDropdown(props) {
         >
           <img
             src={sortingOrder === "asc" ? ascSign : descSign}
-            alt="order Sign"
+            alt={sortingOrder === "asc" ? "ascSign" : "descSign"}
           />
         </button>
       </div>

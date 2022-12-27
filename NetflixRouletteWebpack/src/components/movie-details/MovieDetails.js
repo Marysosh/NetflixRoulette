@@ -62,7 +62,7 @@ function MovieDetails({ movieDetails, showMovieDetails }) {
           <div className="movie-genre">{genre}</div>
           <div className="movie-release-runtime-container">
             <div className="release-date">{releaseDate}</div>
-            <div className="runtime">{runtime || "-"}</div>
+            <div className="runtime">{runtime}</div>
           </div>
           <div className="movie-overview">{overview}</div>
         </div>
