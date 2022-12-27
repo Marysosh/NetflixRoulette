@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hot } from "react-hot-loader";
 import { Provider } from "react-redux";
 import store from "./store/index";
 
@@ -30,4 +31,4 @@ function App() {
   );
 }
 
-export default App;
+export default hot(module)(App);

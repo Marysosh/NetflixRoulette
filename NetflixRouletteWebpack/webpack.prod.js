@@ -5,13 +5,15 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const common = require("./webpack.common");
 
 module.exports = merge(common, {
   mode: "production",
+  entry: "./src/index.js",
   output: {
-    filename: "main.[contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    filename: "js/[name].js",
+    path: path.resolve("./public"),
   },
   optimization: {
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
@@ -27,6 +29,7 @@ module.exports = merge(common, {
         removeComments: true,
       },
     }),
+    new webpack.HashedModuleIdsPlugin(),
   ],
   module: {
     rules: [

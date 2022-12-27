@@ -1,5 +1,12 @@
 module.exports = {
-  entry: "./src/index.js",
+  // entry: "./src/index.js",
+  resolve: {
+    extensions: [".js", ".jsx"],
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+    },
+  },
+
   module: {
     rules: [
       {
